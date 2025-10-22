@@ -27,8 +27,9 @@ const pool = new Pool({
   ssl: {
     rejectUnauthorized: false
   },
-  connectionTimeoutMillis: 5000,
-  idleTimeoutMillis: 30000
+  connectionTimeoutMillis: 10000,
+  idleTimeoutMillis: 30000,
+  statement_timeout: 30000 // 30 second query timeout
 })
 
 // Test database connection on startup
@@ -131,6 +132,12 @@ When user asks about a product (like "tomatoes" or "electronics"):
 3. Query trade_data using those exact hs_codes: WHERE product_code IN ('code1', 'code2', ...)
 4. If step 1 found products but step 3 returns no trade data, tell the user "We found these products but they have no trade activity in our date range"
 5. Do NOT search for alternative HS code patterns - use what you found in step 1
+
+QUERY OPTIMIZATION:
+- Always add LIMIT clauses (typically 10-100 rows)
+- For large aggregations, filter by year first: WHERE year = 2024
+- Avoid complex subqueries when possible
+- Use specific WHERE conditions to reduce rows scanned
 
 Use the query_database tool to execute SQL queries.
 Always provide clear, natural language explanations of results.`
