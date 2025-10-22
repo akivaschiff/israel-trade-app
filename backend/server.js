@@ -48,7 +48,7 @@ testConnection()
 
 // SQL query execution function
 async function executeQuery(sql) {
-  console.log('🔍 Executing SQL:', sql.substring(0, 100) + (sql.length > 100 ? '...' : ''))
+  console.log('🔍 Executing SQL:', sql.substring(0, 150) + (sql.length > 150 ? '...' : ''))
   
   // Validate: Only SELECT queries allowed
   const trimmedSql = sql.trim().toUpperCase()
@@ -98,7 +98,7 @@ DATABASE SCHEMA:
 
 trade_data table:
 - reporting_country: VARCHAR (always 'IL' for Israel)
-- flow: INTEGER (1 = Export from Israel, 2 = Import to Israel)
+- flow: INTEGER (1 = Import to Israel, 2 = Export from Israel)
 - year: INTEGER (2023-2025)
 - period: INTEGER (month 1-12)
 - partner_country: VARCHAR (ISO alpha-2 code like 'US', 'DE', 'TR')
@@ -119,15 +119,23 @@ IMPORTANT NOTES:
 - Total rows: ~1.5 million trade records
 - Date range: January 2023 to October 2025
 - All monetary values are in USD
-- Flow 1 = goods Israel SELLS to other countries (exports)
-- Flow 2 = goods Israel BUYS from other countries (imports)
+- Flow 1 = goods Israel BUYS from other countries (imports)
+- Flow 2 = goods Israel SELLS to other countries (exports)
 - Always JOIN with products table to get readable product names
 - Always JOIN with countries table to get readable country names
+
+WORKFLOW FOR PRODUCT SEARCHES:
+When user asks about a product (like "tomatoes" or "electronics"):
+1. ALWAYS start by querying: SELECT hs_code, description FROM products WHERE description ILIKE '%keyword%' LIMIT 20
+2. Use ALL the hs_codes found in step 1 (don't filter them out or search for different codes)
+3. Query trade_data using those exact hs_codes: WHERE product_code IN ('code1', 'code2', ...)
+4. If step 1 found products but step 3 returns no trade data, tell the user "We found these products but they have no trade activity in our date range"
+5. Do NOT search for alternative HS code patterns - use what you found in step 1
 
 Use the query_database tool to execute SQL queries.
 Always provide clear, natural language explanations of results.`
 
-// Chat endpoint using direct Anthropic SDK with tool calling
+// Chat endpoint with support for multiple tool calls
 app.post('/api/chat', async (req, res) => {
   const { message, conversationHistory = [] } = req.body
   
@@ -138,90 +146,109 @@ app.post('/api/chat', async (req, res) => {
   console.log('\n💬 New chat message:', message)
   
   try {
-    // Build messages array for conversation
+    // Build messages array
     const messages = [
       ...conversationHistory,
       { role: 'user', content: message }
     ]
     
-    // First API call - let Claude decide if it needs to query
-    let response = await anthropic.messages.create({
-      model: 'claude-sonnet-4-20250514',
-      max_tokens: 4096,
-      system: DATABASE_CONTEXT,
-      messages: messages,
-      tools: [{
-        name: 'query_database',
-        description: 'Execute a read-only SQL query on the Israeli trade database',
-        input_schema: {
-          type: 'object',
-          properties: {
-            sql: {
-              type: 'string',
-              description: 'A SELECT query to execute'
-            },
-            reasoning: {
-              type: 'string',
-              description: 'Brief explanation of what this query does'
-            }
+    const tools = [{
+      name: 'query_database',
+      description: 'Execute a read-only SQL query on the Israeli trade database',
+      input_schema: {
+        type: 'object',
+        properties: {
+          sql: {
+            type: 'string',
+            description: 'A SELECT query to execute'
           },
-          required: ['sql']
-        }
-      }]
-    })
-    
-    console.log('🤖 Claude responded with', response.content.length, 'content blocks')
-    
-    // Check if Claude wants to use the tool
-    let toolUse = response.content.find(block => block.type === 'tool_use')
-    
-    if (toolUse) {
-      console.log('🔧 Tool use requested:', toolUse.name)
-      console.log('   Reasoning:', toolUse.input.reasoning || 'Not provided')
-      
-      // Execute the SQL query
-      let toolResult
-      try {
-        const queryResult = await executeQuery(toolUse.input.sql)
-        toolResult = {
-          type: 'tool_result',
-          tool_use_id: toolUse.id,
-          content: JSON.stringify(queryResult, null, 2)
-        }
-      } catch (error) {
-        toolResult = {
-          type: 'tool_result',
-          tool_use_id: toolUse.id,
-          content: JSON.stringify({ error: error.message }),
-          is_error: true
-        }
+          reasoning: {
+            type: 'string',
+            description: 'Brief explanation of what this query does'
+          }
+        },
+        required: ['sql']
       }
-      
-      // Send results back to Claude for final response
-      messages.push({ role: 'assistant', content: response.content })
-      messages.push({ role: 'user', content: [toolResult] })
-      
-      const finalResponse = await anthropic.messages.create({
+    }]
+    
+    let toolCallCount = 0
+    const maxIterations = 8 // Allow more iterations for complex queries
+    
+    // Agentic loop: allow multiple tool calls
+    for (let iteration = 0; iteration < maxIterations; iteration++) {
+      const response = await anthropic.messages.create({
         model: 'claude-sonnet-4-20250514',
         max_tokens: 4096,
         system: DATABASE_CONTEXT,
-        messages: messages
+        messages: messages,
+        tools: tools
       })
       
-      const answer = finalResponse.content.find(block => block.type === 'text')?.text || 'No response generated'
-      console.log('✅ Final answer generated')
+      console.log(`🤖 Iteration ${iteration + 1}: Claude responded with ${response.content.length} content blocks`)
       
-      return res.json({ answer })
+      // Log text content for debugging
+      const textContent = response.content.filter(block => block.type === 'text')
+      if (textContent.length > 0) {
+        console.log('📝 Claude says:', textContent[0].text.substring(0, 200) + (textContent[0].text.length > 200 ? '...' : ''))
+      }
+      
+      // Check for tool use
+      const toolUseBlocks = response.content.filter(block => block.type === 'tool_use')
+      
+      if (toolUseBlocks.length === 0) {
+        // No more tool calls - Claude has the final answer
+        const answer = response.content.find(block => block.type === 'text')?.text || 'No response generated'
+        console.log(`✅ Final answer generated (${toolCallCount} total tool calls)`)
+        return res.json({ answer, toolCalls: toolCallCount })
+      }
+      
+      // Execute all tool calls
+      messages.push({ role: 'assistant', content: response.content })
+      
+      const toolResults = []
+      for (const toolUse of toolUseBlocks) {
+        toolCallCount++
+        console.log(`🔧 Tool call #${toolCallCount}: ${toolUse.name}`)
+        console.log(`   Reasoning: ${toolUse.input.reasoning || 'Not provided'}`)
+        
+        try {
+          const queryResult = await executeQuery(toolUse.input.sql)
+          const resultSummary = queryResult.truncated 
+            ? `Returned ${queryResult.rowCount} rows (showing ${queryResult.rows.length})`
+            : `Returned ${queryResult.rowCount} rows`
+          console.log(`   Result: ${resultSummary}`)
+          toolResults.push({
+            type: 'tool_result',
+            tool_use_id: toolUse.id,
+            content: JSON.stringify(queryResult, null, 2)
+          })
+        } catch (error) {
+          toolResults.push({
+            type: 'tool_result',
+            tool_use_id: toolUse.id,
+            content: JSON.stringify({ error: error.message }),
+            is_error: true
+          })
+        }
+      }
+      
+      // Add tool results to conversation
+      messages.push({ role: 'user', content: toolResults })
     }
     
-    // No tool use needed, just return the text response
-    const answer = response.content.find(block => block.type === 'text')?.text || 'No response generated'
-    console.log('✅ Direct answer (no tool use)')
-    
-    res.json({ answer })
+    // If we hit max iterations, return what we have
+    console.log(`⚠️  Reached max iterations (${maxIterations})`)
+    res.json({ 
+      answer: 'I apologize, but I reached the maximum number of queries. Please try rephrasing your question.',
+      toolCalls: toolCallCount 
+    })
     
   } catch (error) {
     console.error('❌ Chat error:', error.message)
+    console.error('   Error type:', error.constructor.name)
+    if (error.status) {
+      console.error('   HTTP Status:', error.status)
+    }
     res.status(500).json({ 
       error: 'Failed to process chat message',
       details: error.message 
