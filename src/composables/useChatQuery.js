@@ -5,6 +5,9 @@ export function useChatQuery() {
   const isLoading = ref(false)
   const error = ref(null)
   
+  // Use environment variable for API URL (falls back to localhost for development)
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001'
+  
   async function sendMessage(userMessage) {
     if (!userMessage.trim()) return
     
@@ -18,7 +21,7 @@ export function useChatQuery() {
     })
     
     try {
-      const response = await fetch('http://localhost:3001/api/chat', {
+      const response = await fetch(`${API_URL}/api/chat`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

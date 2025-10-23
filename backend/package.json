@@ -4,6 +4,9 @@
   "type": "module",
   "description": "Backend server for trade data chat using Claude API",
   "main": "server.js",
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
     "start": "node server.js",
     "dev": "node --watch server.js"
