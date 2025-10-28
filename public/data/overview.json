@@ -1,0 +1,372 @@
+{
+  "metadata": {
+    "generated_at": "2025-10-28T13:03:22.526444+00:00",
+    "last_month_year": 2025,
+    "last_month_period": 8,
+    "last_month_label": "Aug 2025"
+  },
+  "cards": {
+    "last_month_trade": {
+      "imports": 7369944629.0,
+      "exports": 4073900000.0,
+      "balance": -3296044629.0,
+      "balance_type": "deficit"
+    },
+    "trading_partners": {
+      "total_count": 199,
+      "non_trading_countries": [
+        "Anguilla",
+        "Antarctica",
+        "Aruba",
+        "Bhutan",
+        "Bonaire, Sint Eustatius and Saba",
+        "Bouvet Island",
+        "British Indian Ocean Territory",
+        "Christmas Island",
+        "Cocos (Keeling) Islands",
+        "Curaçao",
+        "Equatorial Guinea",
+        "Falkland Islands (Malvinas)",
+        "French Southern Territories",
+        "Greenland",
+        "Guernsey",
+        "Heard Island and McDonald Islands",
+        "Iran, Islamic Republic of",
+        "Iraq",
+        "Isle of Man",
+        "Israel",
+        "Jersey",
+        "Korea, Democratic People's Republic of",
+        "Kuwait",
+        "Lebanon",
+        "Libya",
+        "Mayotte",
+        "Namibia",
+        "Niue",
+        "Northern Mariana Islands",
+        "Oman",
+        "Palestine, State of",
+        "Pitcairn",
+        "Qatar",
+        "Saint Barthélemy",
+        "Saint Martin (French part)",
+        "Saint Pierre and Miquelon",
+        "Saint Vincent and the Grenadines",
+        "Saudi Arabia",
+        "Sint Maarten (Dutch part)",
+        "South Georgia and the South Sandwich Islands",
+        "Sudan",
+        "Svalbard and Jan Mayen",
+        "Syrian Arab Republic",
+        "Tokelau",
+        "United States Minor Outlying Islands",
+        "Virgin Islands (British)",
+        "Wallis and Futuna",
+        "Western Sahara",
+        "Yemen",
+        "Åland Islands"
+      ]
+    },
+    "items_traded": {
+      "unique_products": 4260,
+      "unique_hs_chapters": 88,
+      "unique_hs_headings": 1193
+    }
+  },
+  "charts": {
+    "top_partners_imports": [
+      {
+        "country_code": "CN",
+        "country_name": "China",
+        "value": 1806498611.0,
+        "rank": 1
+      },
+      {
+        "country_code": "US",
+        "country_name": "United States of America",
+        "value": 787308993.0,
+        "rank": 2
+      },
+      {
+        "country_code": "DE",
+        "country_name": "Germany",
+        "value": 498865879.0,
+        "rank": 3
+      },
+      {
+        "country_code": "IT",
+        "country_name": "Italy",
+        "value": 335325821.0,
+        "rank": 4
+      },
+      {
+        "country_code": "FR",
+        "country_name": "France",
+        "value": 233277563.0,
+        "rank": 5
+      },
+      {
+        "country_code": "KR",
+        "country_name": "Korea, Republic of",
+        "value": 214975581.0,
+        "rank": 6
+      },
+      {
+        "country_code": "RU",
+        "country_name": "Russian Federation",
+        "value": 201469793.0,
+        "rank": 7
+      },
+      {
+        "country_code": "ES",
+        "country_name": "Spain",
+        "value": 174449019.0,
+        "rank": 8
+      },
+      {
+        "country_code": "IN",
+        "country_name": "India",
+        "value": 167234703.0,
+        "rank": 9
+      },
+      {
+        "country_code": "GB",
+        "country_name": "United Kingdom of Great Britain and Northern Ireland",
+        "value": 159931810.0,
+        "rank": 10
+      }
+    ],
+    "top_partners_exports": [
+      {
+        "country_code": "US",
+        "country_name": "United States of America",
+        "value": 1232869000.0,
+        "rank": 1
+      },
+      {
+        "country_code": "CN",
+        "country_name": "China",
+        "value": 287600000.0,
+        "rank": 2
+      },
+      {
+        "country_code": "IN",
+        "country_name": "India",
+        "value": 256623000.0,
+        "rank": 3
+      },
+      {
+        "country_code": "NL",
+        "country_name": "Netherlands, Kingdom of the",
+        "value": 196145000.0,
+        "rank": 4
+      },
+      {
+        "country_code": "DE",
+        "country_name": "Germany",
+        "value": 186378000.0,
+        "rank": 5
+      },
+      {
+        "country_code": "IE",
+        "country_name": "Ireland",
+        "value": 136727000.0,
+        "rank": 6
+      },
+      {
+        "country_code": "HK",
+        "country_name": "Hong Kong",
+        "value": 127765000.0,
+        "rank": 7
+      },
+      {
+        "country_code": "KR",
+        "country_name": "Korea, Republic of",
+        "value": 121821000.0,
+        "rank": 8
+      },
+      {
+        "country_code": "GB",
+        "country_name": "United Kingdom of Great Britain and Northern Ireland",
+        "value": 121654000.0,
+        "rank": 9
+      },
+      {
+        "country_code": "TW",
+        "country_name": "Taiwan, Province of China",
+        "value": 109481000.0,
+        "rank": 10
+      }
+    ],
+    "trade_trend_12m": [
+      {
+        "year": 2024,
+        "period": 9,
+        "month_label": "Sep 2024",
+        "imports": 7289673035.0,
+        "exports": 4552451000.0,
+        "balance": -2737222035.0
+      },
+      {
+        "year": 2024,
+        "period": 10,
+        "month_label": "Oct 2024",
+        "imports": 6908642359.0,
+        "exports": 4251034000.0,
+        "balance": -2657608359.0
+      },
+      {
+        "year": 2024,
+        "period": 11,
+        "month_label": "Nov 2024",
+        "imports": 6757885149.0,
+        "exports": 4563341000.0,
+        "balance": -2194544149.0
+      },
+      {
+        "year": 2024,
+        "period": 12,
+        "month_label": "Dec 2024",
+        "imports": 9036620360.0,
+        "exports": 4719415000.0,
+        "balance": -4317205360.0
+      },
+      {
+        "year": 2025,
+        "period": 1,
+        "month_label": "Jan 2025",
+        "imports": 6538615848.0,
+        "exports": 4479906000.0,
+        "balance": -2058709848.0
+      },
+      {
+        "year": 2025,
+        "period": 2,
+        "month_label": "Feb 2025",
+        "imports": 6432583848.0,
+        "exports": 4324077000.0,
+        "balance": -2108506848.0
+      },
+      {
+        "year": 2025,
+        "period": 3,
+        "month_label": "Mar 2025",
+        "imports": 7731478254.0,
+        "exports": 5479221000.0,
+        "balance": -2252257254.0
+      },
+      {
+        "year": 2025,
+        "period": 4,
+        "month_label": "Apr 2025",
+        "imports": 7084381173.0,
+        "exports": 4031341000.0,
+        "balance": -3053040173.0
+      },
+      {
+        "year": 2025,
+        "period": 5,
+        "month_label": "May 2025",
+        "imports": 7181249890.0,
+        "exports": 4174188000.0,
+        "balance": -3007061890.0
+      },
+      {
+        "year": 2025,
+        "period": 6,
+        "month_label": "Jun 2025",
+        "imports": 6145041323.0,
+        "exports": 3498614000.0,
+        "balance": -2646427323.0
+      },
+      {
+        "year": 2025,
+        "period": 7,
+        "month_label": "Jul 2025",
+        "imports": 8768765218.0,
+        "exports": 4811622000.0,
+        "balance": -3957143218.0
+      },
+      {
+        "year": 2025,
+        "period": 8,
+        "month_label": "Aug 2025",
+        "imports": 7369944629.0,
+        "exports": 4073900000.0,
+        "balance": -3296044629.0
+      }
+    ],
+    "top_product_categories": [
+      {
+        "hs_chapter": "85",
+        "category_name": "Electrical Machinery and Equipment",
+        "value": 2088420990.0,
+        "percentage": 18.2,
+        "rank": 1
+      },
+      {
+        "hs_chapter": "84",
+        "category_name": "Nuclear Reactors, Machinery",
+        "value": 1389783223.0,
+        "percentage": 12.1,
+        "rank": 2
+      },
+      {
+        "hs_chapter": "90",
+        "category_name": "Optical, Photographic, Medical Instruments",
+        "value": 1090257682.0,
+        "percentage": 9.5,
+        "rank": 3
+      },
+      {
+        "hs_chapter": "87",
+        "category_name": "Vehicles",
+        "value": 661683371.0,
+        "percentage": 5.8,
+        "rank": 4
+      },
+      {
+        "hs_chapter": "71",
+        "category_name": "Pearls, Precious Stones, Metals",
+        "value": 640565842.0,
+        "percentage": 5.6,
+        "rank": 5
+      },
+      {
+        "hs_chapter": "30",
+        "category_name": "Pharmaceutical Products",
+        "value": 526838927.0,
+        "percentage": 4.6,
+        "rank": 6
+      },
+      {
+        "hs_chapter": "39",
+        "category_name": "Plastics",
+        "value": 444382305.0,
+        "percentage": 3.9,
+        "rank": 7
+      },
+      {
+        "hs_chapter": "72",
+        "category_name": "Iron and Steel",
+        "value": 242526008.0,
+        "percentage": 2.1,
+        "rank": 8
+      },
+      {
+        "hs_chapter": "98",
+        "category_name": "Special Classification Provisions",
+        "value": 240590337.0,
+        "percentage": 2.1,
+        "rank": 9
+      },
+      {
+        "hs_chapter": "73",
+        "category_name": "Iron and Steel Articles",
+        "value": 238809897.0,
+        "percentage": 2.1,
+        "rank": 10
+      }
+    ]
+  }
+}

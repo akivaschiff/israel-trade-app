@@ -1,4 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
+import DashboardLayout from '@/views/DashboardLayout.vue'
+import OverviewPage from '@/views/OverviewPage.vue'
+import TimeSeriesPage from '@/views/TimeSeriesPage.vue'
+import ProductOriginPage from '@/views/ProductOriginPage.vue'
 import ChatPage from '@/views/ChatPage.vue'
 
 const router = createRouter({
@@ -6,26 +10,44 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'chat',
-      component: ChatPage
+      redirect: '/overview'
     },
-    // Old pages disabled for now due to slow queries on large dataset
-    // Can be re-enabled later with optimized queries
-    // {
-    //   path: '/overview',
-    //   name: 'overview',
-    //   component: () => import('@/views/OverviewPage.vue')
-    // },
-    // {
-    //   path: '/timeseries',
-    //   name: 'timeseries',
-    //   component: () => import('@/views/TimeSeriesPage.vue')
-    // },
-    // {
-    //   path: '/product-origin',
-    //   name: 'product-origin',
-    //   component: () => import('@/views/ProductOriginPage.vue')
-    // }
+    {
+      path: '/',
+      component: DashboardLayout,
+      children: [
+        {
+          path: 'overview',
+          name: 'overview',
+          component: OverviewPage
+        },
+        {
+          path: 'timeseries',
+          name: 'timeseries',
+          component: TimeSeriesPage
+        },
+        {
+          path: 'product-origin',
+          name: 'product-origin',
+          component: ProductOriginPage
+        },
+        {
+          path: 'chat',
+          name: 'chat',
+          component: ChatPage
+        },
+        {
+          path: 'chat/:conversationId',
+          name: 'chat-conversation',
+          component: ChatPage
+        }
+      ]
+    },
+    {
+      path: '/test-selector',
+      name: 'test-selector',
+      component: () => import('@/views/ProductSelectorTest.vue')
+    }
   ],
 })
 

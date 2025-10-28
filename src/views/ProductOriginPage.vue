@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-emerald-50 to-teal-100 p-8">
+  <div class="min-h-[calc(100vh-64px)] p-8">
     <div class="max-w-7xl mx-auto">
       <!-- Header -->
       <div class="mb-8">
