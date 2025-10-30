@@ -16,7 +16,6 @@ export function useWorldMap() {
       const response = await fetch('/data/countries.json')
       const countries = await response.json()
       countriesMap.value = new Map(countries.map(c => [c.code, c]))
-      console.log('Loaded countries:', countriesMap.value.size)
     } catch (e) {
       console.error('Error loading countries:', e)
     }
@@ -64,37 +63,18 @@ export function useWorldMap() {
   // Fetch available months from the database
   async function fetchAvailableMonths() {
     try {
-      // Query with ORDER BY to get recent months first
-      const { data: allData, error: fallbackError } = await supabase
-        .from('trade_data')
-        .select('year, period')
-        .order('year', { ascending: false })
-        .order('period', { ascending: false })
-        .limit(10000) // Get enough rows to find all unique months, starting with most recent
+      const { data, error: queryError } = await supabase
+        .rpc('get_available_months', { max_months: 12 })
       
-      if (fallbackError) throw fallbackError
+      if (queryError) throw queryError
       
-      // Get unique year-period combinations
-      const uniqueMonths = new Map()
+      availableMonths.value = data.map(row => ({
+        year: row.year,
+        period: row.period,
+        label: formatMonthLabel(row.period, row.year),
+        key: `${row.year}-${row.period}`
+      }))
       
-      for (const row of allData) {
-        const key = `${row.year}-${row.period}`
-        if (!uniqueMonths.has(key)) {
-          uniqueMonths.set(key, {
-            year: row.year,
-            period: row.period,
-            label: formatMonthLabel(row.period, row.year),
-            key: key
-          })
-        }
-        // Stop after we have 12 unique months
-        if (uniqueMonths.size >= 12) break
-      }
-      
-      availableMonths.value = Array.from(uniqueMonths.values())
-
-      console.log('Available months:', availableMonths.value.length)
-      console.log('Latest month:', availableMonths.value[0]?.label)
       return availableMonths.value
 
     } catch (e) {
@@ -110,14 +90,9 @@ export function useWorldMap() {
     error.value = null
 
     try {
-      console.log(`Fetching country totals for ${year}-${period}, flow=${flow}`)
-
-      // Use Supabase RPC to call a custom SQL function that does aggregation
-      // If RPC function doesn't exist, fall back to client-side aggregation
       let aggregatedData = []
 
       try {
-        // Try using RPC function first (more efficient)
         const { data: rpcData, error: rpcError } = await supabase
           .rpc('get_country_totals', {
             p_year: year,
@@ -127,11 +102,7 @@ export function useWorldMap() {
 
         if (rpcError) throw rpcError
         aggregatedData = rpcData
-        console.log('Used RPC function for aggregation')
       } catch (rpcError) {
-        console.log('RPC function not found, using Supabase aggregation query')
-        
-        // Fallback: Use Supabase's built-in aggregation
         const { data, error: queryError } = await supabase
           .from('trade_data')
           .select('partner_country, value')
@@ -142,7 +113,6 @@ export function useWorldMap() {
 
         if (queryError) throw queryError
 
-        // Aggregate client-side (less efficient but works)
         const countryMap = new Map()
         for (const row of data) {
           const code = row.partner_country
@@ -154,8 +124,6 @@ export function useWorldMap() {
           partner_country: code,
           total_value: total
         }))
-
-        console.log(`Aggregated ${data.length} rows into ${aggregatedData.length} countries client-side`)
       }
 
       // Map country codes to names using loaded JSON
@@ -175,7 +143,6 @@ export function useWorldMap() {
         })
         .sort((a, b) => b.total_value - a.total_value)
 
-      console.log(`Loaded ${countryTotals.value.length} countries`)
       return countryTotals.value
 
     } catch (e) {
@@ -192,9 +159,6 @@ export function useWorldMap() {
     detailLoading.value = true
 
     try {
-      console.log(`Fetching details for ${countryCode}`)
-
-      // Get all products for this country
       const { data, error: queryError } = await supabase
         .from('trade_data')
         .select('product_code, value, products(description)')
@@ -284,7 +248,6 @@ export function useWorldMap() {
         top_chapters: chapters.slice(0, 5) // Top 5 for chart
       }
 
-      console.log(`Loaded ${chapters.length} chapters for ${countryCode}`)
       return selectedCountryDetails.value
 
     } catch (e) {

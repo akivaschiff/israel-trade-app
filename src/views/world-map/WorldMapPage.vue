@@ -154,7 +154,6 @@ onMounted(async () => {
     const geoJson = await response.json()
     registerMap('world', geoJson)
     mapReady.value = true
-    console.log('World map loaded')
   } catch (error) {
     console.error('Error loading world map:', error)
   }
@@ -285,93 +284,6 @@ const mapOption = computed(() => {
     }
   })
   
-  // === DETAILED ANALYSIS LOGGING ===
-  console.log('\n'.repeat(2) + '='.repeat(60))
-  console.log('📊 VALUE DISTRIBUTION ANALYSIS')
-  console.log('='.repeat(60))
-  console.log(`Flow: ${selectedFlow.value === FLOW_TYPES.EXPORTS ? '🔵 EXPORTS' : '🟠 IMPORTS'}`)
-  console.log(`Total countries: ${values.length}`)
-  console.log(`Max: ${formatValue(maxValue)}`)
-  console.log(`Min: ${formatValue(minValue)}`)
-  console.log(`Range: ${formatValue(maxValue - minValue)}`)
-  
-  console.log('\n' + '─'.repeat(60))
-  console.log('📈 TOP 20 COUNTRIES:')
-  console.log('─'.repeat(60))
-  values.slice(0, 20).forEach((val, i) => {
-    const country = mapData.find(d => d.value === val)
-    const pct = ((val / maxValue) * 100).toFixed(1)
-    console.log(`${(i + 1).toString().padStart(2)}. ${(country?.originalName || '').padEnd(30)} ${formatValue(val).padStart(12)} (${pct}% of max)`)
-  })
-  
-  console.log('\n' + '─'.repeat(60))
-  console.log('📊 PERCENTILE ANALYSIS:')
-  console.log('─'.repeat(60))
-  const percentiles = [99, 95, 90, 75, 50, 25, 10, 5, 1]
-  percentiles.forEach(p => {
-    const index = Math.floor((values.length - 1) * (100 - p) / 100)
-    const val = values[index]
-    const pct = ((val / maxValue) * 100).toFixed(1)
-    console.log(`${p.toString().padStart(3)}th: ${formatValue(val).padStart(12)} (${pct}% of max)`)
-  })
-  
-  console.log('\n' + '─'.repeat(60))
-  console.log('📉 BOTTOM 10 COUNTRIES:')
-  console.log('─'.repeat(60))
-  values.slice(-10).reverse().forEach((val, i) => {
-    const country = mapData.find(d => d.value === val)
-    const pct = ((val / maxValue) * 100).toFixed(3)
-    console.log(`${(values.length - 9 + i).toString().padStart(3)}. ${(country?.originalName || '').padEnd(30)} ${formatValue(val).padStart(12)} (${pct}% of max)`)
-  })
-  
-  console.log('\n' + '─'.repeat(60))
-  console.log('🎨 K-MEANS COLOR SCALE (' + regularBands.length + ' bands + 1 max):')
-  console.log('─'.repeat(60))
-  regularBands.forEach((band, i) => {
-    console.log(`Band ${i + 1}: ${formatValue(band.min).padStart(12)} - ${formatValue(band.max).padStart(12)} (${band.count} countries)`)
-  })
-  const maxCountry = mapData.find(d => d.value === maxCountryValue)
-  console.log(`Band ${regularBands.length + 1}: ${formatValue(maxCountryValue).padStart(12)} - ${formatValue(maxCountryValue).padStart(12)} (1 country - ${maxCountry?.originalName || 'Max'}) ⭐`)
-  console.log(`  🔍 Max band range: gte=${(maxCountryValue * 0.99).toFixed(0)}, lte=${(maxCountryValue * 1.01).toFixed(0)} (actual value: ${maxCountryValue.toFixed(0)})`)
-  console.log('\n🔍 Checking country name mappings:')
-  
-  // Debug: Find countries with values that don't match any band
-  const countriesNotInBands = mapData.filter(c => {
-    if (c.value <= 0) return false
-    const matchingPiece = pieces.find(p => c.value >= p.gte && c.value <= p.lte)
-    return !matchingPiece
-  })
-  
-  if (countriesNotInBands.length > 0) {
-    console.log('⚠️  Countries with data but NO MATCHING BAND:')
-    countriesNotInBands.forEach(c => {
-      console.log(`  - ${c.originalName}: ${formatValue(c.value)} (value=${c.value.toFixed(0)})`)
-      // Show which bands it's between
-      const sortedPieces = [...pieces].sort((a, b) => a.gte - b.gte)
-      for (let i = 0; i < sortedPieces.length - 1; i++) {
-        if (c.value > sortedPieces[i].lte && c.value < sortedPieces[i + 1].gte) {
-          console.log(`    → Falls in GAP between Band ${i + 1} (lte=${sortedPieces[i].lte.toFixed(0)}) and Band ${i + 2} (gte=${sortedPieces[i + 1].gte.toFixed(0)})`)
-        }
-      }
-    })
-  } else {
-    console.log('✅ All countries with data are in a band!')
-  }
-  
-  // Check specific problem countries
-  const problemCountries = ['China', 'Australia', 'Turkey', 'Türkiye', 'United States']
-  problemCountries.forEach(name => {
-    const country = mapData.find(c => c.originalName?.includes(name) || c.name?.includes(name))
-    if (country) {
-      const matchingPiece = pieces.find(p => country.value >= p.gte && country.value <= p.lte)
-      console.log(`  ✅ Found ${name}: DB="${country.originalName}", Map="${country.name}", Value=${formatValue(country.value)}, InBand=${matchingPiece ? 'YES' : 'NO'}`)
-    } else {
-      console.log(`  ❌ Missing ${name}`)
-    }
-  })
-  
-  console.log('='.repeat(60) + '\n')
-
   return {
     tooltip: {
       trigger: 'item',
