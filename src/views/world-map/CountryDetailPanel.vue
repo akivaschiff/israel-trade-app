@@ -33,9 +33,9 @@
 
       <!-- Content -->
       <div v-else class="flex-1 overflow-y-auto p-6">
-        <!-- Top 5 Chapters Chart -->
+        <!-- Top 5 Categories Chart -->
         <div class="mb-6">
-          <h3 class="text-lg font-bold text-gray-800 mb-3">Top 5 HS Chapters</h3>
+          <h3 class="text-lg font-bold text-gray-800 mb-3">Top 5 Categories</h3>
           <div style="height: 200px;">
             <v-chart :option="chartOption" :autoresize="true" />
           </div>
@@ -45,80 +45,124 @@
         <div>
           <h3 class="text-lg font-bold text-gray-800 mb-3">All Products (Tree View)</h3>
           <div class="space-y-2">
+            <!-- Category Level -->
             <div
-              v-for="chapter in details.chapters"
-              :key="chapter.hs_chapter"
+              v-for="category in details.categories"
+              :key="category.category_name"
               class="border border-gray-200 rounded-lg overflow-hidden"
             >
-              <!-- Chapter Level -->
               <div
-                @click="toggleChapter(chapter.hs_chapter)"
-                class="bg-indigo-50 p-3 cursor-pointer hover:bg-indigo-100 transition-colors flex items-center justify-between"
+                @click="toggleCategory(category.category_name)"
+                class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-3 cursor-pointer hover:from-indigo-700 hover:to-purple-700 transition-colors flex items-center justify-between"
               >
-                <div class="flex items-center gap-2">
+                <div class="flex items-center gap-2 flex-1 min-w-0">
                   <svg
-                    :class="['w-4 h-4 transition-transform', expandedChapters.has(chapter.hs_chapter) ? 'rotate-90' : '']"
+                    :class="['w-4 h-4 transition-transform flex-shrink-0', expandedCategories.has(category.category_name) ? 'rotate-90' : '']"
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
                   >
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                   </svg>
-                  <span class="font-semibold text-indigo-900">
-                    Chapter {{ chapter.hs_chapter }}
+                  <span class="font-bold text-lg">
+                    {{ category.category_name }}
                   </span>
                 </div>
-                <div class="text-right">
-                  <span class="font-bold text-indigo-900">{{ formatValue(chapter.value) }}</span>
-                  <span class="text-sm text-indigo-600 ml-2">({{ chapter.percentage.toFixed(1) }}%)</span>
+                <div class="text-right flex-shrink-0 ml-4">
+                  <span class="font-bold text-lg">{{ formatValue(category.value) }}</span>
+                  <span class="text-sm text-indigo-200 ml-2">({{ category.percentage.toFixed(1) }}%)</span>
                 </div>
               </div>
 
-              <!-- Headings Level -->
-              <div v-show="expandedChapters.has(chapter.hs_chapter)" class="bg-white">
+              <!-- Chapters within Category -->
+              <div v-show="expandedCategories.has(category.category_name)" class="bg-white">
                 <div
-                  v-for="heading in chapter.headings"
-                  :key="heading.hs_heading"
+                  v-for="chapter in category.chapters"
+                  :key="chapter.hs_chapter"
                   class="border-t border-gray-100"
                 >
+                  <!-- Chapter Level -->
                   <div
-                    @click="toggleHeading(heading.hs_heading)"
-                    class="bg-purple-50 p-3 pl-8 cursor-pointer hover:bg-purple-100 transition-colors flex items-center justify-between"
+                    @click="toggleChapter(chapter.hs_chapter)"
+                    class="bg-indigo-50 p-3 pl-6 cursor-pointer hover:bg-indigo-100 transition-colors flex items-center justify-between"
                   >
-                    <div class="flex items-center gap-2">
+                    <div class="flex items-center gap-2 flex-1 min-w-0">
                       <svg
-                        :class="['w-3 h-3 transition-transform', expandedHeadings.has(heading.hs_heading) ? 'rotate-90' : '']"
+                        :class="['w-4 h-4 transition-transform flex-shrink-0', expandedChapters.has(chapter.hs_chapter) ? 'rotate-90' : '']"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
                       >
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                       </svg>
-                      <span class="font-semibold text-purple-900 text-sm">
-                        Heading {{ heading.hs_heading }}
-                      </span>
+                      <div class="flex-1 min-w-0">
+                        <span class="font-semibold text-indigo-900 block">
+                          {{ chapter.chapter_name }}
+                        </span>
+                        <span class="text-xs text-indigo-600">
+                          Chapter {{ chapter.hs_chapter }}
+                        </span>
+                      </div>
                     </div>
-                    <div class="text-right">
-                      <span class="font-bold text-purple-900 text-sm">{{ formatValue(heading.value) }}</span>
-                      <span class="text-xs text-purple-600 ml-2">({{ heading.percentage.toFixed(1) }}%)</span>
+                    <div class="text-right flex-shrink-0 ml-4">
+                      <span class="font-bold text-indigo-900">{{ formatValue(chapter.value) }}</span>
+                      <span class="text-sm text-indigo-600 ml-2">({{ chapter.percentage.toFixed(1) }}%)</span>
                     </div>
                   </div>
 
-                  <!-- Products Level -->
-                  <div v-show="expandedHeadings.has(heading.hs_heading)" class="bg-gray-50">
+                  <!-- Headings within Chapter -->
+                  <div v-show="expandedChapters.has(chapter.hs_chapter)" class="bg-white">
                     <div
-                      v-for="product in heading.products"
-                      :key="product.hs_code"
-                      class="p-3 pl-14 border-t border-gray-200 hover:bg-gray-100 transition-colors"
+                      v-for="heading in chapter.headings"
+                      :key="heading.heading_name"
+                      class="border-t border-gray-100"
                     >
-                      <div class="flex items-start justify-between gap-4">
-                        <div class="flex-1 min-w-0">
-                          <p class="font-mono text-xs text-gray-500 mb-1">{{ product.hs_code }}</p>
-                          <p class="text-sm text-gray-800">{{ product.description }}</p>
+                      <!-- Heading Level (grouped by name) -->
+                      <div
+                        @click="toggleHeading(heading.heading_name)"
+                        class="bg-purple-50 p-3 pl-12 cursor-pointer hover:bg-purple-100 transition-colors flex items-center justify-between"
+                      >
+                        <div class="flex items-center gap-2 flex-1 min-w-0">
+                          <svg
+                            :class="['w-3 h-3 transition-transform flex-shrink-0', expandedHeadings.has(heading.heading_name) ? 'rotate-90' : '']"
+                            fill="none"
+                            stroke="currentColor"
+                            viewBox="0 0 24 24"
+                          >
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                          </svg>
+                          <div class="flex-1 min-w-0">
+                            <span class="font-semibold text-purple-900 text-sm block truncate">
+                              {{ heading.heading_name }}
+                            </span>
+                            <span class="text-xs text-purple-600">
+                              {{ heading.heading_codes.join(', ') }}
+                            </span>
+                          </div>
                         </div>
-                        <div class="text-right flex-shrink-0">
-                          <p class="font-bold text-sm text-gray-900">{{ formatValue(product.value) }}</p>
-                          <p class="text-xs text-gray-600">({{ product.percentage.toFixed(1) }}%)</p>
+                        <div class="text-right flex-shrink-0 ml-4">
+                          <span class="font-bold text-purple-900 text-sm">{{ formatValue(heading.value) }}</span>
+                          <span class="text-xs text-purple-600 ml-2">({{ heading.percentage.toFixed(1) }}%)</span>
+                        </div>
+                      </div>
+
+                      <!-- Products within Heading -->
+                      <div v-show="expandedHeadings.has(heading.heading_name)" class="bg-gray-50">
+                        <div
+                          v-for="product in heading.products"
+                          :key="product.hs_code"
+                          class="p-3 pl-20 border-t border-gray-200 hover:bg-gray-100 transition-colors"
+                        >
+                          <div class="flex items-start justify-between gap-4">
+                            <div class="flex-1 min-w-0">
+                              <p class="font-mono text-xs text-gray-500 mb-1">{{ product.hs_code }} ({{ product.heading_code }})</p>
+                              <p class="text-sm text-gray-800">{{ product.description }}</p>
+                            </div>
+                            <div class="text-right flex-shrink-0">
+                              <p class="font-bold text-sm text-gray-900">{{ formatValue(product.value) }}</p>
+                              <p class="text-xs text-gray-600">({{ product.percentage.toFixed(1) }}%)</p>
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -164,8 +208,17 @@ const props = defineProps({
 
 defineEmits(['close'])
 
+const expandedCategories = ref(new Set())
 const expandedChapters = ref(new Set())
 const expandedHeadings = ref(new Set())
+
+function toggleCategory(categoryName) {
+  if (expandedCategories.value.has(categoryName)) {
+    expandedCategories.value.delete(categoryName)
+  } else {
+    expandedCategories.value.add(categoryName)
+  }
+}
 
 function toggleChapter(chapterCode) {
   if (expandedChapters.value.has(chapterCode)) {
@@ -175,11 +228,11 @@ function toggleChapter(chapterCode) {
   }
 }
 
-function toggleHeading(headingCode) {
-  if (expandedHeadings.value.has(headingCode)) {
-    expandedHeadings.value.delete(headingCode)
+function toggleHeading(headingName) {
+  if (expandedHeadings.value.has(headingName)) {
+    expandedHeadings.value.delete(headingName)
   } else {
-    expandedHeadings.value.add(headingCode)
+    expandedHeadings.value.add(headingName)
   }
 }
 
@@ -192,30 +245,34 @@ function formatValue(value) {
   } else if (actualValue >= 1e6) {
     return `${(actualValue / 1e6).toFixed(2)}M`
   } else if (actualValue >= 1e3) {
-    return `${(actualValue / 1e3).toFixed(2)}K`
+    return `${Math.round(actualValue / 1e3)}K`  // No decimals for K
   }
-  return `${actualValue.toFixed(2)}`
+  return `${Math.round(actualValue)}`
 }
 
-// Top 5 Chapters Donut Chart
+// Top 5 Categories Donut Chart
 const chartOption = computed(() => {
-  if (!props.details?.top_chapters) return {}
+  if (!props.details?.top_categories) return {}
 
   return {
     tooltip: {
       trigger: 'item',
       formatter: (params) => {
-        return `Chapter ${params.name}<br/>${params.marker} ${formatValue(params.value)} (${params.percent}%)`
+        return `${params.name}<br/>${params.marker} ${formatValue(params.value)} (${params.percent}%)`
       },
     },
     legend: {
       orient: 'horizontal',
       bottom: 0,
-      formatter: (name) => `Ch ${name}`,
+      type: 'scroll',
+      formatter: (name) => {
+        // Truncate long names for legend
+        return name.length > 25 ? name.substring(0, 25) + '...' : name
+      },
     },
     series: [
       {
-        name: 'Chapters',
+        name: 'Categories',
         type: 'pie',
         radius: ['40%', '70%'],
         center: ['50%', '45%'],
@@ -229,9 +286,9 @@ const chartOption = computed(() => {
           show: true,
           formatter: (params) => `${params.percent}%`,
         },
-        data: props.details.top_chapters.map(c => ({
+        data: props.details.top_categories.map(c => ({
           value: c.value,
-          name: c.hs_chapter,
+          name: c.category_name,
         })),
       },
     ],

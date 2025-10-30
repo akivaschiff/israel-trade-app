@@ -149,6 +149,7 @@ const {
   countryTotals,
   selectedCountryDetails,
   loadCountries,
+  loadCategories,
   fetchAvailableMonths,
   fetchCountryTotals,
   fetchCountryDetails,
@@ -164,6 +165,9 @@ const previousCountryTotals = ref([]) // Keep previous data during loading
 onMounted(async () => {
   // Load static countries data
   await loadCountries()
+  
+  // Load categories data
+  await loadCategories()
   
   // Load world map
   try {
@@ -231,13 +235,13 @@ function formatValue(value) {
   const actualValue = value * 1000
   
   if (actualValue >= 1e9) {
-    return `$${(actualValue / 1e9).toFixed(2)}B`
+    return `${(actualValue / 1e9).toFixed(2)}B`
   } else if (actualValue >= 1e6) {
-    return `$${(actualValue / 1e6).toFixed(2)}M`
+    return `${(actualValue / 1e6).toFixed(2)}M`
   } else if (actualValue >= 1e3) {
-    return `$${(actualValue / 1e3).toFixed(2)}K`
+    return `${Math.round(actualValue / 1e3)}K`  // No decimals for K
   }
-  return `$${actualValue.toFixed(2)}`
+  return `${Math.round(actualValue)}`
 }
 
 // Map configuration

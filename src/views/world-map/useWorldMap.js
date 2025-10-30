@@ -9,6 +9,7 @@ export function useWorldMap() {
   const selectedCountryDetails = ref(null)
   const detailLoading = ref(false)
   const countriesMap = ref(new Map())
+  const categoriesData = ref(null)
 
   // Load countries from JSON file
   async function loadCountries() {
@@ -19,6 +20,32 @@ export function useWorldMap() {
     } catch (e) {
       console.error('Error loading countries:', e)
     }
+  }
+
+  // Load categories from JSON file
+  async function loadCategories() {
+    try {
+      const response = await fetch('/data/categories.json')
+      categoriesData.value = await response.json()
+    } catch (e) {
+      console.error('Error loading categories:', e)
+    }
+  }
+
+  // Get chapter info from categories.json
+  function getChapterInfo(chapterCode) {
+    if (!categoriesData.value) return null
+    
+    for (const category of categoriesData.value) {
+      const chapter = category.chapters.find(ch => ch.code === chapterCode)
+      if (chapter) {
+        return {
+          categoryName: category.name,
+          chapterName: chapter.name
+        }
+      }
+    }
+    return null
   }
 
   // Map database country names to GeoJSON country names
@@ -159,61 +186,109 @@ export function useWorldMap() {
     detailLoading.value = true
 
     try {
-      const { data, error: queryError } = await supabase
+      // Fetch trade data
+      const { data: tradeData, error: tradeError } = await supabase
         .from('trade_data')
-        .select('product_code, value, products(description)')
+        .select('product_code, value')
         .eq('partner_country', countryCode)
         .eq('year', year)
         .eq('period', period)
         .eq('flow', flow)
         .not('product_code', 'is', null)
 
-      if (queryError) throw queryError
+      if (tradeError) throw tradeError
+
+      // Get unique product codes
+      const productCodes = [...new Set(tradeData.map(row => row.product_code))]
+
+      // Fetch product descriptions
+      const { data: productsData, error: productsError } = await supabase
+        .from('products')
+        .select('hs_code, description, hs_chapter, hs_heading')
+        .in('hs_code', productCodes)
+
+      if (productsError) throw productsError
+
+      // Create maps for quick lookup
+      const productsMap = new Map(productsData.map(p => [p.hs_code, p]))
+      
+      // Build heading info map (heading -> simplified name)
+      const headingInfoMap = new Map()
+      productsData.forEach(p => {
+        if (p.hs_heading && p.description && !headingInfoMap.has(p.hs_heading)) {
+          // Extract simplified name (text before semicolon)
+          const simplified = p.description.split(';')[0].trim()
+          headingInfoMap.set(p.hs_heading, simplified)
+        }
+      })
 
       // Calculate total for percentage calculation
-      const totalValue = data.reduce((sum, row) => sum + (parseFloat(row.value) || 0), 0)
+      const totalValue = tradeData.reduce((sum, row) => sum + (parseFloat(row.value) || 0), 0)
 
-      // Build hierarchical structure: Chapter -> Heading -> Product
-      const chapterMap = new Map()
+      // Build hierarchical structure: Category -> Chapter -> Heading (grouped by name) -> Products
+      const categoryMap = new Map()
 
-      for (const row of data) {
+      for (const row of tradeData) {
         const productCode = row.product_code
         const value = parseFloat(row.value) || 0
-        const description = row.products?.description || productCode
+        const product = productsMap.get(productCode)
+        const description = product?.description || productCode
 
         if (!productCode || productCode.length < 2) continue
 
         const chapterCode = productCode.substring(0, 2)
         const headingCode = productCode.length >= 4 ? productCode.substring(0, 4) : null
+        
+        // Get chapter info from categories.json
+        const chapterInfo = getChapterInfo(chapterCode)
+        const categoryName = chapterInfo?.categoryName || 'Other'
+        const chapterName = chapterInfo?.chapterName || `Chapter ${chapterCode}`
+        const headingName = headingCode ? headingInfoMap.get(headingCode) || `Heading ${headingCode}` : null
 
-        // Initialize chapter
-        if (!chapterMap.has(chapterCode)) {
-          chapterMap.set(chapterCode, {
-            hs_chapter: chapterCode,
+        // Initialize category
+        if (!categoryMap.has(categoryName)) {
+          categoryMap.set(categoryName, {
+            category_name: categoryName,
             value: 0,
-            headings: new Map()
+            chapters: new Map()
           })
         }
 
-        const chapter = chapterMap.get(chapterCode)
+        const category = categoryMap.get(categoryName)
+        category.value += value
+
+        // Initialize chapter within category
+        if (!category.chapters.has(chapterCode)) {
+          category.chapters.set(chapterCode, {
+            hs_chapter: chapterCode,
+            chapter_name: chapterName,
+            value: 0,
+            headings: new Map() // headings grouped by name
+          })
+        }
+
+        const chapter = category.chapters.get(chapterCode)
         chapter.value += value
 
-        // Initialize heading if applicable
-        if (headingCode) {
-          if (!chapter.headings.has(headingCode)) {
-            chapter.headings.set(headingCode, {
-              hs_heading: headingCode,
+        // Group headings by their simplified name
+        if (headingCode && headingName) {
+          if (!chapter.headings.has(headingName)) {
+            chapter.headings.set(headingName, {
+              heading_name: headingName,
               value: 0,
+              heading_codes: new Set(), // Track which heading codes are in this group
               products: []
             })
           }
 
-          const heading = chapter.headings.get(headingCode)
+          const heading = chapter.headings.get(headingName)
           heading.value += value
+          heading.heading_codes.add(headingCode)
 
           // Add product
           heading.products.push({
             hs_code: productCode,
+            heading_code: headingCode,
             description: description,
             value: value,
             percentage: totalValue > 0 ? (value / totalValue * 100) : 0
@@ -222,15 +297,22 @@ export function useWorldMap() {
       }
 
       // Convert to arrays and sort
-      const chapters = Array.from(chapterMap.values())
-        .map(chapter => ({
-          ...chapter,
-          percentage: totalValue > 0 ? (chapter.value / totalValue * 100) : 0,
-          headings: Array.from(chapter.headings.values())
-            .map(heading => ({
-              ...heading,
-              percentage: totalValue > 0 ? (heading.value / totalValue * 100) : 0,
-              products: heading.products.sort((a, b) => b.value - a.value)
+      const categories = Array.from(categoryMap.values())
+        .map(category => ({
+          ...category,
+          percentage: totalValue > 0 ? (category.value / totalValue * 100) : 0,
+          chapters: Array.from(category.chapters.values())
+            .map(chapter => ({
+              ...chapter,
+              percentage: totalValue > 0 ? (chapter.value / totalValue * 100) : 0,
+              headings: Array.from(chapter.headings.values())
+                .map(heading => ({
+                  ...heading,
+                  heading_codes: Array.from(heading.heading_codes),
+                  percentage: totalValue > 0 ? (heading.value / totalValue * 100) : 0,
+                  products: heading.products.sort((a, b) => b.value - a.value)
+                }))
+                .sort((a, b) => b.value - a.value)
             }))
             .sort((a, b) => b.value - a.value)
         }))
@@ -244,8 +326,8 @@ export function useWorldMap() {
         country_code: countryCode,
         country_name: countryName,
         total_value: totalValue,
-        chapters: chapters,
-        top_chapters: chapters.slice(0, 5) // Top 5 for chart
+        categories: categories,
+        top_categories: categories.slice(0, 5) // Top 5 for chart
       }
 
       return selectedCountryDetails.value
@@ -273,6 +355,7 @@ export function useWorldMap() {
     selectedCountryDetails,
     countriesMap,
     loadCountries,
+    loadCategories,
     fetchAvailableMonths,
     fetchCountryTotals,
     fetchCountryDetails,
