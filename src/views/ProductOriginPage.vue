@@ -138,6 +138,7 @@ import {
 import VChart from 'vue-echarts'
 import { useProductOrigin } from '@/composables/useProductOrigin'
 import ProductLabelSearch from '@/components/trade/ProductLabelSearch.vue'
+import { TRADE_COLORS } from '@/lib/tradeConstants'
 
 // Register ECharts components
 use([
@@ -249,7 +250,7 @@ const mapOption = computed(() => {
       realtime: false,
       calculable: true,
       inRange: {
-        color: ['#e0f2f1', '#4db6ac', '#00897b', '#00695c', '#004d40']
+        color: [TRADE_COLORS.EXPORTS.lightest, TRADE_COLORS.EXPORTS.lighter, TRADE_COLORS.EXPORTS.light, TRADE_COLORS.EXPORTS.primary, TRADE_COLORS.EXPORTS.dark]
       },
       textStyle: {
         color: '#333'
@@ -275,10 +276,14 @@ const mapOption = computed(() => {
   }
 })
 
-// Color palette for different countries
+// Color palette for different countries (using export blue colors)
 const colorPalette = [
-  '#00897b', '#26a69a', '#4db6ac', '#80cbc4', '#b2dfdb',
-  '#00695c', '#009688', '#00bfa5', '#1de9b6', '#64ffda',
+  TRADE_COLORS.EXPORTS.primary,
+  TRADE_COLORS.EXPORTS.light,
+  TRADE_COLORS.EXPORTS.lighter,
+  TRADE_COLORS.EXPORTS.dark,
+  TRADE_COLORS.EXPORTS.darker,
+  '#60a5fa', '#93c5fd', '#3b82f6', '#2563eb', '#1d4ed8',
 ]
 
 // Top 6 countries for time series
@@ -418,8 +423,15 @@ const averageBarOption = computed(() => {
         data: last3MonthsAverage.value.map(d => d.average),
         itemStyle: {
           color: (params) => {
-            // Gradient from highest to lowest
-            const colors = ['#00695c', '#00897b', '#26a69a', '#4db6ac', '#80cbc4', '#b2dfdb']
+            // Gradient from highest to lowest using export blue colors
+            const colors = [
+              TRADE_COLORS.EXPORTS.darker,
+              TRADE_COLORS.EXPORTS.dark,
+              TRADE_COLORS.EXPORTS.primary,
+              TRADE_COLORS.EXPORTS.light,
+              TRADE_COLORS.EXPORTS.lighter,
+              TRADE_COLORS.EXPORTS.lightest
+            ]
             return colors[params.dataIndex % colors.length]
           }
         },

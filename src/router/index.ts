@@ -4,6 +4,7 @@ import OverviewPage from '@/views/OverviewPage.vue'
 import TimeSeriesPage from '@/views/TimeSeriesPage.vue'
 import ProductOriginPage from '@/views/ProductOriginPage.vue'
 import ChatPage from '@/views/ChatPage.vue'
+import WorldMapPage from '@/views/world-map/WorldMapPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -30,6 +31,11 @@ const router = createRouter({
           path: 'product-origin',
           name: 'product-origin',
           component: ProductOriginPage
+        },
+        {
+          path: 'world-map',
+          name: 'world-map',
+          component: WorldMapPage
         },
         {
           path: 'chat',

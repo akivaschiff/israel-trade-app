@@ -110,9 +110,10 @@
                 :class="[
                   'px-4 py-2 rounded-lg font-medium transition-colors',
                   partnerView === 'imports' 
-                    ? 'bg-red-500 text-white' 
+                    ? 'text-white' 
                     : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                 ]"
+                :style="partnerView === 'imports' ? { backgroundColor: TRADE_COLORS.IMPORTS.primary } : {}"
               >
                 Imports
               </button>
@@ -121,9 +122,10 @@
                 :class="[
                   'px-4 py-2 rounded-lg font-medium transition-colors',
                   partnerView === 'exports' 
-                    ? 'bg-green-500 text-white' 
+                    ? 'text-white' 
                     : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
                 ]"
+                :style="partnerView === 'exports' ? { backgroundColor: TRADE_COLORS.EXPORTS.primary } : {}"
               >
                 Exports
               </button>
@@ -204,6 +206,7 @@ import {
 } from 'echarts/components'
 import VChart from 'vue-echarts'
 import { useTradeOverview } from '@/composables/useTradeOverview'
+import { TRADE_COLORS, FLOW_TYPES } from '@/lib/tradeConstants'
 
 // Register ECharts components
 use([
@@ -259,8 +262,8 @@ const partnersChartOption = computed(() => {
     : overviewData.value.charts.top_partners_exports
   
   const color = partnerView.value === 'imports' 
-    ? ['#ef4444', '#dc2626']  // Red for imports
-    : ['#10b981', '#059669']  // Green for exports
+    ? [TRADE_COLORS.IMPORTS.primary, TRADE_COLORS.IMPORTS.dark]  // Orange for imports
+    : [TRADE_COLORS.EXPORTS.primary, TRADE_COLORS.EXPORTS.dark]  // Blue for exports
 
   // Calculate max value across both datasets to keep scale consistent
   const maxImports = Math.max(...overviewData.value.charts.top_partners_imports.map(p => p.value))
@@ -380,12 +383,12 @@ const trendChartOption = computed(() => {
         smooth: true,
         lineStyle: {
           width: 3,
-          color: '#ef4444',
+          color: TRADE_COLORS.IMPORTS.primary,
         },
         symbol: 'circle',
         symbolSize: 8,
         itemStyle: {
-          color: '#ef4444',
+          color: TRADE_COLORS.IMPORTS.primary,
         },
       },
       {
@@ -395,12 +398,12 @@ const trendChartOption = computed(() => {
         smooth: true,
         lineStyle: {
           width: 3,
-          color: '#10b981',
+          color: TRADE_COLORS.EXPORTS.primary,
         },
         symbol: 'circle',
         symbolSize: 8,
         itemStyle: {
-          color: '#10b981',
+          color: TRADE_COLORS.EXPORTS.primary,
         },
       },
     ],

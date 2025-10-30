@@ -34,12 +34,16 @@ const tabs = [
   { name: 'Overview', path: '/overview', icon: '📊' },
   { name: 'Time Series', path: '/timeseries', icon: '📈' },
   { name: 'Product Origins', path: '/product-origin', icon: '🌍' },
+  { name: 'World Map', path: '/world-map', icon: '🗺️' },
   { name: 'AI Chat', path: '/chat', icon: '💬' },
 ]
 
 function isActive(path) {
   if (path === '/chat') {
     return route.path === '/chat' || route.path.startsWith('/chat/')
+  }
+  if (path === '/world-map') {
+    return route.path === '/world-map'
   }
   return route.path === path
 }
