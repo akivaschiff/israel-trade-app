@@ -16,18 +16,6 @@
           <label class="block text-sm font-semibold text-gray-700 mb-2">Trade Flow</label>
           <div class="flex gap-2">
             <button
-              @click="selectedFlow = FLOW_TYPES.EXPORTS"
-              :class="[
-                'px-6 py-2 rounded-lg font-medium transition-colors',
-                selectedFlow === FLOW_TYPES.EXPORTS
-                  ? 'text-white'
-                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-              ]"
-              :style="selectedFlow === FLOW_TYPES.EXPORTS ? { backgroundColor: TRADE_COLORS.EXPORTS.primary } : {}"
-            >
-              Exports
-            </button>
-            <button
               @click="selectedFlow = FLOW_TYPES.IMPORTS"
               :class="[
                 'px-6 py-2 rounded-lg font-medium transition-colors',
@@ -38,6 +26,18 @@
               :style="selectedFlow === FLOW_TYPES.IMPORTS ? { backgroundColor: TRADE_COLORS.IMPORTS.primary } : {}"
             >
               Imports
+            </button>
+            <button
+              @click="selectedFlow = FLOW_TYPES.EXPORTS"
+              :class="[
+                'px-6 py-2 rounded-lg font-medium transition-colors',
+                selectedFlow === FLOW_TYPES.EXPORTS
+                  ? 'text-white'
+                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
+              ]"
+              :style="selectedFlow === FLOW_TYPES.EXPORTS ? { backgroundColor: TRADE_COLORS.EXPORTS.primary } : {}"
+            >
+              Exports
             </button>
           </div>
         </div>
@@ -50,12 +50,21 @@
 
         <!-- Country Selection -->
         <div>
-          <label class="block text-sm font-semibold text-gray-700 mb-2">
-            Select Countries to Compare
-            <span v-if="selectedCountries.length > 0" class="text-indigo-600 font-normal">
-              ({{ selectedCountries.length }} selected)
-            </span>
-          </label>
+          <div class="flex items-center justify-between mb-2">
+            <label class="text-sm font-semibold text-gray-700">
+              Select Countries to Compare
+              <span v-if="selectedCountries.length > 0" class="text-indigo-600 font-normal">
+                ({{ selectedCountries.length }} selected)
+              </span>
+            </label>
+            <button
+              v-if="sortedCountries.length > 0"
+              @click="toggleSelectAll"
+              class="text-xs text-indigo-600 hover:text-indigo-800 font-medium"
+            >
+              {{ allCountriesSelected ? 'Deselect All' : 'Select All' }}
+            </button>
+          </div>
           
           <!-- No products selected message -->
           <div v-if="!hasProducts" class="text-sm text-gray-500 italic py-8 text-center border border-gray-300 rounded-lg">
@@ -119,9 +128,9 @@
           <v-chart :option="chartOption" :autoresize="true" />
         </div>
 
-        <!-- Time Range Slider - Below Chart -->
+        <!-- Time Range Selector - Below Chart -->
         <div v-if="availableMonths.length > 0" class="mt-8 pt-6 border-t border-gray-200">
-          <div class="flex items-center justify-between mb-3">
+          <div class="flex items-center justify-between mb-4">
             <label class="text-sm font-semibold text-gray-700">Time Range</label>
             <button
               @click="resetToDefaultRange"
@@ -131,79 +140,51 @@
             </button>
           </div>
           
-          <div class="space-y-4">
-            <!-- Range Display -->
-            <div class="flex items-center justify-between text-sm text-gray-700">
-              <span class="font-medium">{{ formatMonthLabel(timeRange[0]) }}</span>
-              <span class="text-gray-500">to</span>
-              <span class="font-medium">{{ formatMonthLabel(timeRange[1]) }}</span>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
+            <!-- Start Month -->
+            <div>
+              <label class="block text-xs text-gray-600 mb-1">From</label>
+              <select
+                v-model="selectedStartMonth"
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              >
+                <option
+                  v-for="(month, index) in availableMonths"
+                  :key="month.key"
+                  :value="index"
+                  :disabled="index < selectedEndMonth"
+                >
+                  {{ formatMonthLabel(index) }}
+                </option>
+              </select>
             </div>
 
-            <!-- Slider -->
-            <div class="relative px-2">
-              <input
-                type="range"
-                v-model.number="timeRange[0]"
-                :min="0"
-                :max="availableMonths.length - 1"
-                class="absolute w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer slider-thumb-lower"
-                style="pointer-events: none;"
-              />
-              <input
-                type="range"
-                v-model.number="timeRange[1]"
-                :min="0"
-                :max="availableMonths.length - 1"
-                class="absolute w-full h-2 bg-transparent rounded-lg appearance-none cursor-pointer slider-thumb-upper"
-                style="pointer-events: none;"
-              />
-              <div class="relative h-2 bg-gray-200 rounded-lg">
-                <div
-                  class="absolute h-2 rounded-lg"
-                  :style="{
-                    left: `${(timeRange[0] / (availableMonths.length - 1)) * 100}%`,
-                    width: `${((timeRange[1] - timeRange[0]) / (availableMonths.length - 1)) * 100}%`,
-                    backgroundColor: selectedFlow === FLOW_TYPES.EXPORTS ? TRADE_COLORS.EXPORTS.primary : TRADE_COLORS.IMPORTS.primary
-                  }"
-                ></div>
-              </div>
-              <!-- Clickable overlay for both thumbs -->
-              <div class="absolute inset-0" style="pointer-events: auto;">
-                <input
-                  type="range"
-                  v-model.number="timeRange[0]"
-                  :min="0"
-                  :max="timeRange[1]"
-                  class="absolute w-full h-2 bg-transparent appearance-none cursor-pointer"
-                  @input="constrainRange"
-                />
-                <input
-                  type="range"
-                  v-model.number="timeRange[1]"
-                  :min="timeRange[0]"
-                  :max="availableMonths.length - 1"
-                  class="absolute w-full h-2 bg-transparent appearance-none cursor-pointer"
-                  @input="constrainRange"
-                />
-              </div>
+            <!-- End Month -->
+            <div>
+              <label class="block text-xs text-gray-600 mb-1">To</label>
+              <select
+                v-model="selectedEndMonth"
+                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+              >
+                <option
+                  v-for="(month, index) in availableMonths"
+                  :key="month.key"
+                  :value="index"
+                  :disabled="index > selectedStartMonth"
+                >
+                  {{ formatMonthLabel(index) }}
+                </option>
+              </select>
             </div>
 
-            <!-- Month markers -->
-            <div class="flex justify-between text-xs text-gray-500 px-2">
-              <span>{{ formatMonthLabel(0) }}</span>
-              <span>{{ formatMonthLabel(availableMonths.length - 1) }}</span>
-            </div>
-          </div>
-
-          <!-- Apply Button -->
-          <div class="flex justify-end mt-4">
+            <!-- Apply Button -->
             <button
               @click="applyTimeRange"
               :disabled="loading"
               class="px-6 py-2 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               <span v-if="loading">Updating...</span>
-              <span v-else>Apply Time Range</span>
+              <span v-else>Apply Range</span>
             </button>
           </div>
         </div>
@@ -248,13 +229,14 @@ const {
   fetchTrends
 } = useTrends()
 
-const selectedFlow = ref(FLOW_TYPES.EXPORTS)
+const selectedFlow = ref(FLOW_TYPES.IMPORTS) // Default to IMPORTS
 const selectedProducts = ref(new Set())
 const selectedCountries = ref([])
 const fetchingCountries = ref(false)
 
 // Time range as indices into availableMonths array
-const timeRange = ref([0, 0])
+const selectedStartMonth = ref(0)
+const selectedEndMonth = ref(0)
 
 let fetchCountriesTimeout = null
 
@@ -283,6 +265,21 @@ const sortedCountries = computed(() => {
 const canLoadTrends = computed(() => {
   return hasProducts.value && selectedCountries.value.length > 0
 })
+
+// Check if all countries are selected
+const allCountriesSelected = computed(() => {
+  return sortedCountries.value.length > 0 && 
+         selectedCountries.value.length === sortedCountries.value.length
+})
+
+// Toggle select all countries
+function toggleSelectAll() {
+  if (allCountriesSelected.value) {
+    selectedCountries.value = []
+  } else {
+    selectedCountries.value = sortedCountries.value.map(([code]) => code)
+  }
+}
 
 // Watch for product/flow changes to fetch relevant countries (debounced)
 watch([selectedProducts, selectedFlow], ([products, flow]) => {
@@ -320,25 +317,16 @@ function formatMonthLabel(index) {
 function resetToDefaultRange() {
   if (availableMonths.value.length === 0) return
   
-  const latestIndex = 0 // Months are sorted newest first
-  const startIndex = Math.min(11, availableMonths.value.length - 1) // 12 months back
-  
-  timeRange.value = [startIndex, latestIndex]
-}
-
-// Constrain range so start <= end
-function constrainRange() {
-  if (timeRange.value[0] > timeRange.value[1]) {
-    timeRange.value = [timeRange.value[1], timeRange.value[0]]
-  }
+  selectedEndMonth.value = 0 // Latest month (months are sorted newest first)
+  selectedStartMonth.value = Math.min(11, availableMonths.value.length - 1) // 12 months back
 }
 
 // Apply time range and reload trends
 async function applyTimeRange() {
   if (!canLoadTrends.value) return
   
-  const startMonth = availableMonths.value[timeRange.value[0]]
-  const endMonth = availableMonths.value[timeRange.value[1]]
+  const startMonth = availableMonths.value[selectedStartMonth.value]
+  const endMonth = availableMonths.value[selectedEndMonth.value]
   
   await fetchTrends(
     Array.from(selectedProducts.value),
@@ -356,8 +344,8 @@ async function loadTrends() {
   if (!canLoadTrends.value) return
   
   // Use current time range
-  const startMonth = availableMonths.value[timeRange.value[0]]
-  const endMonth = availableMonths.value[timeRange.value[1]]
+  const startMonth = availableMonths.value[selectedStartMonth.value]
+  const endMonth = availableMonths.value[selectedEndMonth.value]
   
   await fetchTrends(
     Array.from(selectedProducts.value),
@@ -486,43 +474,3 @@ const chartOption = computed(() => {
   }
 })
 </script>
-
-<style scoped>
-/* Custom slider styling */
-input[type="range"] {
-  -webkit-appearance: none;
-  appearance: none;
-}
-
-input[type="range"]::-webkit-slider-thumb {
-  -webkit-appearance: none;
-  appearance: none;
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: #4f46e5;
-  cursor: pointer;
-  border: 2px solid white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  pointer-events: auto;
-}
-
-input[type="range"]::-moz-range-thumb {
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background: #4f46e5;
-  cursor: pointer;
-  border: 2px solid white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  pointer-events: auto;
-}
-
-input[type="range"]::-webkit-slider-thumb:hover {
-  background: #4338ca;
-}
-
-input[type="range"]::-moz-range-thumb:hover {
-  background: #4338ca;
-}
-</style>

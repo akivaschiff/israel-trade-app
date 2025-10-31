@@ -6,22 +6,22 @@
 export const TRADE_COLORS = {
   // Primary flow colors
   EXPORTS: {
-    primary: '#3b82f6',     // blue-500
-    light: '#60a5fa',        // blue-400
-    lighter: '#93c5fd',      // blue-300
-    lightest: '#dbeafe',     // blue-100
-    dark: '#2563eb',         // blue-600
-    darker: '#1d4ed8',       // blue-700
-    gradient: ['#bfdbfe', '#93c5fd', '#60a5fa', '#3b82f6', '#2563eb', '#1d4ed8'], // blue gradient scale
-  },
-  IMPORTS: {
-    primary: '#f97316',      // orange-500
+    primary: '#f97316',      // orange-500 - outgoing
     light: '#fb923c',        // orange-400
     lighter: '#fdba74',      // orange-300
     lightest: '#ffedd5',     // orange-100
     dark: '#ea580c',         // orange-600
     darker: '#c2410c',       // orange-700
     gradient: ['#ffedd5', '#fed7aa', '#fdba74', '#fb923c', '#f97316', '#ea580c', '#c2410c'], // orange gradient scale
+  },
+  IMPORTS: {
+    primary: '#3b82f6',     // blue-500 - incoming
+    light: '#60a5fa',        // blue-400
+    lighter: '#93c5fd',      // blue-300
+    lightest: '#dbeafe',     // blue-100
+    dark: '#2563eb',         // blue-600
+    darker: '#1d4ed8',       // blue-700
+    gradient: ['#bfdbfe', '#93c5fd', '#60a5fa', '#3b82f6', '#2563eb', '#1d4ed8'], // blue gradient scale
   },
 }
 
