@@ -9,6 +9,7 @@ export function useTrends() {
   const countriesMap = ref(new Map())
   const availableTimeRange = ref(null)
   const relevantCountries = ref([]) // Countries that have the selected products
+  const availableMonths = ref([]) // All available months in the database
 
   // Load categories from JSON file
   async function loadCategories() {
@@ -168,6 +169,29 @@ export function useTrends() {
     }
   }
 
+  // Fetch all available months from the database
+  async function fetchAvailableMonths() {
+    try {
+      const { data, error: queryError } = await supabase
+        .rpc('get_available_months', { max_months: 60 }) // Get up to 5 years of data
+      
+      if (queryError) throw queryError
+      
+      availableMonths.value = data.map(row => ({
+        year: row.year,
+        period: row.period,
+        key: `${row.year}-${row.period}`,
+        index: (row.year * 12) + row.period // For easy sorting and range calculations
+      }))
+      
+      return availableMonths.value
+
+    } catch (e) {
+      console.error('Error fetching available months:', e)
+      return []
+    }
+  }
+
   // Get available time range for selected products and countries
   async function fetchTimeRange(productCodes, countryCodes, flow) {
     try {
@@ -259,10 +283,12 @@ export function useTrends() {
     countriesMap,
     relevantCountries,
     availableTimeRange,
+    availableMonths,
     loadCategories,
     loadCountries,
     searchProducts,
     fetchRelevantCountries,
+    fetchAvailableMonths,
     fetchTimeRange,
     fetchTrends
   }
