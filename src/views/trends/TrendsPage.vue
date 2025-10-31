@@ -430,11 +430,18 @@ const chartOption = computed(() => {
         type: 'cross'
       },
       formatter: (params) => {
+        // Filter out null/undefined/NaN values and sort by value descending (highest first)
+        const validParams = params
+          .filter(param => param.value != null && !isNaN(param.value) && param.value !== '')
+          .sort((a, b) => b.value - a.value) // b - a = descending order
+        
+        if (validParams.length === 0) {
+          return `<strong>${params[0]?.axisValue || ''}</strong><br/>No data`
+        }
+        
         let result = `<strong>${params[0].axisValue}</strong><br/>`
-        params.forEach(param => {
-          if (param.value !== null) {
-            result += `${param.marker} ${param.seriesName}: ${formatValue(param.value)}<br/>`
-          }
+        validParams.forEach(param => {
+          result += `${param.marker} ${param.seriesName}: ${formatValue(param.value)}<br/>`
         })
         return result
       }
