@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import DashboardLayout from '@/views/DashboardLayout.vue'
 import OverviewPage from '@/views/OverviewPage.vue'
-import TimeSeriesPage from '@/views/TimeSeriesPage.vue'
 import ProductOriginPage from '@/views/ProductOriginPage.vue'
 import ChatPage from '@/views/ChatPage.vue'
 import WorldMapPage from '@/views/world-map/WorldMapPage.vue'
@@ -22,11 +21,6 @@ const router = createRouter({
           path: 'overview',
           name: 'overview',
           component: OverviewPage
-        },
-        {
-          path: 'timeseries',
-          name: 'timeseries',
-          component: TimeSeriesPage
         },
         {
           path: 'product-origin',

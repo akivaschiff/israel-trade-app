@@ -32,7 +32,6 @@ const route = useRoute()
 
 const tabs = [
   { name: 'Overview', path: '/overview', icon: '📊' },
-  { name: 'Time Series', path: '/timeseries', icon: '📈' },
   { name: 'Product Origins', path: '/product-origin', icon: '🌍' },
   { name: 'World Map', path: '/world-map', icon: '🗺️' },
   { name: 'Trends', path: '/trends', icon: '📉' },
