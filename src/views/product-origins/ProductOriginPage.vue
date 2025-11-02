@@ -16,9 +16,10 @@
           <h2 class="text-xl font-semibold text-gray-900 mb-4">From where do we buy...</h2>
           
           <!-- Product Selection with Search -->
-          <FlatProductSelector
+          <SmartProductSelector
             v-model="selectedProducts"
             :on-search="searchProducts"
+            :categoriesData="categoriesData"
           />
         </div>
 
@@ -189,7 +190,7 @@ import { GridComponent, TooltipComponent, LegendComponent } from 'echarts/compon
 import VChart from 'vue-echarts'
 import { useProductOrigins } from './useProductOrigins'
 import { TRADE_COLORS, FLOW_TYPES } from '@/lib/tradeConstants'
-import FlatProductSelector from './FlatProductSelector.vue'
+import SmartProductSelector from '@/components/SmartProductSelector.vue'
 
 use([CanvasRenderer, LineChart, GridComponent, TooltipComponent, LegendComponent])
 
@@ -199,6 +200,7 @@ const {
   trendsData,
   fullTrendsData,
   availableMonths,
+  categoriesData,
   loadCategories,
   loadCountries,
   searchProducts,

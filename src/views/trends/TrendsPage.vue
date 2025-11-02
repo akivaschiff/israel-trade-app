@@ -43,9 +43,10 @@
         </div>
 
         <!-- Product Selection with Search -->
-        <ProductSelector
+        <SmartProductSelector
           v-model="selectedProducts"
           :on-search="searchProducts"
+          :categoriesData="categoriesData"
         />
 
         <!-- Country Selection -->
@@ -211,13 +212,14 @@ import { GridComponent, TooltipComponent, LegendComponent, DataZoomComponent } f
 import VChart from 'vue-echarts'
 import { useTrends } from './useTrends'
 import { TRADE_COLORS, FLOW_TYPES } from '@/lib/tradeConstants'
-import ProductSelector from './ProductSelector.vue'
+import SmartProductSelector from '@/components/SmartProductSelector.vue'
 
 use([CanvasRenderer, LineChart, GridComponent, TooltipComponent, LegendComponent, DataZoomComponent])
 
 const {
   loading,
   trendsData,
+  categoriesData,
   countriesMap,
   relevantCountries,
   availableMonths,

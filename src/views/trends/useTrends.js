@@ -32,7 +32,7 @@ export function useTrends() {
     }
   }
 
-  // Search products by text
+  // Search products by text - returns flat list for SmartProductSelector
   async function searchProducts(searchTerm) {
     if (!searchTerm || searchTerm.length < 2) return []
     
@@ -42,96 +42,28 @@ export function useTrends() {
 
       if (queryError) throw queryError
       
-      // Build hierarchical structure from flat results
-      return buildHierarchy(data)
+      // Return flat list of products with full details
+      return data.map(product => {
+        // Get chapter info
+        const chapterCode = product.hs_chapter
+        const categoryInfo = categoriesData.value?.find(c => 
+          c.chapters.some(ch => ch.code === chapterCode)
+        )
+        const chapterInfo = categoryInfo?.chapters.find(ch => ch.code === chapterCode)
+        
+        return {
+          code: product.hs_code,
+          description: product.description,
+          chapter: chapterCode,
+          chapter_name: chapterInfo?.name || `Chapter ${chapterCode}`,
+          category: product.category,
+          heading: product.hs_heading
+        }
+      }).sort((a, b) => a.code.localeCompare(b.code))
     } catch (e) {
       console.error('Error searching products:', e)
       return []
     }
-  }
-
-  // Build hierarchical structure from search results
-  function buildHierarchy(products) {
-    if (!categoriesData.value) return []
-    
-    const categoryMap = new Map()
-    
-    for (const product of products) {
-      const categoryName = product.category || 'Other'
-      const chapterCode = product.hs_chapter
-      const headingCode = product.hs_heading
-      
-      // Initialize category
-      if (!categoryMap.has(categoryName)) {
-        const categoryInfo = categoriesData.value.find(c => c.name === categoryName)
-        categoryMap.set(categoryName, {
-          type: 'category',
-          name: categoryName,
-          display_name: categoryName,
-          chapters: new Map()
-        })
-      }
-      
-      const category = categoryMap.get(categoryName)
-      
-      // Initialize chapter
-      if (!category.chapters.has(chapterCode)) {
-        const categoryInfo = categoriesData.value.find(c => c.name === categoryName)
-        const chapterInfo = categoryInfo?.chapters.find(ch => ch.code === chapterCode)
-        
-        category.chapters.set(chapterCode, {
-          type: 'chapter',
-          code: chapterCode,
-          name: chapterInfo?.name || `Chapter ${chapterCode}`,
-          display_name: `${chapterInfo?.name || 'Chapter ' + chapterCode} (Ch ${chapterCode})`,
-          headings: new Map()
-        })
-      }
-      
-      const chapter = category.chapters.get(chapterCode)
-      
-      // Initialize heading
-      if (headingCode) {
-        if (!chapter.headings.has(headingCode)) {
-          // Extract heading name from first product description
-          const headingName = product.description.split(';')[0].trim()
-          
-          chapter.headings.set(headingCode, {
-            type: 'heading',
-            code: headingCode,
-            name: headingName,
-            display_name: `${headingName} (${headingCode})`,
-            products: []
-          })
-        }
-        
-        const heading = chapter.headings.get(headingCode)
-        heading.products.push({
-          type: 'product',
-          code: product.hs_code,
-          description: product.description,
-          display_name: `${product.hs_code} - ${product.description}`
-        })
-      }
-    }
-    
-    // Convert to arrays
-    const result = []
-    for (const category of categoryMap.values()) {
-      const chapters = []
-      for (const chapter of category.chapters.values()) {
-        const headings = []
-        for (const heading of chapter.headings.values()) {
-          headings.push(heading)
-        }
-        chapter.headings = headings
-        chapters.push(chapter)
-      }
-      category.chapters = chapters
-      result.push(category)
-    }
-    
-    return result
   }
 
   // Get countries that have traded the selected products in the last year
