@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import DashboardLayout from '@/views/DashboardLayout.vue'
 import OverviewPage from '@/views/OverviewPage.vue'
-import ProductOriginPage from '@/views/ProductOriginPage.vue'
+import ProductOriginPage from '@/views/product-origins/ProductOriginPage.vue'
 import ChatPage from '@/views/ChatPage.vue'
 import WorldMapPage from '@/views/world-map/WorldMapPage.vue'
 import TrendsPage from '@/views/trends/TrendsPage.vue'
