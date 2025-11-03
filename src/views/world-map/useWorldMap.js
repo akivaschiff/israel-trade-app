@@ -341,6 +341,80 @@ export function useWorldMap() {
     }
   }
 
+  // Fetch country time series (all available months) - SERVER AGGREGATED
+  async function fetchCountryTimeSeries(countryCode, flow) {
+    try {
+      const { data, error: queryError } = await supabase
+        .rpc('get_country_monthly_totals', {
+          p_country_code: countryCode,
+          p_flow: flow
+        })
+
+      if (queryError) throw queryError
+
+      return data.map(row => ({
+        year: row.year,
+        period: row.period,
+        month: `${row.year}-${String(row.period).padStart(2, '0')}`,
+        value: parseFloat(row.total_value) || 0
+      }))
+
+    } catch (e) {
+      console.error('Error fetching country time series:', e)
+      return []
+    }
+  }
+
+  // Fetch chapter breakdown time series - SERVER AGGREGATED
+  async function fetchChapterTimeSeries(countryCode, flow) {
+    try {
+      const { data, error: queryError } = await supabase
+        .rpc('get_country_chapter_monthly', {
+          p_country_code: countryCode,
+          p_flow: flow
+        })
+
+      if (queryError) throw queryError
+
+      // Group by chapter
+      const chapterMap = new Map()
+
+      for (const row of data) {
+        const chapterCode = row.chapter_code
+        const monthKey = `${row.year}-${String(row.period).padStart(2, '0')}`
+        
+        if (!chapterMap.has(chapterCode)) {
+          chapterMap.set(chapterCode, {
+            chapter_code: chapterCode,
+            monthly_data: []
+          })
+        }
+
+        const chapter = chapterMap.get(chapterCode)
+        chapter.monthly_data.push({
+          year: row.year,
+          period: row.period,
+          month: monthKey,
+          value: parseFloat(row.total_value) || 0
+        })
+      }
+
+      // Convert to array format and get chapter names
+      return Array.from(chapterMap.values()).map(chapter => {
+        const chapterInfo = getChapterInfo(chapter.chapter_code)
+        return {
+          chapter_code: chapter.chapter_code,
+          chapter_name: chapterInfo?.chapterName || `Chapter ${chapter.chapter_code}`,
+          monthly_data: chapter.monthly_data
+        }
+      })
+
+    } catch (e) {
+      console.error('Error fetching chapter time series:', e)
+      return []
+    }
+  }
+
   // Clear selected country details
   function clearCountryDetails() {
     selectedCountryDetails.value = null
@@ -359,6 +433,8 @@ export function useWorldMap() {
     fetchAvailableMonths,
     fetchCountryTotals,
     fetchCountryDetails,
+    fetchCountryTimeSeries,
+    fetchChapterTimeSeries,
     clearCountryDetails
   }
 }

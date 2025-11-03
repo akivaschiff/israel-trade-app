@@ -117,13 +117,14 @@
       </div>
     </div>
 
-    <!-- Country Detail Panel -->
-    <CountryDetailPanel
-      :details="selectedCountryDetails"
-      :loading="detailLoading"
+    <!-- Country Trend Modal -->
+    <CountryTrendModal
+      :country-code="selectedCountryCode"
+      :country-name="selectedCountryName"
+      :flow-type="selectedFlow"
       :flow-label="selectedFlow === FLOW_TYPES.IMPORTS ? 'Imports' : 'Exports'"
-      :month-label="currentMonthLabel"
-      @close="clearCountryDetails"
+      :current-month-label="currentMonthLabel"
+      @close="clearCountrySelection"
     />
   </div>
 </template>
@@ -136,7 +137,7 @@ import { MapChart } from 'echarts/charts'
 import { TooltipComponent, VisualMapComponent } from 'echarts/components'
 import VChart from 'vue-echarts'
 import { useWorldMap } from './useWorldMap'
-import CountryDetailPanel from './CountryDetailPanel.vue'
+import CountryTrendModal from './CountryTrendModal.vue'
 import { TRADE_COLORS, FLOW_TYPES, getFlowGradient } from '@/lib/tradeConstants'
 import { createKMeansColorScale } from '@/lib/kmeansScale'
 
@@ -144,16 +145,12 @@ use([CanvasRenderer, MapChart, TooltipComponent, VisualMapComponent])
 
 const {
   loading,
-  detailLoading,
   availableMonths,
   countryTotals,
-  selectedCountryDetails,
   loadCountries,
   loadCategories,
   fetchAvailableMonths,
-  fetchCountryTotals,
-  fetchCountryDetails,
-  clearCountryDetails
+  fetchCountryTotals
 } = useWorldMap()
 
 const mapReady = ref(false)
@@ -161,6 +158,8 @@ const selectedFlow = ref(FLOW_TYPES.EXPORTS) // Default to Exports
 const selectedMonth = ref(null)
 const dataLoading = ref(false) // Separate loading state for data updates
 const previousCountryTotals = ref([]) // Keep previous data during loading
+const selectedCountryCode = ref(null)
+const selectedCountryName = ref('')
 
 onMounted(async () => {
   // Load static countries data
@@ -201,7 +200,7 @@ watch([selectedFlow, selectedMonth], async ([newFlow, newMonth]) => {
     await fetchCountryTotals(parseInt(year), parseInt(period), newFlow)
     // Store current data as previous for next transition
     previousCountryTotals.value = [...countryTotals.value]
-    clearCountryDetails() // Close detail panel when switching
+    clearCountrySelection() // Close modal when switching
     // Small delay to let the visual update happen
     setTimeout(() => {
       dataLoading.value = false
@@ -218,15 +217,15 @@ async function handleMapClick(params) {
     )
 
     if (country) {
-      const [year, period] = selectedMonth.value.split('-')
-      await fetchCountryDetails(
-        country.country_code,
-        parseInt(year),
-        parseInt(period),
-        selectedFlow.value
-      )
+      selectedCountryCode.value = country.country_code
+      selectedCountryName.value = country.country_name
     }
   }
+}
+
+function clearCountrySelection() {
+  selectedCountryCode.value = null
+  selectedCountryName.value = ''
 }
 
 // Format value for display (values are in thousands of USD)
