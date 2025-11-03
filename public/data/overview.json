@@ -1,6 +1,6 @@
 {
   "metadata": {
-    "generated_at": "2025-10-28T13:03:22.526444+00:00",
+    "generated_at": "2025-11-03T06:11:13.656461+00:00",
     "last_month_year": 2025,
     "last_month_period": 8,
     "last_month_label": "Aug 2025"
@@ -13,7 +13,7 @@
       "balance_type": "deficit"
     },
     "trading_partners": {
-      "total_count": 199,
+      "total_count": 200,
       "non_trading_countries": [
         "Anguilla",
         "Antarctica",
@@ -25,7 +25,6 @@
         "Christmas Island",
         "Cocos (Keeling) Islands",
         "Curaçao",
-        "Equatorial Guinea",
         "Falkland Islands (Malvinas)",
         "French Southern Territories",
         "Greenland",
@@ -68,9 +67,9 @@
       ]
     },
     "items_traded": {
-      "unique_products": 4260,
-      "unique_hs_chapters": 88,
-      "unique_hs_headings": 1193
+      "unique_products": 4191,
+      "unique_hs_chapters": 97,
+      "unique_hs_headings": 1116
     }
   },
   "charts": {
@@ -314,8 +313,8 @@
       {
         "hs_chapter": "90",
         "category_name": "Optical, Photographic, Medical Instruments",
-        "value": 1090257682.0,
-        "percentage": 9.5,
+        "value": 1059719746.0,
+        "percentage": 9.3,
         "rank": 3
       },
       {
@@ -328,15 +327,15 @@
       {
         "hs_chapter": "71",
         "category_name": "Pearls, Precious Stones, Metals",
-        "value": 640565842.0,
-        "percentage": 5.6,
+        "value": 626056755.0,
+        "percentage": 5.5,
         "rank": 5
       },
       {
         "hs_chapter": "30",
         "category_name": "Pharmaceutical Products",
-        "value": 526838927.0,
-        "percentage": 4.6,
+        "value": 461923609.0,
+        "percentage": 4.0,
         "rank": 6
       },
       {

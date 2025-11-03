@@ -35,6 +35,7 @@ const tabs = [
   { name: 'Product Origins', path: '/product-origin', icon: '🌍' },
   { name: 'World Map', path: '/world-map', icon: '🗺️' },
   { name: 'Trends', path: '/trends', icon: '📉' },
+  { name: 'HS Explorer', path: '/hs-explorer', icon: '🔍' },
   { name: 'AI Chat', path: '/chat', icon: '💬' },
 ]
 

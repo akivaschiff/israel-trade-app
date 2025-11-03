@@ -5,6 +5,7 @@ import ProductOriginPage from '@/views/product-origins/ProductOriginPage.vue'
 import ChatPage from '@/views/ChatPage.vue'
 import WorldMapPage from '@/views/world-map/WorldMapPage.vue'
 import TrendsPage from '@/views/trends/TrendsPage.vue'
+import HSCodeExplorer from '@/views/HSCodeExplorer.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -36,6 +37,11 @@ const router = createRouter({
           path: 'trends',
           name: 'trends',
           component: TrendsPage
+        },
+        {
+          path: 'hs-explorer',
+          name: 'hs-explorer',
+          component: HSCodeExplorer
         },
         {
           path: 'chat',
