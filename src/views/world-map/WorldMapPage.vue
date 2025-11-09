@@ -31,29 +31,49 @@
           </button>
         </div>
 
-        <!-- Month Selector -->
-        <div class="flex items-center gap-3">
-          <label class="text-sm font-semibold text-gray-700">Month:</label>
-          <div class="relative flex items-center gap-2">
-            <select
-              v-model="selectedMonth"
-              :disabled="dataLoading"
-              class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white disabled:opacity-75 disabled:cursor-wait"
-            >
-              <option
-                v-for="month in availableMonths"
-                :key="month.key"
-                :value="month.key"
+        <!-- Time Range Controls -->
+        <div class="flex items-center gap-6">
+          <!-- Month Range Slider -->
+          <div class="flex items-center gap-3">
+            <label class="text-sm font-semibold text-gray-700">Months:</label>
+            <div class="flex items-center gap-2">
+              <input
+                type="range"
+                v-model.number="monthRange"
+                :disabled="dataLoading"
+                min="1"
+                max="12"
+                step="1"
+                class="w-32 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-indigo-600 disabled:opacity-75 disabled:cursor-wait"
+              />
+              <span class="text-sm font-medium text-gray-700 min-w-[3ch] text-center">{{ monthRange }}</span>
+            </div>
+          </div>
+
+          <!-- End Month Selector -->
+          <div class="flex items-center gap-3">
+            <label class="text-sm font-semibold text-gray-700">Ending:</label>
+            <div class="relative flex items-center gap-2">
+              <select
+                v-model="selectedMonth"
+                :disabled="dataLoading"
+                class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white disabled:opacity-75 disabled:cursor-wait"
               >
-                {{ month.label }}
-              </option>
-            </select>
-            <!-- Small Loading Indicator -->
-            <div v-if="dataLoading" class="flex items-center">
-              <svg class="animate-spin h-5 w-5 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-              </svg>
+                <option
+                  v-for="month in availableMonths"
+                  :key="month.key"
+                  :value="month.key"
+                >
+                  {{ month.label }}
+                </option>
+              </select>
+              <!-- Small Loading Indicator -->
+              <div v-if="dataLoading" class="flex items-center">
+                <svg class="animate-spin h-5 w-5 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+              </div>
             </div>
           </div>
         </div>
@@ -62,20 +82,20 @@
         <div class="flex items-center gap-2 text-sm">
         <span class="text-gray-600">Trade Value:</span>
         <div class="flex items-center gap-1">
-        <div class="w-4 h-4 bg-gray-200 border border-gray-300"></div>
+        <div class="w-4 h-4 bg-white border border-gray-300"></div>
         <span class="text-xs text-gray-500">None</span>
         </div>
         <div class="flex items-center gap-1 ml-2">
         <div
         class="w-4 h-4 border border-gray-300"
-        :style="{ backgroundColor: selectedFlow === FLOW_TYPES.EXPORTS ? TRADE_COLORS.EXPORTS.lighter : TRADE_COLORS.IMPORTS.lighter }"
+        :style="{ backgroundColor: selectedFlow === FLOW_TYPES.EXPORTS ? TRADE_COLORS.EXPORTS.lighter : TRADE_COLORS.IMPORTS.gradient[0] }"
         ></div>
         <span class="text-xs text-gray-500">Low</span>
         </div>
         <div class="flex items-center gap-1">
         <div
         class="w-4 h-4 border border-gray-300"
-        :style="{ backgroundColor: selectedFlow === FLOW_TYPES.EXPORTS ? TRADE_COLORS.EXPORTS.dark : TRADE_COLORS.IMPORTS.dark }"
+        :style="{ backgroundColor: selectedFlow === FLOW_TYPES.EXPORTS ? TRADE_COLORS.EXPORTS.dark : TRADE_COLORS.IMPORTS.gradient[6] }"
         ></div>
         <span class="text-xs text-gray-500">High</span>
         </div>
@@ -117,6 +137,105 @@
       </div>
     </div>
 
+    <!-- K-Means Distribution Visualization -->
+    <div v-if="colorBands.length > 0" class="bg-white border-t border-gray-200 p-6">
+      <div class="max-w-7xl mx-auto">
+        <h3 class="text-lg font-semibold text-gray-800 mb-4">K-Means Color Bands</h3>
+
+        <!-- K-Means Bands -->
+        <div class="space-y-3">
+          <div
+            v-for="(band, idx) in sortedColorBands"
+            :key="idx"
+            class="border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow"
+          >
+            <!-- Band header - clickable -->
+            <div
+              @click="toggleBandExpansion(idx)"
+              class="flex items-center gap-4 p-4 cursor-pointer hover:bg-gray-50"
+            >
+              <!-- Color indicator -->
+              <div
+                class="w-8 h-8 rounded border border-gray-300 flex-shrink-0"
+                :style="{ backgroundColor: band.color }"
+              ></div>
+
+              <!-- Band info -->
+              <div class="flex-1">
+                <div class="flex items-center justify-between mb-1">
+                  <span class="text-sm font-medium text-gray-700">
+                    {{ formatValue(band.min) }} - {{ formatValue(band.max) }}
+                  </span>
+                  <span class="text-xs text-gray-500">
+                    {{ band.count }} {{ band.count === 1 ? 'country' : 'countries' }}
+                  </span>
+                </div>
+
+                <!-- Bar chart -->
+                <div class="w-full bg-gray-100 rounded-full h-4 overflow-hidden">
+                  <div
+                    class="h-full rounded-full transition-all duration-500"
+                    :style="{
+                      width: `${(band.count / totalCountriesWithData) * 100}%`,
+                      backgroundColor: band.color
+                    }"
+                  ></div>
+                </div>
+              </div>
+
+              <!-- Centroid value and expand icon -->
+              <div class="flex items-center gap-3">
+                <div class="text-xs text-gray-500 text-right">
+                  Avg: {{ formatValue(band.centroid) }}
+                </div>
+                <svg
+                  class="w-5 h-5 text-gray-400 transition-transform"
+                  :class="{ 'rotate-180': expandedBands[idx] }"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                </svg>
+              </div>
+            </div>
+
+            <!-- Expanded country list -->
+            <div
+              v-if="expandedBands[idx]"
+              class="bg-gray-50 border-t border-gray-200 p-4"
+            >
+              <div class="max-h-96 overflow-y-auto">
+                <div class="space-y-2">
+                  <div
+                    v-for="country in getCountriesInBand(band)"
+                    :key="country.country_code"
+                    class="flex items-center justify-between py-2 px-3 bg-white rounded hover:bg-gray-100 transition-colors"
+                  >
+                    <span class="text-sm font-medium text-gray-700">{{ country.country_name }}</span>
+                    <span class="text-sm text-gray-600">{{ formatValue(country.total_value) }}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Summary stats -->
+        <div class="mt-6 flex items-center gap-6 text-sm text-gray-600 border-t border-gray-200 pt-4">
+          <div>
+            <span class="font-semibold">Total countries with data:</span> {{ totalCountriesWithData }}
+          </div>
+          <div>
+            <span class="font-semibold">Color bands:</span> {{ colorBands.length }}
+          </div>
+          <div>
+            <span class="font-semibold">Max value:</span> {{ formatValue(maxTradeValue) }}
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Country Trend Modal -->
     <CountryTrendModal
       :country-code="selectedCountryCode"
@@ -150,16 +269,26 @@ const {
   loadCountries,
   loadCategories,
   fetchAvailableMonths,
-  fetchCountryTotals
+  fetchCountryTotals,
+  fetchCountryTotalsRange
 } = useWorldMap()
 
 const mapReady = ref(false)
-const selectedFlow = ref(FLOW_TYPES.EXPORTS) // Default to Exports
+const selectedFlow = ref(FLOW_TYPES.IMPORTS) // Default to Imports
 const selectedMonth = ref(null)
+const monthRange = ref(1) // Number of months to aggregate (1-12)
 const dataLoading = ref(false) // Separate loading state for data updates
 const previousCountryTotals = ref([]) // Keep previous data during loading
 const selectedCountryCode = ref(null)
 const selectedCountryName = ref('')
+
+// K-Means distribution data for visualization
+const colorBands = ref([])
+const maxTradeValue = ref(0)
+const minTradeValue = ref(0)
+const totalCountriesWithData = ref(0)
+const allTradeValues = ref([]) // Store all values for histogram
+const expandedBands = ref({}) // Track which bands are expanded
 
 onMounted(async () => {
   // Load static countries data
@@ -188,16 +317,68 @@ onMounted(async () => {
 
 // Current month label for display
 const currentMonthLabel = computed(() => {
-  const month = availableMonths.value.find(m => m.key === selectedMonth.value)
-  return month?.label || ''
+  if (monthRange.value === 1) {
+    const month = availableMonths.value.find(m => m.key === selectedMonth.value)
+    return month?.label || ''
+  } else {
+    // Get the range of months
+    const endIndex = availableMonths.value.findIndex(m => m.key === selectedMonth.value)
+    if (endIndex === -1) return ''
+    const startIndex = Math.min(endIndex + monthRange.value - 1, availableMonths.value.length - 1)
+    const startMonth = availableMonths.value[startIndex]
+    const endMonth = availableMonths.value[endIndex]
+    return `${startMonth.label} - ${endMonth.label}`
+  }
 })
 
-// Watch for changes in flow or month selection
-watch([selectedFlow, selectedMonth], async ([newFlow, newMonth]) => {
+// Sorted color bands for display (from low to high values)
+const sortedColorBands = computed(() => {
+  return [...colorBands.value].sort((a, b) => a.min - b.min)
+})
+
+// Toggle band expansion
+function toggleBandExpansion(idx) {
+  expandedBands.value[idx] = !expandedBands.value[idx]
+}
+
+// Get countries in a specific band
+function getCountriesInBand(band) {
+  return countryTotals.value
+    .filter(country => {
+      const value = country.total_value
+      return value >= band.min && value <= band.max
+    })
+    .sort((a, b) => b.total_value - a.total_value) // Sort by value descending
+}
+
+// Watch for changes in flow, month selection, or range
+watch([selectedFlow, selectedMonth, monthRange], async ([newFlow, newMonth, newRange]) => {
   if (newMonth) {
     dataLoading.value = true
-    const [year, period] = newMonth.split('-')
-    await fetchCountryTotals(parseInt(year), parseInt(period), newFlow)
+
+    if (newRange === 1) {
+      // Single month - use original function
+      const [year, period] = newMonth.split('-')
+      await fetchCountryTotals(parseInt(year), parseInt(period), newFlow)
+    } else {
+      // Multiple months - get the range and aggregate
+      const endIndex = availableMonths.value.findIndex(m => m.key === newMonth)
+      if (endIndex !== -1) {
+        // Get months from end backwards by range (e.g., if range=3, get last 3 months)
+        const startIndex = Math.min(endIndex + newRange - 1, availableMonths.value.length - 1)
+        const monthsInRange = availableMonths.value.slice(endIndex, startIndex + 1)
+        await fetchCountryTotalsRange(monthsInRange, newFlow)
+
+        // Normalize values by number of months to maintain consistent color scale
+        // This gives us an "average per month" value
+        const actualMonthCount = monthsInRange.length
+        countryTotals.value = countryTotals.value.map(country => ({
+          ...country,
+          total_value: country.total_value / actualMonthCount
+        }))
+      }
+    }
+
     // Store current data as previous for next transition
     previousCountryTotals.value = [...countryTotals.value]
     clearCountrySelection() // Close modal when switching
@@ -265,35 +446,74 @@ const mapOption = computed(() => {
   const values = mapData.map(d => d.value).filter(v => v > 0).sort((a, b) => b - a)
   const maxValue = Math.max(...values)
   const minValue = Math.min(...values)
-  
-  // Special handling: Reserve darkest color for the max country (outlier)
-  // Run k-means on remaining countries for better distribution
-  const maxCountryValue = values[0]  // USA or top country
-  const remainingValues = values.slice(1)  // All others
-  
-  // Use k-means to find natural color breaks (6 bands for non-max countries)
+
+  // Custom distribution: Force top country in its own band
   const colors = getFlowGradient(selectedFlow.value)
-  const numRegularBands = colors.length - 1  // Reserve last color for max country
-  const regularColors = colors.slice(0, numRegularBands)  // First 6 colors
-  const maxColor = colors[colors.length - 1]  // Darkest color for max
-  
-  const regularBands = createKMeansColorScale(remainingValues, numRegularBands, regularColors)
-  
-  // Add the max country as its own band
-  const colorBands = [
-    ...regularBands,
-    {
-      min: maxCountryValue,
-      max: maxCountryValue,
-      centroid: maxCountryValue,
-      color: maxColor,
-      count: 1
-    }
+
+  // Separate the max country (top value)
+  const maxCountryValue = values[0]  // Highest value (USA or similar)
+  const remainingValues = values.slice(1)  // All other countries
+
+  // Define target distribution for remaining countries (from low to high)
+  // Band sizes as percentages of remaining countries
+  const targetDistribution = [
+    { percentage: 0.36, color: colors[0] },  // Band 1: ~36% of countries (lowest values)
+    { percentage: 0.36, color: colors[1] },  // Band 2: ~36% of countries
+    { percentage: 0.20, color: colors[2] },  // Band 3: ~20% of countries
+    { percentage: 0.07, color: colors[3] },  // Band 4: ~7% of countries
+    { percentage: 0.01, color: colors[4] },  // Band 5: ~1% of countries (2-3 if ~200 total)
   ]
-  
+
+  // Sort remaining values in ascending order for quantile calculation
+  const sortedValues = [...remainingValues].sort((a, b) => a - b)
+  const totalCount = sortedValues.length
+
+  // Create bands based on quantiles for regular countries
+  const bands = []
+  let currentIndex = 0
+
+  for (let i = 0; i < targetDistribution.length; i++) {
+    const dist = targetDistribution[i]
+    const bandSize = Math.max(1, Math.round(totalCount * dist.percentage))
+    const endIndex = Math.min(currentIndex + bandSize, totalCount)
+
+    const bandValues = sortedValues.slice(currentIndex, endIndex)
+
+    if (bandValues.length > 0) {
+      bands.push({
+        min: bandValues[0],
+        max: bandValues[bandValues.length - 1],
+        centroid: bandValues.reduce((sum, v) => sum + v, 0) / bandValues.length,
+        color: dist.color,
+        count: bandValues.length
+      })
+
+      currentIndex = endIndex
+    }
+
+    // Stop if we've allocated all countries
+    if (currentIndex >= totalCount) break
+  }
+
+  // Add the max country as its own band (darkest color)
+  bands.push({
+    min: maxCountryValue,
+    max: maxCountryValue,
+    centroid: maxCountryValue,
+    color: colors[6], // Darkest color
+    count: 1
+  })
+
+  // Store color bands data for visualization
+  colorBands.value = bands
+  maxTradeValue.value = maxValue
+  minTradeValue.value = minValue
+  totalCountriesWithData.value = values.length
+  allTradeValues.value = values // Store all values for histogram
+
   // Create piecewise visual map from k-means bands
   // Make bands CONTIGUOUS to eliminate gaps (countries falling between bands)
-  const sortedBands = [...colorBands].sort((a, b) => a.min - b.min)
+  const sortedBands = [...bands].sort((a, b) => a.min - b.min)
   
   const pieces = sortedBands.map((band, index) => {
     const isMaxBand = index === sortedBands.length - 1
@@ -320,6 +540,7 @@ const mapOption = computed(() => {
   })
   
   return {
+    backgroundColor: '#ffffff', // White background
     tooltip: {
       trigger: 'item',
       formatter: (params) => {
@@ -351,8 +572,8 @@ const mapOption = computed(() => {
         map: 'world',
         roam: true,
         itemStyle: {
-          areaColor: '#eee',  // Default color for countries with no data
-          borderColor: '#d1d5db',  // Soft gray border (gray-300)
+          areaColor: '#ffffff',  // White for countries with no data
+          borderColor: '#d1d5db',  // Soft gray border
           borderWidth: 0.8
         },
         emphasis: {
@@ -360,8 +581,8 @@ const mapOption = computed(() => {
             show: true
           },
           itemStyle: {
-            areaColor: '#ffd54f',
-            borderColor: '#9ca3af',  // Slightly darker on hover (gray-400)
+            areaColor: '#ffd54f', // Yellow highlight on hover
+            borderColor: '#9ca3af',
             borderWidth: 1.2
           }
         },

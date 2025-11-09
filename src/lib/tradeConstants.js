@@ -21,7 +21,7 @@ export const TRADE_COLORS = {
     lightest: '#dbeafe',     // blue-100
     dark: '#2563eb',         // blue-600
     darker: '#1d4ed8',       // blue-700
-    gradient: ['#bfdbfe', '#93c5fd', '#60a5fa', '#3b82f6', '#2563eb', '#1d4ed8'], // blue gradient scale
+    gradient: ['#e0f2fe', '#bae6fd', '#7dd3f0', '#38bdf8', '#0ea5e9', '#0284c7', '#075985'], // light blue to deepest blue
   },
 }
 

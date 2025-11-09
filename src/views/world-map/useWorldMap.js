@@ -181,6 +181,68 @@ export function useWorldMap() {
     }
   }
 
+  // Fetch country trade totals for a RANGE of months - aggregates multiple months
+  async function fetchCountryTotalsRange(monthsData, flow) {
+    loading.value = true
+    error.value = null
+
+    try {
+      const countryMap = new Map()
+
+      // Fetch data for each month in the range and aggregate
+      for (const monthData of monthsData) {
+        const { data, error: queryError } = await supabase
+          .from('trade_data')
+          .select('partner_country, value')
+          .eq('year', monthData.year)
+          .eq('period', monthData.period)
+          .eq('flow', flow)
+          .not('partner_country', 'is', null)
+
+        if (queryError) throw queryError
+
+        // Aggregate values by country
+        for (const row of data) {
+          const code = row.partner_country
+          const value = parseFloat(row.value) || 0
+          countryMap.set(code, (countryMap.get(code) || 0) + value)
+        }
+      }
+
+      // Convert to array format
+      const aggregatedData = Array.from(countryMap.entries()).map(([code, total]) => ({
+        partner_country: code,
+        total_value: total
+      }))
+
+      // Map country codes to names using loaded JSON
+      countryTotals.value = aggregatedData
+        .map(row => {
+          const code = row.partner_country
+          const country = countriesMap.value.get(code)
+          const countryName = country?.name || code
+          const mappedName = mapCountryName(countryName)
+
+          return {
+            country_code: code,
+            country_name: countryName,
+            map_name: mappedName,
+            total_value: parseFloat(row.total_value) || 0
+          }
+        })
+        .sort((a, b) => b.total_value - a.total_value)
+
+      return countryTotals.value
+
+    } catch (e) {
+      error.value = e.message
+      console.error('Error fetching country totals range:', e)
+      return []
+    } finally {
+      loading.value = false
+    }
+  }
+
   // Fetch detailed product breakdown for a specific country
   async function fetchCountryDetails(countryCode, year, period, flow) {
     detailLoading.value = true
@@ -432,6 +494,7 @@ export function useWorldMap() {
     loadCategories,
     fetchAvailableMonths,
     fetchCountryTotals,
+    fetchCountryTotalsRange,
     fetchCountryDetails,
     fetchCountryTimeSeries,
     fetchChapterTimeSeries,
