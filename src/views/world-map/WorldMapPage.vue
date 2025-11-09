@@ -416,7 +416,7 @@ function clearCountrySelection() {
 function formatValue(value) {
   // Multiply by 1000 since database stores values in thousands
   const actualValue = value * 1000
-  
+
   if (actualValue >= 1e9) {
     return `${(actualValue / 1e9).toFixed(2)}B`
   } else if (actualValue >= 1e6) {
@@ -425,6 +425,26 @@ function formatValue(value) {
     return `${Math.round(actualValue / 1e3)}K`  // No decimals for K
   }
   return `${Math.round(actualValue)}`
+}
+
+// Get country flag emoji from country code
+function getCountryFlag(countryCode) {
+  if (!countryCode || countryCode.length !== 2) return ''
+
+  // Convert country code to flag emoji using regional indicator symbols
+  const codePoints = countryCode
+    .toUpperCase()
+    .split('')
+    .map(char => 127397 + char.charCodeAt(0))
+
+  return String.fromCodePoint(...codePoints)
+}
+
+// Format label with flag and value
+function formatLabelWithFlag(countryCode, value) {
+  const flag = getCountryFlag(countryCode)
+  const formattedValue = formatValue(value)
+  return `${flag} ${formattedValue}`
 }
 
 // Map configuration
@@ -442,8 +462,16 @@ const mapOption = computed(() => {
   const mapData = dataToDisplay.map(c => ({
     name: c.map_name || c.country_name,
     value: c.total_value, // in thousands of USD
-    originalName: c.country_name
+    originalName: c.country_name,
+    country_code: c.country_code
   }))
+
+  // Get top 3 countries by value for labeling (avoids overlaps)
+  const top3Countries = [...mapData]
+    .filter(d => d.value > 0)
+    .sort((a, b) => b.value - a.value)
+    .slice(0, 3)
+    .map(d => d.name)
 
   // Analyze distribution
   const values = mapData.map(d => d.value).filter(v => v > 0).sort((a, b) => b - a)
@@ -598,21 +626,48 @@ const mapOption = computed(() => {
         select: {
           disabled: true
         },
-        data: mapData.map(d => ({
-          name: d.name,
-          value: d.value,
-          itemStyle: {
-            borderColor: '#bae6fd',  // Light ocean blue border
-            borderWidth: 0.5
-          },
-          emphasis: {
+        data: mapData.map(d => {
+          const isTop3 = top3Countries.includes(d.name)
+
+          return {
+            name: d.name,
+            value: d.value,
+            label: {
+              show: isTop3,
+              formatter: () => formatLabelWithFlag(d.country_code, d.value),
+              position: 'inside',
+              fontSize: 13,
+              fontWeight: 'bold',
+              color: '#0f172a',
+              backgroundColor: 'rgba(255, 255, 255, 0.95)',
+              borderColor: '#94a3b8',
+              borderWidth: 1,
+              borderRadius: 4,
+              padding: [5, 10],
+              shadowColor: 'rgba(0, 0, 0, 0.2)',
+              shadowBlur: 8,
+              shadowOffsetY: 2
+            },
             itemStyle: {
-              areaColor: '#fde68a', // Brighter amber on hover
-              borderColor: '#0ea5e9',  // Sky-500 on hover
-              borderWidth: 2
+              borderColor: '#bae6fd',  // Light ocean blue border
+              borderWidth: 0.5
+            },
+            emphasis: {
+              label: {
+                show: true,
+                fontSize: 13,
+                formatter: () => formatLabelWithFlag(d.country_code, d.value),
+                backgroundColor: 'rgba(255, 255, 255, 1)',
+                shadowBlur: 8
+              },
+              itemStyle: {
+                areaColor: '#fde68a', // Brighter amber on hover
+                borderColor: '#0ea5e9',  // Sky-500 on hover
+                borderWidth: 2
+              }
             }
           }
-        })),
+        }),
       },
     ],
   }
