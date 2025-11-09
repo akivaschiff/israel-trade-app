@@ -60,47 +60,49 @@ function saveActiveConversationId(id) {
   }
 }
 
-export function useConversations() {
+export function useConversations(routeName = 'chat') {
   const router = useRouter()
   const conversations = ref(loadConversations())
   const activeConversationId = ref(loadActiveConversationId())
-  
+
   // Get the currently active conversation
   const activeConversation = computed(() => {
     return conversations.value.find(c => c.id === activeConversationId.value) || null
   })
-  
+
   // Get conversations sorted by most recent first
   const sortedConversations = computed(() => {
-    return [...conversations.value].sort((a, b) => 
+    return [...conversations.value].sort((a, b) =>
       new Date(b.updatedAt) - new Date(a.updatedAt)
     )
   })
-  
+
   // Create a new conversation and navigate to it
   function createNewConversation() {
     const newConv = createConversation()
     conversations.value.push(newConv)
     saveConversations(conversations.value)
-    
+
     activeConversationId.value = newConv.id
     saveActiveConversationId(newConv.id)
-    
+
     console.log('✨ Created new conversation:', newConv.id)
-    
-    // Navigate to the new conversation
-    router.push({ name: 'chat', params: { conversationId: newConv.id } })
-    
+
+    // Navigate to the new conversation using the provided route name
+    const conversationRouteName = routeName.includes('conversation') ? routeName : `${routeName}-conversation`
+    router.push({ name: conversationRouteName, params: { conversationId: newConv.id } })
+
     return newConv
   }
-  
+
   // Switch to an existing conversation
   function switchToConversation(conversationId) {
     const conv = conversations.value.find(c => c.id === conversationId)
     if (conv) {
       activeConversationId.value = conversationId
       saveActiveConversationId(conversationId)
-      router.push({ name: 'chat', params: { conversationId } })
+      const conversationRouteName = routeName.includes('conversation') ? routeName : `${routeName}-conversation`
+      router.push({ name: conversationRouteName, params: { conversationId } })
       console.log('🔄 Switched to conversation:', conversationId)
     }
   }

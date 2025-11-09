@@ -35,13 +35,16 @@ const tabs = [
   { name: 'Product Origins', path: '/product-origin', icon: '🌍' },
   { name: 'World Map', path: '/world-map', icon: '🗺️' },
   { name: 'Trends', path: '/trends', icon: '📉' },
-  { name: 'HS Explorer', path: '/hs-explorer', icon: '🔍' },
+  { name: 'HS Code Lookup', path: '/hs-lookup', icon: '🔎' },
   { name: 'AI Chat', path: '/chat', icon: '💬' },
 ]
 
 function isActive(path) {
   if (path === '/chat') {
     return route.path === '/chat' || route.path.startsWith('/chat/')
+  }
+  if (path === '/hs-lookup') {
+    return route.path === '/hs-lookup' || route.path.startsWith('/hs-lookup/')
   }
   if (path === '/world-map') {
     return route.path === '/world-map'
