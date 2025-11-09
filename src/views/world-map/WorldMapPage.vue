@@ -1,7 +1,7 @@
 <template>
-  <div class="min-h-[calc(100vh-64px)] relative">
+  <div class="min-h-[calc(100vh-64px)] relative bg-gradient-to-b from-slate-50 to-white">
     <!-- Controls Bar -->
-    <div class="bg-white border-b border-gray-200 p-4 sticky top-16 z-30">
+    <div class="bg-white/90 backdrop-blur-sm border-b border-gray-200 p-4 sticky top-16 z-30 shadow-sm">
       <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
         <!-- Flow Toggle -->
         <div class="flex gap-2">
@@ -367,15 +367,18 @@ watch([selectedFlow, selectedMonth, monthRange], async ([newFlow, newMonth, newR
         // Get months from end backwards by range (e.g., if range=3, get last 3 months)
         const startIndex = Math.min(endIndex + newRange - 1, availableMonths.value.length - 1)
         const monthsInRange = availableMonths.value.slice(endIndex, startIndex + 1)
+
+        console.log('📅 Fetching data for months:', monthsInRange)
+        console.log('📊 Month range:', { endIndex, startIndex, count: monthsInRange.length })
+
         await fetchCountryTotalsRange(monthsInRange, newFlow)
 
-        // Normalize values by number of months to maintain consistent color scale
-        // This gives us an "average per month" value
-        const actualMonthCount = monthsInRange.length
-        countryTotals.value = countryTotals.value.map(country => ({
-          ...country,
-          total_value: country.total_value / actualMonthCount
-        }))
+        console.log('✅ Fetched country totals:', countryTotals.value.length, 'countries')
+        console.log('🔝 Top 5 countries:', countryTotals.value.slice(0, 5).map(c => ({ name: c.country_name, value: c.total_value })))
+
+        // Don't normalize - keep aggregated values
+        // The color bands will naturally adjust to the higher values
+        // This shows total trade over the period, not average per month
       }
     }
 
@@ -540,7 +543,7 @@ const mapOption = computed(() => {
   })
   
   return {
-    backgroundColor: '#ffffff', // White background
+    backgroundColor: '#e0f2fe', // Light blue background (like ocean/water)
     tooltip: {
       trigger: 'item',
       formatter: (params) => {
@@ -572,26 +575,42 @@ const mapOption = computed(() => {
         map: 'world',
         roam: true,
         itemStyle: {
-          areaColor: '#ffffff',  // White for countries with no data
-          borderColor: '#d1d5db',  // Soft gray border
-          borderWidth: 0.8
+          areaColor: '#f8fafc',  // Very light slate for countries with no data
+          borderColor: '#bae6fd',  // Light ocean blue border (sky-200)
+          borderWidth: 0.5,
+          borderType: 'solid'
         },
         emphasis: {
           label: {
-            show: true
+            show: true,
+            color: '#0f172a',
+            fontWeight: 'bold',
+            fontSize: 13,
+            textBorderColor: '#fff',
+            textBorderWidth: 2
           },
           itemStyle: {
-            areaColor: '#ffd54f', // Yellow highlight on hover
-            borderColor: '#9ca3af',
-            borderWidth: 1.2
+            areaColor: '#fbbf24', // Amber highlight on hover
+            borderColor: '#3b82f6',
+            borderWidth: 2
           }
+        },
+        select: {
+          disabled: true
         },
         data: mapData.map(d => ({
           name: d.name,
           value: d.value,
           itemStyle: {
-            borderColor: '#d1d5db',  // Soft gray border
-            borderWidth: 0.8
+            borderColor: '#bae6fd',  // Light ocean blue border
+            borderWidth: 0.5
+          },
+          emphasis: {
+            itemStyle: {
+              areaColor: '#fde68a', // Brighter amber on hover
+              borderColor: '#0ea5e9',  // Sky-500 on hover
+              borderWidth: 2
+            }
           }
         })),
       },

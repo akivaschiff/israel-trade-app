@@ -189,25 +189,63 @@ export function useWorldMap() {
     try {
       const countryMap = new Map()
 
-      // Fetch data for each month in the range and aggregate
+      console.log('🔍 fetchCountryTotalsRange called with:', {
+        monthCount: monthsData.length,
+        months: monthsData.map(m => `${m.year}-${m.period}`),
+        flow
+      })
+
+      // Fetch aggregated data for each month using the RPC function
       for (const monthData of monthsData) {
-        const { data, error: queryError } = await supabase
-          .from('trade_data')
-          .select('partner_country, value')
-          .eq('year', monthData.year)
-          .eq('period', monthData.period)
-          .eq('flow', flow)
-          .not('partner_country', 'is', null)
+        try {
+          // Use the RPC function for server-side aggregation
+          const { data: rpcData, error: rpcError } = await supabase
+            .rpc('get_country_totals', {
+              p_year: monthData.year,
+              p_period: monthData.period,
+              p_flow: flow
+            })
 
-        if (queryError) throw queryError
+          if (rpcError) throw rpcError
 
-        // Aggregate values by country
-        for (const row of data) {
-          const code = row.partner_country
-          const value = parseFloat(row.value) || 0
-          countryMap.set(code, (countryMap.get(code) || 0) + value)
+          console.log(`📦 Data for ${monthData.year}-${monthData.period}:`, rpcData?.length || 0, 'countries')
+
+          // Aggregate values across months
+          for (const row of rpcData) {
+            const code = row.partner_country
+            const value = parseFloat(row.total_value) || 0
+            countryMap.set(code, (countryMap.get(code) || 0) + value)
+          }
+        } catch (rpcError) {
+          console.warn(`⚠️ RPC failed for ${monthData.year}-${monthData.period}, falling back to direct query`)
+
+          // Fallback: direct query with limit
+          const { data, error: queryError } = await supabase
+            .from('trade_data')
+            .select('partner_country, value')
+            .eq('year', monthData.year)
+            .eq('period', monthData.period)
+            .eq('flow', flow)
+            .not('partner_country', 'is', null)
+
+          if (queryError) throw queryError
+
+          // Manual aggregation
+          const monthCountryMap = new Map()
+          for (const row of data) {
+            const code = row.partner_country
+            const value = parseFloat(row.value) || 0
+            monthCountryMap.set(code, (monthCountryMap.get(code) || 0) + value)
+          }
+
+          // Add to overall map
+          for (const [code, value] of monthCountryMap.entries()) {
+            countryMap.set(code, (countryMap.get(code) || 0) + value)
+          }
         }
       }
+
+      console.log('🗺️ Total unique countries after aggregation:', countryMap.size)
 
       // Convert to array format
       const aggregatedData = Array.from(countryMap.entries()).map(([code, total]) => ({
