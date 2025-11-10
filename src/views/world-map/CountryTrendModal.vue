@@ -298,42 +298,32 @@ watch(() => props.countryCode, async (newCode) => {
 
 async function loadTrendData() {
   if (!props.countryCode) {
-    console.log('No country code provided')
     return
   }
-  
+
   loading.value = true
-  
+
   try {
-    console.log('Loading trend data for:', props.countryCode, 'Flow:', props.flowType)
-    
     // Fetch total time series from real database
     const totalData = await fetchCountryTimeSeries(
-      props.countryCode, 
+      props.countryCode,
       props.flowType
     )
-    
-    console.log('Total data received:', totalData.length, 'months')
-    
-    if (totalData.length === 0) {
-      console.warn('No time series data found for country:', props.countryCode)
-    }
-    
+
     timeSeriesData.value = totalData.map(d => ({
       month: d.month,
       value: d.value
     }))
-    
-    console.log('Formatted time series:', timeSeriesData.value.length, 'records')
-    
+
+    // Set visibleMonths to show all available data by default (instead of hardcoded 12)
+    visibleMonths.value = Math.min(timeSeriesData.value.length, 24) // Cap at 24 months for performance
+
     // Fetch chapter breakdown from real database
     const chapterRaw = await fetchChapterTimeSeries(
       props.countryCode,
       props.flowType
     )
-    
-    console.log('Chapter data received:', chapterRaw.length, 'chapters')
-    
+
     // Store raw chapter data (will be filtered by visibleMonths in computed)
     chapterData.value = chapterRaw.map(chapter => {
       const sorted = [...chapter.monthly_data].sort((a, b) =>
@@ -346,9 +336,7 @@ async function loadTrendData() {
         monthly_data: sorted
       }
     }).filter(c => c.monthly_data.length > 0)
-    
-    console.log('Processed chapters:', chapterData.value.length)
-    
+
   } catch (error) {
     console.error('Error loading trend data:', error)
   } finally {

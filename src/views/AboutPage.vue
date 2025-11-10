@@ -233,25 +233,20 @@ onMounted(() => {
       })
 
       // Phase 1: Ship moves left independently (relative to container)
-      shipTimeline.call(() => console.log('🚢 START: Ship starting to move left independently'))
       shipTimeline.to(shipElement.value, {
         x: -shipIndependentTravel,
         duration: 3,
-        ease: 'power1.inOut',
-        onComplete: () => console.log('🚢 CUE #1: Ship finished moving left independently')
+        ease: 'power1.inOut'
       })
 
       // Phase 2: Ship and container move left together (ship pulling)
-      shipTimeline.call(() => console.log('🚢 CUE #2: Ship starting to pull container left'))
       shipTimeline.to(animatedContainer.value, {
         x: travelDistance,
         duration: 5,
-        ease: 'power1.inOut',
-        onComplete: () => console.log('🚢 CUE #3: Ship finished pulling container left')
+        ease: 'power1.inOut'
       })
 
       // Phase 3: Pause at left
-      shipTimeline.call(() => console.log('🚢 CUE #4: Ship pausing at left'))
 
       // FLIP: Ship turns around to face left
       shipTimeline.to(shipElement.value, {
@@ -263,12 +258,10 @@ onMounted(() => {
       shipTimeline.to({}, { duration: 0.5 })
 
       // Phase 4: Ship moves right independently (back to starting position)
-      shipTimeline.call(() => console.log('🚢 CUE #5: Ship starting to move right independently'))
       shipTimeline.to(shipElement.value, {
         x: 0,
         duration: 3,
-        ease: 'power1.inOut',
-        onComplete: () => console.log('🚢 CUE #6: Ship finished moving right independently')
+        ease: 'power1.inOut'
       })
 
       // FLIP: Ship turns around to face left (ready to pull right)
@@ -279,12 +272,10 @@ onMounted(() => {
       })
 
       // Phase 5: Ship and container move right together (ship pulling)
-      shipTimeline.call(() => console.log('🚢 CUE #7: Ship starting to pull container right'))
       shipTimeline.to(animatedContainer.value, {
         x: 0,
         duration: 5,
-        ease: 'power1.inOut',
-        onComplete: () => console.log('🚢 CUE #8: Ship finished pulling container right')
+        ease: 'power1.inOut'
       })
 
       // FLIP: Ship turns to face left (ready for next cycle)
@@ -295,10 +286,7 @@ onMounted(() => {
       })
 
       // Phase 6: Pause at right
-      shipTimeline.call(() => console.log('🚢 CUE #9: Ship pausing at right'))
-
       shipTimeline.to({}, { duration: 0.5 })
-      shipTimeline.call(() => console.log('🚢 CUE #10: Ship about to restart cycle'))
     }
   }
 })

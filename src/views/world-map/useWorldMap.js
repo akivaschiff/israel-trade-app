@@ -91,7 +91,7 @@ export function useWorldMap() {
   async function fetchAvailableMonths() {
     try {
       const { data, error: queryError } = await supabase
-        .rpc('get_available_months', { max_months: 12 })
+        .rpc('get_available_months', { max_months: 24 })
       
       if (queryError) throw queryError
       
@@ -189,11 +189,6 @@ export function useWorldMap() {
     try {
       const countryMap = new Map()
 
-      console.log('🔍 fetchCountryTotalsRange called with:', {
-        monthCount: monthsData.length,
-        months: monthsData.map(m => `${m.year}-${m.period}`),
-        flow
-      })
 
       // Fetch aggregated data for each month using the RPC function
       for (const monthData of monthsData) {
@@ -208,7 +203,6 @@ export function useWorldMap() {
 
           if (rpcError) throw rpcError
 
-          console.log(`📦 Data for ${monthData.year}-${monthData.period}:`, rpcData?.length || 0, 'countries')
 
           // Aggregate values across months
           for (const row of rpcData) {
@@ -245,7 +239,6 @@ export function useWorldMap() {
         }
       }
 
-      console.log('🗺️ Total unique countries after aggregation:', countryMap.size)
 
       // Convert to array format
       const aggregatedData = Array.from(countryMap.entries()).map(([code, total]) => ({
@@ -466,6 +459,7 @@ export function useWorldMap() {
   }
 
   // Fetch chapter breakdown time series - SERVER AGGREGATED
+  // Returns data already grouped by chapter with monthly_data as JSON array
   async function fetchChapterTimeSeries(countryCode, flow) {
     try {
       const { data, error: queryError } = await supabase
@@ -476,36 +470,21 @@ export function useWorldMap() {
 
       if (queryError) throw queryError
 
-      // Group by chapter
-      const chapterMap = new Map()
-
-      for (const row of data) {
-        const chapterCode = row.chapter_code
-        const monthKey = `${row.year}-${String(row.period).padStart(2, '0')}`
-        
-        if (!chapterMap.has(chapterCode)) {
-          chapterMap.set(chapterCode, {
-            chapter_code: chapterCode,
-            monthly_data: []
-          })
-        }
-
-        const chapter = chapterMap.get(chapterCode)
-        chapter.monthly_data.push({
-          year: row.year,
-          period: row.period,
-          month: monthKey,
-          value: parseFloat(row.total_value) || 0
-        })
-      }
-
-      // Convert to array format and get chapter names
-      return Array.from(chapterMap.values()).map(chapter => {
+      return data.map(chapter => {
         const chapterInfo = getChapterInfo(chapter.chapter_code)
+
+        // Parse monthly_data from JSONB and format
+        const monthlyData = chapter.monthly_data.map(m => ({
+          year: m.year,
+          period: m.period,
+          month: `${m.year}-${String(m.period).padStart(2, '0')}`,
+          value: parseFloat(m.value) || 0
+        }))
+
         return {
           chapter_code: chapter.chapter_code,
           chapter_name: chapterInfo?.chapterName || `Chapter ${chapter.chapter_code}`,
-          monthly_data: chapter.monthly_data
+          monthly_data: monthlyData
         }
       })
 
@@ -516,6 +495,7 @@ export function useWorldMap() {
   }
 
   // Fetch heading breakdown time series - SERVER AGGREGATED
+  // Returns data already grouped by heading with monthly_data as JSON array
   async function fetchHeadingTimeSeries(countryCode, flow, chapterCode = null) {
     try {
       const { data, error: queryError } = await supabase
@@ -527,32 +507,9 @@ export function useWorldMap() {
 
       if (queryError) throw queryError
 
-      // Group by heading
-      const headingMap = new Map()
-
-      for (const row of data) {
-        const headingCode = row.heading_code
-        const monthKey = `${row.year}-${String(row.period).padStart(2, '0')}`
-
-        if (!headingMap.has(headingCode)) {
-          headingMap.set(headingCode, {
-            chapter_code: row.chapter_code,
-            heading_code: headingCode,
-            monthly_data: []
-          })
-        }
-
-        const heading = headingMap.get(headingCode)
-        heading.monthly_data.push({
-          year: row.year,
-          period: row.period,
-          month: monthKey,
-          value: parseFloat(row.total_value) || 0
-        })
-      }
 
       // Get heading names from products table
-      const headingCodes = Array.from(headingMap.keys())
+      const headingCodes = data.map(h => h.heading_code)
       const { data: productsData, error: productsError } = await supabase
         .from('products')
         .select('hs_heading, description')
@@ -574,14 +531,23 @@ export function useWorldMap() {
         })
       }
 
-      // Convert to array format with heading names
-      return Array.from(headingMap.values()).map(heading => {
+      // Parse and format the data
+      return data.map(heading => {
         const headingName = headingNamesMap.get(heading.heading_code) || `Heading ${heading.heading_code}`
+
+        // Parse monthly_data from JSONB and format
+        const monthlyData = heading.monthly_data.map(m => ({
+          year: m.year,
+          period: m.period,
+          month: `${m.year}-${String(m.period).padStart(2, '0')}`,
+          value: parseFloat(m.value) || 0
+        }))
+
         return {
           chapter_code: heading.chapter_code,
           heading_code: heading.heading_code,
           heading_name: headingName,
-          monthly_data: heading.monthly_data
+          monthly_data: monthlyData
         }
       })
 
