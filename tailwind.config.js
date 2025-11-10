@@ -7,8 +7,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        sans: ['Assistant', 'system-ui', 'sans-serif'],
-        serif: ['Frank Ruhl Libre', 'Georgia', 'serif'],
+        sans: ['Rubik', 'system-ui', 'sans-serif'],
+        serif: ['Rubik', 'system-ui', 'sans-serif'],
       },
       colors: {
         // Enable default color palette

@@ -25,17 +25,17 @@
 
     <!-- Content Area -->
     <div class="max-w-3xl mx-auto px-6 py-12 relative z-10">
-      <div class="text-right">
+      <div class="text-right font-sans">
         <!-- Opening -->
-        <p class="text-xl leading-relaxed text-gray-800 mb-8 font-serif">
+        <p class="text-xl leading-relaxed text-gray-800 mb-8">
           לפני כמה חודשים נתקלתי במאגר נתונים שפתח לי עיניים - הלמ״ס מפרסם כל חודש את כל הייבוא והייצוא של ישראל 📊. ביליוני דולרים של סחורות שעוברות דרך הנמלים והגבולות שלנו, מתועדים באקסל עם קודים מסתוריים בני שש ספרות.
         </p>
 
-        <p class="text-xl leading-relaxed text-gray-800 mb-8 font-serif">
+        <p class="text-xl leading-relaxed text-gray-800 mb-8">
           ואז התחילו השאלות: מאיפה באמת מגיעים האננסים שלנו 🍍? איך המלחמה השפיעה על שרשרת האספקה? למה פתאום יש כל כך הרבה עגבניות מטורקיה ואחר כך בכלל אין 🍅? מי קונה מאיתנו? ומה בכלל אנחנו מוכרים?
         </p>
 
-        <p class="text-xl leading-relaxed text-gray-800 mb-16 font-serif">
+        <p class="text-xl leading-relaxed text-gray-800 mb-16">
           הבעיה היא שהתשובות קבורות מתחת לשכבות של קודי HS, מדינות מקוצרות לשתי אותיות, ומיליון וחצי שורות של מידע גולמי 😅. אז החלטתי לעשות את מה שאני יודע - לבנות משהו שהופך את זה לנגיש.
         </p>
 
@@ -45,11 +45,11 @@
         <!-- What is this -->
         <h2 class="text-3xl font-bold text-gray-900 mb-8 mt-16">מה זה האתר הזה</h2>
 
-        <p class="text-xl leading-relaxed text-gray-800 mb-8 font-serif">
+        <p class="text-xl leading-relaxed text-gray-800 mb-8">
           האתר הזה לוקח את כל נתוני המכס של ישראל משלוש השנים האחרונות ומאפשר לחקור אותם בשפה טבעית - בעברית ובאנגלית. במקום לחפש קודים לא מוכרים של "080430" אפשר פשוט לשאול "מאיפה מגיעים האננסים" 🔍. יש כאן צ׳אט מבוסס AI שעונה על שאלות 🤖, מפות אינטראקטיביות 🗺️, ויזואליזציות שמראות סיפור של הסחר שלנו.
         </p>
 
-        <p class="text-xl leading-relaxed text-gray-800 mb-16 font-serif">
+        <p class="text-xl leading-relaxed text-gray-800 mb-16">
           התהליך הזה גם לימד אותי כמה מרתק עולם הסחר הבינלאומי ⛴️. כל מוצר שאנחנו קונים מגיע דרך שרשרת אספקה מורכבת, דרך נמלים, מכסים, קודים, וחוקים בינלאומיים. יש כאן המון טכנולוגיה שעדיין לא פותחה, המון תהליכים שאפשר לייעל, והמון מידע שאפשר להפוך לתובנות 💡.
         </p>
 
@@ -59,59 +59,43 @@
         <!-- Where I want to go -->
         <h2 class="text-3xl font-bold text-gray-900 mb-8 mt-16">לאן אני רוצה מזה ללכת</h2>
 
-        <p class="text-2xl leading-relaxed text-gray-900 mb-8 font-serif font-semibold">
+        <p class="text-2xl leading-relaxed text-gray-900 mb-8 font-semibold">
           אני מחפש את הפרק הבא שלי בטכנולוגיית סחר.
         </p>
 
-        <p class="text-xl leading-relaxed text-gray-800 mb-8 font-serif">
+        <p class="text-xl leading-relaxed text-gray-800 mb-8">
           האתר הזה הוא הפרויקט האישי שלי, אבל מה שממש מעניין אותי זה לעבוד עם אנשים שבונים טכנולוגיה בתחום הזה - לוגיסטיקה, ניתוח שרשרות אספקה, פינטק של סחר בינלאומי, מכס דיגיטלי, או כל דבר אחר שקשור לתחום.
         </p>
 
-        <p class="text-xl leading-relaxed text-gray-800 mb-8 font-serif">
-          אם אתם עובדים על משהו בתחום, אם יש לכם בעיות שטכנולוגיה יכולה לפתור, או שפשוט רוצים לדבר על איך הופכים מיליוני שורות של נתונים למשהו שימושי - <strong>אשמח מאוד לשמוע מכם</strong> ✉️.
+        <p class="text-xl leading-relaxed text-gray-800 mb-8">
+          תחום הסחר הוא מצד אחד קריטי למשק ומצד שני לא מפותח מבחינה טכנולוגית. יש המון מקום לבנות דברים חכמים, שקופים, ויעילים יותר 🚀.
         </p>
 
-        <p class="text-xl leading-relaxed text-gray-800 mb-16 font-serif">
-          תחום הסחר הוא בו זמנית קריטי למשק ויחסית לא מפותח מבחינה טכנולוגית. יש המון מקום לבנות דברים חכמים, שקופים, ויעילים יותר 🚀.
+        <p class="text-xl leading-relaxed text-gray-800 mb-16">
+          אם אתם עובדים על משהו בתחום, אם יש לכם בעיות שטכנולוגיה יכולה לפתור, או שפשוט רוצים לדבר על איך הופכים מיליוני שורות של נתונים למשהו שימושי - אשמח לדבר 😌️.
         </p>
 
-        <!-- Contact CTA -->
-        <div class="relative bg-white rounded-3xl p-12 mt-20 shadow-2xl border-2 border-blue-200 overflow-hidden">
-          <!-- Decorative background -->
-          <div class="absolute inset-0 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 opacity-60"></div>
-
-          <!-- Content -->
-          <div class="relative">
-            <div class="text-center mb-8">
-              <div class="inline-block mb-4">
-                <span class="text-6xl">💬</span>
-              </div>
-              <h3 class="text-4xl font-bold text-gray-900 mb-4">בואו נדבר</h3>
-              <p class="text-xl text-gray-700 leading-relaxed max-w-2xl mx-auto">
-                מעוניינים לשתף פעולה? רוצים לדבר על הפרויקט או על הזדמנויות בטכנולוגיית סחר?
-                אשמח לשמוע מכם!
-              </p>
-            </div>
-
-            <div class="flex gap-5 justify-center flex-wrap mt-10">
-              <a
-                href="mailto:akiva.s.dev@gmail.com"
-                class="group inline-flex items-center gap-3 px-10 py-5 bg-gradient-to-r from-blue-600 to-blue-700 text-white font-bold text-lg rounded-2xl hover:from-blue-700 hover:to-blue-800 transition-all duration-300 hover:shadow-2xl hover:scale-105 transform"
-              >
-                <span class="text-2xl">📧</span>
-                <span>שלחו מייל</span>
-              </a>
-              <a
-                href="https://www.linkedin.com/in/akiva-schiff-blass-6b5b39167"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="group inline-flex items-center gap-3 px-10 py-5 bg-gradient-to-r from-gray-800 to-gray-900 text-white font-bold text-lg rounded-2xl hover:from-gray-900 hover:to-black transition-all duration-300 hover:shadow-2xl hover:scale-105 transform"
-              >
-                <span class="text-2xl">💼</span>
-                <span>LinkedIn</span>
-              </a>
-            </div>
+        <!-- Contact Links -->
+        <div class="flex flex-col items-end gap-4 mt-12 pb-12">
+          <div class="text-2xl font-semibold text-gray-900 mb-2">
+            Akiva Schiff
           </div>
+          <a
+            href="mailto:akiva.s.dev@gmail.com"
+            class="text-xl text-blue-600 hover:text-blue-800 font-medium transition-colors flex items-center gap-3"
+          >
+            <span class="text-2xl">📧</span>
+            <span>akiva.s.dev@gmail.com</span>
+          </a>
+          <a
+            href="https://www.linkedin.com/in/akiva-schiff-blass-6b5b39167"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-xl text-blue-600 hover:text-blue-800 font-medium transition-colors flex items-center gap-3"
+          >
+            <span class="text-2xl">💼</span>
+            <span>LinkedIn Profile</span>
+          </a>
         </div>
       </div>
     </div>
