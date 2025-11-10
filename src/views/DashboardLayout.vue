@@ -40,12 +40,12 @@ const route = useRoute()
 
 const tabs = [
   { name: 'World Map', path: '/world-map', icon: '🗺️' },
+  { name: 'AI Chat', path: '/ai-chat', icon: '🤖' },
   { name: 'About', path: '/about', icon: 'ℹ️' },
   // Hidden pages (kept in code for later):
   // { name: 'Product Origins', path: '/product-origin', icon: '🌍' },
   // { name: 'Trends', path: '/trends', icon: '📉' },
   // { name: 'HS Code Lookup', path: '/hs-lookup', icon: '🔎' },
-  // { name: 'AI Chat', path: '/chat', icon: '💬' },
 ]
 
 function isActive(path) {

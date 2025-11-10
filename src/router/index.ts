@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import DashboardLayout from '@/views/DashboardLayout.vue'
 import WorldMapPage from '@/views/world-map/WorldMapPage.vue'
 import AboutPage from '@/views/AboutPage.vue'
+import AIPage from '@/views/AIPage.vue'
 
 // Hidden imports (kept for later):
 // import ProductOriginPage from '@/views/product-origins/ProductOriginPage.vue'
@@ -24,6 +25,11 @@ const router = createRouter({
           path: 'world-map',
           name: 'world-map',
           component: WorldMapPage
+        },
+        {
+          path: 'ai-chat',
+          name: 'ai-chat',
+          component: AIPage
         },
         {
           path: 'about',
