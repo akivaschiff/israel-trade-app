@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Israeli Trade Data Visualization App - A Vue 3 application for exploring Israeli import/export trade data (2023-2025) with AI-powered chat using Claude AI.
+**Israel Trade** - A Vue 3 application for exploring Israeli import/export trade data (2023-2025) with interactive visualizations and AI-powered chat using Claude AI.
 
 **Key Technologies:**
 - Frontend: Vue 3 (Composition API), TypeScript, TailwindCSS, Vite
@@ -53,24 +53,22 @@ The application has two distinct data access patterns:
 
 2. **Direct Visualization Mode** (Other pages):
    - Frontend queries Supabase directly via `@supabase/supabase-js`
-   - Pre-cached static data files in `/public/data/` (overview.json, countries.json, etc.)
+   - Pre-cached static data files in `/public/data/` (countries.json, hs_codes.json, etc.)
    - No backend involvement for performance
 
 ### Key Components
 
 **Views** (`src/views/`):
-- `ChatPage.vue` - AI-powered natural language chat interface
-- `OverviewPage.vue` - Dashboard with aggregate trade statistics
-- `WorldMapPage.vue` - Geographic visualization of trade partners
-- `TrendsPage.vue` - Time-series analysis and trends
+- `WorldMapPage.vue` - Geographic visualization of trade partners (default home page)
 - `ProductOriginPage.vue` - Product-specific import/export origins
+- `TrendsPage.vue` - Time-series analysis and trends
 - `HSCodeLookupPage.vue` - HS code search and exploration
+- `ChatPage.vue` - AI-powered natural language chat interface
 - `DashboardLayout.vue` - Main layout with navigation
 
 **Composables** (`src/composables/`):
 - `useChatQuery.js` - Backend API integration for AI chat
 - `useConversations.js` - LocalStorage-based conversation management
-- `useTradeOverview.js` - Fetches static overview data
 - `useProductOrigin.js` - Direct Supabase queries for product origins
 - `useHSCodeLookup.js` - HS code search functionality
 

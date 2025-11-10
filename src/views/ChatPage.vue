@@ -14,6 +14,12 @@
       <div class="flex-1 overflow-y-auto p-6">
         <div class="max-w-4xl mx-auto">
 
+          <!-- Page Header -->
+          <div class="mb-6">
+            <h1 class="text-3xl font-bold text-gray-900">AI Chat</h1>
+            <p class="text-gray-600 mt-2">Ask questions about Israel's trade data in natural language</p>
+          </div>
+
           <!-- Chat Container -->
           <div class="bg-white rounded-lg shadow-lg p-6 mb-6">
             <!-- Messages -->

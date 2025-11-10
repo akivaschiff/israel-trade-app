@@ -1,7 +1,8 @@
 {
-  "name": "trade-app",
+  "name": "israel-trade",
   "version": "1.0.0",
   "private": true,
+  "description": "Israel Trade - Interactive visualizations and AI-powered insights for Israeli import/export data",
   "type": "module",
   "engines": {
     "node": "^20.19.0 || >=22.12.0"

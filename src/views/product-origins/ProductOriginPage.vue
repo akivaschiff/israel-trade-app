@@ -4,7 +4,7 @@
     <div class="bg-white border-b border-gray-200 p-6">
       <div class="max-w-7xl mx-auto">
         <h1 class="text-3xl font-bold text-gray-900">Product Origins</h1>
-        <p class="text-gray-600 mt-2">Discover where Israel imports products from - explore trading partners and historical trends</p>
+        <p class="text-gray-600 mt-2">Explore where Israel imports products from and track trends over time</p>
       </div>
     </div>
 

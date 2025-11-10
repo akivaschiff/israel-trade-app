@@ -1,6 +1,6 @@
-# Israel Trade Data App
+# Israel Trade
 
-AI-powered chat interface for exploring Israeli import/export trade data (2023-2025).
+Interactive visualizations and AI-powered insights for exploring Israeli import/export trade data (2023-2025).
 
 ## 🎯 What This App Does
 

@@ -1,63 +1,66 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import DashboardLayout from '@/views/DashboardLayout.vue'
-import OverviewPage from '@/views/OverviewPage.vue'
-import ProductOriginPage from '@/views/product-origins/ProductOriginPage.vue'
-import ChatPage from '@/views/ChatPage.vue'
 import WorldMapPage from '@/views/world-map/WorldMapPage.vue'
-import TrendsPage from '@/views/trends/TrendsPage.vue'
-import HSCodeLookupPage from '@/views/HSCodeLookupPage.vue'
+import AboutPage from '@/views/AboutPage.vue'
+
+// Hidden imports (kept for later):
+// import ProductOriginPage from '@/views/product-origins/ProductOriginPage.vue'
+// import ChatPage from '@/views/ChatPage.vue'
+// import TrendsPage from '@/views/trends/TrendsPage.vue'
+// import HSCodeLookupPage from '@/views/HSCodeLookupPage.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      redirect: '/overview'
+      redirect: '/world-map'
     },
     {
       path: '/',
       component: DashboardLayout,
       children: [
         {
-          path: 'overview',
-          name: 'overview',
-          component: OverviewPage
-        },
-        {
-          path: 'product-origin',
-          name: 'product-origin',
-          component: ProductOriginPage
-        },
-        {
           path: 'world-map',
           name: 'world-map',
           component: WorldMapPage
         },
         {
-          path: 'trends',
-          name: 'trends',
-          component: TrendsPage
+          path: 'about',
+          name: 'about',
+          component: AboutPage
         },
-        {
-          path: 'hs-lookup',
-          name: 'hs-lookup',
-          component: HSCodeLookupPage
-        },
-        {
-          path: 'hs-lookup/:conversationId',
-          name: 'hs-lookup-conversation',
-          component: HSCodeLookupPage
-        },
-        {
-          path: 'chat',
-          name: 'chat',
-          component: ChatPage
-        },
-        {
-          path: 'chat/:conversationId',
-          name: 'chat-conversation',
-          component: ChatPage
-        }
+        // Hidden routes (kept for later):
+        // {
+        //   path: 'product-origin',
+        //   name: 'product-origin',
+        //   component: ProductOriginPage
+        // },
+        // {
+        //   path: 'trends',
+        //   name: 'trends',
+        //   component: TrendsPage
+        // },
+        // {
+        //   path: 'hs-lookup',
+        //   name: 'hs-lookup',
+        //   component: HSCodeLookupPage
+        // },
+        // {
+        //   path: 'hs-lookup/:conversationId',
+        //   name: 'hs-lookup-conversation',
+        //   component: HSCodeLookupPage
+        // },
+        // {
+        //   path: 'chat',
+        //   name: 'chat',
+        //   component: ChatPage
+        // },
+        // {
+        //   path: 'chat/:conversationId',
+        //   name: 'chat-conversation',
+        //   component: ChatPage
+        // }
       ]
     },
     {
