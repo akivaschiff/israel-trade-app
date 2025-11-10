@@ -75,27 +75,42 @@
           אם אתם עובדים על משהו בתחום, אם יש לכם בעיות שטכנולוגיה יכולה לפתור, או שפשוט רוצים לדבר על איך הופכים מיליוני שורות של נתונים למשהו שימושי - אשמח לדבר 😌️.
         </p>
 
-        <!-- Contact Links -->
-        <div class="flex flex-col items-end gap-4 mt-12 pb-12">
-          <div class="text-2xl font-semibold text-gray-900 mb-2">
-            Akiva Schiff
+        <!-- Contact Links with Ship Animation -->
+        <div class="relative mt-24 pb-12 h-80">
+          <!-- Animated Container -->
+          <div ref="animatedContainer" class="absolute top-0 right-0">
+            <div class="relative">
+              <!-- Contact Card (base layer) -->
+              <div class="bg-white rounded-2xl shadow-xl p-8 pb-22 border-2 border-blue-200 relative z-10">
+                <div class="flex flex-col items-end gap-4">
+                  <div class="text-2xl font-semibold text-gray-900 mb-2">
+                    Akiva Schiff-Blass
+                  </div>
+                  <a
+                    href="mailto:akiva.s.dev@gmail.com"
+                    class="text-xl text-blue-600 hover:text-blue-800 font-medium transition-colors flex items-center gap-3"
+                  >
+                    <span>akiva.s.dev@gmail.com</span>
+                    <span class="text-2xl">📧</span>
+                  </a>
+                  <a
+                    href="https://www.linkedin.com/in/akiva-schiff-blass-6b5b39167"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-xl text-blue-600 hover:text-blue-800 font-medium transition-colors flex items-center gap-3"
+                  >
+                    <span>LinkedIn Profile</span>
+                    <span class="text-2xl">💼</span>
+                  </a>
+                </div>
+              </div>
+
+              <!-- Ship -->
+              <div ref="shipElement" class="absolute z-40" style="bottom: -40px; right: -10px;">
+                <img src="/icon-ship.png" alt="Ship" class="w-28 h-28" />
+              </div>
+            </div>
           </div>
-          <a
-            href="mailto:akiva.s.dev@gmail.com"
-            class="text-xl text-blue-600 hover:text-blue-800 font-medium transition-colors flex items-center gap-3"
-          >
-            <span class="text-2xl">📧</span>
-            <span>akiva.s.dev@gmail.com</span>
-          </a>
-          <a
-            href="https://www.linkedin.com/in/akiva-schiff-blass-6b5b39167"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="text-xl text-blue-600 hover:text-blue-800 font-medium transition-colors flex items-center gap-3"
-          >
-            <span class="text-2xl">💼</span>
-            <span>LinkedIn Profile</span>
-          </a>
         </div>
       </div>
     </div>
@@ -116,6 +131,10 @@ const logo3 = ref(null)
 const logo4 = ref(null)
 const logo5 = ref(null)
 const logo6 = ref(null)
+
+// Refs for ship animation
+const animatedContainer = ref(null)
+const shipElement = ref(null)
 
 onMounted(() => {
   const logos = [
@@ -153,6 +172,92 @@ onMounted(() => {
       ease: 'sine.inOut',
     })
   })
+
+  // Ship pulling card animation
+  if (animatedContainer.value && shipElement.value) {
+    // Calculate travel distance (50% of container width)
+    const containerWidth = animatedContainer.value.parentElement?.offsetWidth || 1000
+    const travelDistance = -containerWidth * 0.5
+    const shipIndependentTravel = 240 // Distance ship travels independently
+
+    const shipTimeline = gsap.timeline({
+      repeat: -1
+    })
+
+    // FLIP: Ship turns around to face right (ready to pull left)
+    shipTimeline.to(shipElement.value, {
+      scaleX: -1,
+      duration: 0.5,
+      ease: 'power2.inOut'
+    })
+
+    // Phase 1: Ship moves left independently (relative to container)
+    shipTimeline.call(() => console.log('🚢 START: Ship starting to move left independently'))
+    shipTimeline.to(shipElement.value, {
+      x: -shipIndependentTravel,
+      duration: 3,
+      ease: 'power1.inOut',
+      onComplete: () => console.log('🚢 CUE #1: Ship finished moving left independently')
+    })
+    // Phase 2: Ship and container move left together (ship pulling)
+    shipTimeline.call(() => console.log('🚢 CUE #2: Ship starting to pull container left'))
+    shipTimeline.to(animatedContainer.value, {
+      x: travelDistance,
+      duration: 5,
+      ease: 'power1.inOut',
+      onComplete: () => console.log('🚢 CUE #3: Ship finished pulling container left')
+    })
+
+    // Phase 3: Pause at left
+    shipTimeline.call(() => console.log('🚢 CUE #4: Ship pausing at left'))
+
+    // FLIP: Ship turns around to face left
+    shipTimeline.to(shipElement.value, {
+      scaleX: 1,
+      duration: 0.5,
+      ease: 'power2.inOut'
+    })
+
+    shipTimeline.to({}, { duration: 0.5 })
+
+    // Phase 4: Ship moves right independently (back to starting position)
+    shipTimeline.call(() => console.log('🚢 CUE #5: Ship starting to move right independently'))
+    shipTimeline.to(shipElement.value, {
+      x: 0,
+      duration: 3,
+      ease: 'power1.inOut',
+      onComplete: () => console.log('🚢 CUE #6: Ship finished moving right independently')
+    })
+
+    // FLIP: Ship turns around to face left (ready to pull right)
+    shipTimeline.to(shipElement.value, {
+      scaleX: 1,
+      duration: 0.5,
+      ease: 'power2.inOut'
+    })
+
+    // Phase 5: Ship and container move right together (ship pulling)
+    shipTimeline.call(() => console.log('🚢 CUE #7: Ship starting to pull container right'))
+    shipTimeline.to(animatedContainer.value, {
+      x: 0,
+      duration: 5,
+      ease: 'power1.inOut',
+      onComplete: () => console.log('🚢 CUE #8: Ship finished pulling container right')
+    })
+
+    // FLIP: Ship turns to face left (ready for next cycle)
+    shipTimeline.to(shipElement.value, {
+      scaleX: 1,
+      duration: 0.5,
+      ease: 'power2.inOut'
+    })
+
+    // Phase 6: Pause at right
+    shipTimeline.call(() => console.log('🚢 CUE #9: Ship pausing at right'))
+
+    shipTimeline.to({}, { duration: 0.5 })
+    shipTimeline.call(() => console.log('🚢 CUE #10: Ship about to restart cycle'))
+  }
 })
 </script>
 

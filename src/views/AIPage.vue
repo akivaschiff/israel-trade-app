@@ -16,7 +16,7 @@
       <!-- Countdown -->
       <div class="mb-8">
         <p class="text-2xl text-gray-700 mb-4 font-semibold">
-          Launching This Wednesday
+          Launching This Thursday
         </p>
         <div class="flex justify-center gap-4 mb-6">
           <div class="bg-white rounded-xl shadow-lg p-4 min-w-[80px]">
@@ -40,13 +40,13 @@
 
       <!-- Description -->
       <p class="text-xl text-gray-700 mb-10 leading-relaxed max-w-2xl mx-auto">
-        Ask questions about Israel's trade data in natural language and get detailed answers with interactive visualizations.
+        Ask questions about Israel's trade data in natural language.
       </p>
 
       <!-- Animated Examples -->
       <div class="bg-white rounded-2xl shadow-xl p-8 mb-8 relative overflow-hidden">
         <div class="mb-4">
-          <p class="text-lg text-gray-600 font-semibold">Example questions you'll be able to ask:</p>
+          <p class="text-lg text-gray-600 font-semibold">Example questions:</p>
         </div>
 
         <div class="relative h-24 flex items-center justify-center">
@@ -78,7 +78,7 @@ let interval = null
 const getNextWednesday = () => {
   const today = new Date()
   const dayOfWeek = today.getDay()
-  const daysUntilWednesday = (3 - dayOfWeek + 7) % 7 || 7 // 3 = Wednesday
+  const daysUntilWednesday = (4 - dayOfWeek + 7) % 7 || 7 // 3 = Wednesday
   const nextWednesday = new Date(today)
   nextWednesday.setDate(today.getDate() + daysUntilWednesday)
   nextWednesday.setHours(0, 0, 0, 0)
@@ -110,15 +110,15 @@ const seconds = computed(() => {
 // Question rotation logic
 const questions = [
   "Where does Israel import most electronics from?",
-  "How has software export changed over the last year?",
+  "What are the top 5 countries we export to?",
   "Which countries does Israel trade with the most?",
-  "What are the top 5 imported products?",
+  "Show me import trends for vehicles over the last year",
   "Show me the trend of diamond exports",
-  "How did the war affect supply chains?",
+  "What products does Israel import from the United States?",
   "Which countries buy Israeli agricultural products?",
   "What's the trade balance with China?",
   "Show me monthly import trends for petroleum",
-  "Which industries export the most from Israel?"
+  "How much does Israel export in medical equipment?"
 ]
 
 const currentQuestion = ref(questions[0])
