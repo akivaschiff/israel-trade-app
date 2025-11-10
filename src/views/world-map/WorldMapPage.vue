@@ -113,19 +113,51 @@
 
     <!-- Map Container -->
     <div class="relative">
-      <div 
-        v-if="mapReady" 
-        style="height: calc(100vh - 180px);" 
+      <div
+        v-if="mapReady"
+        style="height: calc(100vh - 180px);"
         class="w-full transition-opacity duration-300"
         :class="{ 'opacity-60': dataLoading, 'opacity-100': !dataLoading }"
       >
         <v-chart
+          ref="chartRef"
           :option="mapOption"
           :autoresize="true"
           :update-options="{ notMerge: false, lazyUpdate: false }"
           @click="handleMapClick"
           style="height: 100%; width: 100%;"
         />
+      </div>
+
+      <!-- Zoom Controls -->
+      <div v-if="mapReady" class="absolute bottom-6 right-6 flex flex-col gap-2 z-10">
+        <button
+          @click="zoomIn"
+          class="bg-white hover:bg-gray-100 text-gray-700 font-bold p-3 rounded-lg shadow-lg transition-colors border-2 border-gray-200"
+          aria-label="Zoom in"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+          </svg>
+        </button>
+        <button
+          @click="zoomOut"
+          class="bg-white hover:bg-gray-100 text-gray-700 font-bold p-3 rounded-lg shadow-lg transition-colors border-2 border-gray-200"
+          aria-label="Zoom out"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
+          </svg>
+        </button>
+        <button
+          @click="resetZoom"
+          class="bg-white hover:bg-gray-100 text-gray-700 font-bold p-3 rounded-lg shadow-lg transition-colors border-2 border-gray-200"
+          aria-label="Reset zoom"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+          </svg>
+        </button>
       </div>
 
       <!-- Map Loading -->
@@ -182,6 +214,7 @@ const dataLoading = ref(false) // Separate loading state for data updates
 const previousCountryTotals = ref([]) // Keep previous data during loading
 const selectedCountryCode = ref(null)
 const selectedCountryName = ref('')
+const chartRef = ref(null) // Reference to the chart component
 
 // K-Means distribution data for visualization
 const colorBands = ref([])
@@ -311,6 +344,46 @@ async function handleMapClick(params) {
 function clearCountrySelection() {
   selectedCountryCode.value = null
   selectedCountryName.value = ''
+}
+
+// Zoom control functions
+function zoomIn() {
+  if (chartRef.value) {
+    const echartsInstance = chartRef.value
+    echartsInstance.dispatchAction({
+      type: 'geoRoam',
+      seriesIndex: 0,
+      zoom: 1.2,
+      originX: window.innerWidth / 2,
+      originY: window.innerHeight / 2
+    })
+  }
+}
+
+function zoomOut() {
+  if (chartRef.value) {
+    const echartsInstance = chartRef.value
+    echartsInstance.dispatchAction({
+      type: 'geoRoam',
+      seriesIndex: 0,
+      zoom: 0.8,
+      originX: window.innerWidth / 2,
+      originY: window.innerHeight / 2
+    })
+  }
+}
+
+function resetZoom() {
+  if (chartRef.value) {
+    const echartsInstance = chartRef.value
+    // Reset zoom and center by setting option with notMerge
+    echartsInstance.setOption({
+      series: [{
+        zoom: 1,
+        center: null
+      }]
+    }, { notMerge: false })
+  }
 }
 
 // Format value for display (values are in thousands of USD)

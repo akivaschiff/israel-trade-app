@@ -512,7 +512,7 @@ export function useWorldMap() {
       const headingCodes = data.map(h => h.heading_code)
       const { data: productsData, error: productsError } = await supabase
         .from('products')
-        .select('hs_heading, description')
+        .select('hs_heading, hs_code, description')
         .in('hs_heading', headingCodes)
 
       if (productsError) {
@@ -520,13 +520,30 @@ export function useWorldMap() {
       }
 
       // Create a map of heading codes to names
+      // For each heading, find the product with the shortest hs_code (most general)
       const headingNamesMap = new Map()
       if (productsData) {
+        // Group products by heading
+        const headingProducts = new Map()
         productsData.forEach(p => {
-          if (p.hs_heading && !headingNamesMap.has(p.hs_heading)) {
+          if (p.hs_heading) {
+            if (!headingProducts.has(p.hs_heading)) {
+              headingProducts.set(p.hs_heading, [])
+            }
+            headingProducts.get(p.hs_heading).push(p)
+          }
+        })
+
+        // For each heading, pick the product with shortest code (most general description)
+        headingProducts.forEach((products, heading) => {
+          const shortestProduct = products.reduce((shortest, p) => {
+            return !shortest || p.hs_code.length < shortest.hs_code.length ? p : shortest
+          }, null)
+
+          if (shortestProduct) {
             // Extract simplified name (text before semicolon or comma)
-            const simplified = p.description.split(/[;,]/)[0].trim()
-            headingNamesMap.set(p.hs_heading, simplified)
+            const simplified = shortestProduct.description.split(/[;,]/)[0].trim()
+            headingNamesMap.set(heading, simplified)
           }
         })
       }
