@@ -486,6 +486,7 @@ const mapOption = computed(() => {
       },
     },
     visualMap: {
+      show: false,  // Hide the legend on the map - we have it in the top bar
       type: 'piecewise',
       pieces: pieces,
       calculable: false,
