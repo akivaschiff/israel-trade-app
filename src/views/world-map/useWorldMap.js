@@ -515,6 +515,82 @@ export function useWorldMap() {
     }
   }
 
+  // Fetch heading breakdown time series - SERVER AGGREGATED
+  async function fetchHeadingTimeSeries(countryCode, flow, chapterCode = null) {
+    try {
+      const { data, error: queryError } = await supabase
+        .rpc('get_country_heading_monthly', {
+          p_country_code: countryCode,
+          p_flow: flow,
+          p_chapter_code: chapterCode
+        })
+
+      if (queryError) throw queryError
+
+      // Group by heading
+      const headingMap = new Map()
+
+      for (const row of data) {
+        const headingCode = row.heading_code
+        const monthKey = `${row.year}-${String(row.period).padStart(2, '0')}`
+
+        if (!headingMap.has(headingCode)) {
+          headingMap.set(headingCode, {
+            chapter_code: row.chapter_code,
+            heading_code: headingCode,
+            monthly_data: []
+          })
+        }
+
+        const heading = headingMap.get(headingCode)
+        heading.monthly_data.push({
+          year: row.year,
+          period: row.period,
+          month: monthKey,
+          value: parseFloat(row.total_value) || 0
+        })
+      }
+
+      // Get heading names from products table
+      const headingCodes = Array.from(headingMap.keys())
+      const { data: productsData, error: productsError } = await supabase
+        .from('products')
+        .select('hs_heading, description')
+        .in('hs_heading', headingCodes)
+
+      if (productsError) {
+        console.warn('Error fetching product names:', productsError)
+      }
+
+      // Create a map of heading codes to names
+      const headingNamesMap = new Map()
+      if (productsData) {
+        productsData.forEach(p => {
+          if (p.hs_heading && !headingNamesMap.has(p.hs_heading)) {
+            // Extract simplified name (text before semicolon or comma)
+            const simplified = p.description.split(/[;,]/)[0].trim()
+            headingNamesMap.set(p.hs_heading, simplified)
+          }
+        })
+      }
+
+      // Convert to array format with heading names
+      return Array.from(headingMap.values()).map(heading => {
+        const headingName = headingNamesMap.get(heading.heading_code) || `Heading ${heading.heading_code}`
+        return {
+          chapter_code: heading.chapter_code,
+          heading_code: heading.heading_code,
+          heading_name: headingName,
+          monthly_data: heading.monthly_data
+        }
+      })
+
+    } catch (e) {
+      console.error('Error fetching heading time series:', e)
+      return []
+    }
+  }
+
   // Clear selected country details
   function clearCountryDetails() {
     selectedCountryDetails.value = null
@@ -536,6 +612,7 @@ export function useWorldMap() {
     fetchCountryDetails,
     fetchCountryTimeSeries,
     fetchChapterTimeSeries,
+    fetchHeadingTimeSeries,
     clearCountryDetails
   }
 }
