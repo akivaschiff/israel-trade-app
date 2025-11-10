@@ -1,27 +1,27 @@
 [
   {
     "name": "Chemicals & Allied Industries",
-    "product_count": 922,
+    "product_count": 965,
     "chapters": [
       {
         "code": "28",
         "name": "Inorganic chemicals",
-        "product_count": 171
+        "product_count": 174
       },
       {
         "code": "29",
         "name": "Organic chemicals",
-        "product_count": 325
+        "product_count": 341
       },
       {
         "code": "30",
         "name": "Pharmaceutical products",
-        "product_count": 170
+        "product_count": 183
       },
       {
         "code": "31",
         "name": "Fertilizers",
-        "product_count": 22
+        "product_count": 23
       },
       {
         "code": "32",
@@ -51,64 +51,64 @@
       {
         "code": "37",
         "name": "Photographic goods",
-        "product_count": 28
+        "product_count": 29
       },
       {
         "code": "38",
         "name": "Miscellaneous chemical products",
-        "product_count": 88
+        "product_count": 97
       }
     ]
   },
   {
     "name": "Machinery & Electronics",
-    "product_count": 823,
+    "product_count": 832,
     "chapters": [
       {
         "code": "84",
         "name": "Nuclear reactors, machinery",
-        "product_count": 531
+        "product_count": 536
       },
       {
         "code": "85",
         "name": "Electrical machinery",
-        "product_count": 292
+        "product_count": 296
       }
     ]
   },
   {
     "name": "Textiles",
-    "product_count": 785,
+    "product_count": 828,
     "chapters": [
       {
         "code": "50",
         "name": "Silk",
-        "product_count": 16
+        "product_count": 20
       },
       {
         "code": "51",
         "name": "Wool",
-        "product_count": 31
+        "product_count": 37
       },
       {
         "code": "52",
         "name": "Cotton",
-        "product_count": 101
+        "product_count": 111
       },
       {
         "code": "53",
         "name": "Vegetable textile fibers",
-        "product_count": 18
+        "product_count": 21
       },
       {
         "code": "54",
         "name": "Man-made filaments",
-        "product_count": 66
+        "product_count": 68
       },
       {
         "code": "55",
         "name": "Man-made staple fibers",
-        "product_count": 99
+        "product_count": 107
       },
       {
         "code": "56",
@@ -133,7 +133,7 @@
       {
         "code": "60",
         "name": "Knitted fabrics",
-        "product_count": 76
+        "product_count": 86
       },
       {
         "code": "61",
@@ -154,17 +154,17 @@
   },
   {
     "name": "Base Metals",
-    "product_count": 641,
+    "product_count": 656,
     "chapters": [
       {
         "code": "72",
         "name": "Iron and steel",
-        "product_count": 159
+        "product_count": 164
       },
       {
         "code": "73",
         "name": "Iron and steel articles",
-        "product_count": 121
+        "product_count": 124
       },
       {
         "code": "74",
@@ -184,22 +184,22 @@
       {
         "code": "78",
         "name": "Lead",
-        "product_count": 7
+        "product_count": 8
       },
       {
         "code": "79",
         "name": "Zinc",
-        "product_count": 8
+        "product_count": 9
       },
       {
         "code": "80",
         "name": "Tin",
-        "product_count": 68
+        "product_count": 69
       },
       {
         "code": "81",
         "name": "Other base metals",
-        "product_count": 75
+        "product_count": 79
       },
       {
         "code": "82",
@@ -214,34 +214,85 @@
     ]
   },
   {
+    "name": "Vegetable Products",
+    "product_count": 295,
+    "chapters": [
+      {
+        "code": "06",
+        "name": "Live trees and plants",
+        "product_count": 14
+      },
+      {
+        "code": "07",
+        "name": "Edible vegetables",
+        "product_count": 55
+      },
+      {
+        "code": "08",
+        "name": "Edible fruit and nuts",
+        "product_count": 58
+      },
+      {
+        "code": "09",
+        "name": "Coffee, tea, spices",
+        "product_count": 38
+      },
+      {
+        "code": "10",
+        "name": "Cereals",
+        "product_count": 46
+      },
+      {
+        "code": "11",
+        "name": "Milling products",
+        "product_count": 27
+      },
+      {
+        "code": "12",
+        "name": "Oil seeds",
+        "product_count": 42
+      },
+      {
+        "code": "13",
+        "name": "Lac, gums, resins",
+        "product_count": 11
+      },
+      {
+        "code": "14",
+        "name": "Vegetable plaiting materials",
+        "product_count": 4
+      }
+    ]
+  },
+  {
     "name": "Plastics & Rubber",
-    "product_count": 258,
+    "product_count": 261,
     "chapters": [
       {
         "code": "39",
         "name": "Plastics",
-        "product_count": 129
+        "product_count": 130
       },
       {
         "code": "40",
         "name": "Rubber",
-        "product_count": 129
+        "product_count": 131
       }
     ]
   },
   {
     "name": "Precision Instruments",
-    "product_count": 249,
+    "product_count": 252,
     "chapters": [
       {
         "code": "90",
         "name": "Optical, photographic, medical instruments",
-        "product_count": 180
+        "product_count": 179
       },
       {
         "code": "91",
         "name": "Clocks and watches",
-        "product_count": 52
+        "product_count": 56
       },
       {
         "code": "92",
@@ -252,12 +303,12 @@
   },
   {
     "name": "Foodstuffs",
-    "product_count": 222,
+    "product_count": 229,
     "chapters": [
       {
         "code": "16",
         "name": "Preparations of meat, fish",
-        "product_count": 27
+        "product_count": 30
       },
       {
         "code": "17",
@@ -277,12 +328,12 @@
       {
         "code": "20",
         "name": "Vegetable preparations",
-        "product_count": 72
+        "product_count": 75
       },
       {
         "code": "21",
         "name": "Miscellaneous edible preparations",
-        "product_count": 16
+        "product_count": 17
       },
       {
         "code": "22",
@@ -303,12 +354,12 @@
   },
   {
     "name": "Stone, Cement, Ceramics, Glass",
-    "product_count": 188,
+    "product_count": 196,
     "chapters": [
       {
         "code": "68",
         "name": "Stone, plaster, cement",
-        "product_count": 47
+        "product_count": 50
       },
       {
         "code": "69",
@@ -318,23 +369,54 @@
       {
         "code": "70",
         "name": "Glass",
-        "product_count": 110
+        "product_count": 115
+      }
+    ]
+  },
+  {
+    "name": "Animal Products",
+    "product_count": 176,
+    "chapters": [
+      {
+        "code": "01",
+        "name": "Live animals",
+        "product_count": 16
+      },
+      {
+        "code": "02",
+        "name": "Meat and edible meat offal",
+        "product_count": 16
+      },
+      {
+        "code": "03",
+        "name": "Fish and crustaceans",
+        "product_count": 108
+      },
+      {
+        "code": "04",
+        "name": "Dairy produce, eggs, honey",
+        "product_count": 26
+      },
+      {
+        "code": "05",
+        "name": "Products of animal origin",
+        "product_count": 10
       }
     ]
   },
   {
     "name": "Transportation Equipment",
-    "product_count": 150,
+    "product_count": 156,
     "chapters": [
       {
         "code": "86",
         "name": "Railway locomotives",
-        "product_count": 17
+        "product_count": 18
       },
       {
         "code": "87",
         "name": "Vehicles",
-        "product_count": 87
+        "product_count": 89
       },
       {
         "code": "88",
@@ -344,7 +426,7 @@
       {
         "code": "89",
         "name": "Ships, boats",
-        "product_count": 20
+        "product_count": 23
       }
     ]
   },
@@ -371,12 +453,12 @@
   },
   {
     "name": "Wood & Wood Products",
-    "product_count": 133,
+    "product_count": 137,
     "chapters": [
       {
         "code": "44",
         "name": "Wood",
-        "product_count": 115
+        "product_count": 119
       },
       {
         "code": "45",
@@ -392,17 +474,17 @@
   },
   {
     "name": "Paper & Paperboard",
-    "product_count": 132,
+    "product_count": 136,
     "chapters": [
       {
         "code": "47",
         "name": "Pulp",
-        "product_count": 15
+        "product_count": 18
       },
       {
         "code": "48",
         "name": "Paper and paperboard",
-        "product_count": 100
+        "product_count": 101
       },
       {
         "code": "49",
@@ -412,39 +494,8 @@
     ]
   },
   {
-    "name": "Vegetable Products",
-    "product_count": 122,
-    "chapters": [
-      {
-        "code": "10",
-        "name": "Cereals",
-        "product_count": 42
-      },
-      {
-        "code": "11",
-        "name": "Milling products",
-        "product_count": 27
-      },
-      {
-        "code": "12",
-        "name": "Oil seeds",
-        "product_count": 39
-      },
-      {
-        "code": "13",
-        "name": "Lac, gums, resins",
-        "product_count": 10
-      },
-      {
-        "code": "14",
-        "name": "Vegetable plaiting materials",
-        "product_count": 4
-      }
-    ]
-  },
-  {
     "name": "Mineral Products",
-    "product_count": 113,
+    "product_count": 127,
     "chapters": [
       {
         "code": "25",
@@ -454,34 +505,34 @@
       {
         "code": "26",
         "name": "Ores, slag, ash",
-        "product_count": 19
+        "product_count": 30
       },
       {
         "code": "27",
         "name": "Mineral fuels, oils",
-        "product_count": 32
+        "product_count": 35
       }
     ]
   },
   {
     "name": "Precious Stones & Metals",
-    "product_count": 96,
+    "product_count": 98,
     "chapters": [
       {
         "code": "71",
         "name": "Pearls, precious stones, metals",
-        "product_count": 96
+        "product_count": 98
       }
     ]
   },
   {
     "name": "Raw Hides & Skins",
-    "product_count": 53,
+    "product_count": 56,
     "chapters": [
       {
         "code": "41",
         "name": "Raw hides and skins",
-        "product_count": 26
+        "product_count": 29
       },
       {
         "code": "42",
@@ -497,12 +548,12 @@
   },
   {
     "name": "Animal/Vegetable Fats",
-    "product_count": 50,
+    "product_count": 51,
     "chapters": [
       {
         "code": "15",
         "name": "Animal or vegetable fats",
-        "product_count": 50
+        "product_count": 51
       }
     ]
   },
@@ -534,12 +585,12 @@
   },
   {
     "name": "Special Classifications",
-    "product_count": 24,
+    "product_count": 25,
     "chapters": [
       {
         "code": "98",
         "name": "Special classification provisions",
-        "product_count": 24
+        "product_count": 25
       }
     ]
   },
@@ -556,12 +607,12 @@
   },
   {
     "name": "Arms & Ammunition",
-    "product_count": 10,
+    "product_count": 12,
     "chapters": [
       {
         "code": "93",
         "name": "Arms and ammunition",
-        "product_count": 10
+        "product_count": 12
       }
     ]
   }
