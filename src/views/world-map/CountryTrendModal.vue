@@ -303,6 +303,11 @@ async function loadTrendData() {
 
   loading.value = true
 
+  // Reset state when loading data for a new country
+  selectedItems.value = new Set()
+  expandedChapters.value = new Set()
+  headingData.value = []
+
   try {
     // Fetch total time series from real database
     const totalData = await fetchCountryTimeSeries(
