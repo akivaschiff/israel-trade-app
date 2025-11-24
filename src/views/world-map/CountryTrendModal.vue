@@ -7,7 +7,12 @@
     >
       <div class="bg-white rounded-2xl shadow-2xl w-full max-w-7xl max-h-[90vh] overflow-hidden flex flex-col">
         <!-- Header -->
-        <div class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white p-6">
+        <div
+          class="text-white p-6"
+          :class="flowType === 1
+            ? 'bg-gradient-to-r from-blue-500 to-blue-600'
+            : 'bg-gradient-to-r from-orange-500 to-orange-600'"
+        >
           <div class="flex items-start justify-between">
             <div>
               <h2 class="text-3xl font-bold mb-2">{{ countryName }}</h2>
@@ -647,6 +652,10 @@ function getSparklineOption(item) {
 const comparisonChartOption = computed(() => {
   if (selectedItems.value.size === 0) return {}
 
+  // Get the months from total time series (this is the authoritative source)
+  const months = visibleData.value.map(d => d.month)
+  const monthSet = new Set(months)
+
   // Collect selected chapters and headings
   const selectedData = []
 
@@ -656,11 +665,17 @@ const comparisonChartOption = computed(() => {
       const chapterCode = id.substring(3)
       const chapter = chaptersWithStats.value.find(c => c.chapter_code === chapterCode)
       if (chapter) {
+        // Align chapter data with total time series months
+        const alignedData = months.map(month => {
+          const dataPoint = chapter.monthly_data.find(d => d.month === month)
+          return { month, value: dataPoint?.value || 0 }
+        })
         selectedData.push({
           ...chapter,
           id,
           displayName: chapter.chapter_name || `Ch ${chapter.chapter_code}`,
-          color: '#4f46e5'
+          color: '#4f46e5',
+          alignedData
         })
       }
     } else if (id.startsWith('hd-')) {
@@ -668,21 +683,25 @@ const comparisonChartOption = computed(() => {
       const headingCode = id.substring(3)
       const heading = headingData.value.find(h => h.heading_code === headingCode)
       if (heading) {
+        // Align heading data with total time series months
+        const alignedData = months.map(month => {
+          const dataPoint = heading.monthly_data.find(d => d.month === month)
+          return { month, value: dataPoint?.value || 0 }
+        })
         const stats = calculateSeriesStats(heading.monthly_data)
         selectedData.push({
           ...heading,
           ...stats,
           id,
           displayName: heading.heading_name || heading.heading_code,
-          color: '#8b5cf6'
+          color: '#8b5cf6',
+          alignedData
         })
       }
     }
   })
 
   const colors = ['#4f46e5', '#f59e0b', '#10b981', '#ef4444', '#8b5cf6', '#ec4899', '#06b6d4', '#84cc16']
-
-  const months = visibleData.value.map(d => d.month)
   
   if (viewMode.value === 'lines') {
     // Line chart - compare absolute values
@@ -725,7 +744,7 @@ const comparisonChartOption = computed(() => {
       series: selectedData.map((item, idx) => ({
         name: item.displayName,
         type: 'line',
-        data: item.visibleData.map(d => d.value),
+        data: item.alignedData.map(d => d.value),
         smooth: true,
         lineStyle: {
           width: 2.5,
@@ -778,7 +797,7 @@ const comparisonChartOption = computed(() => {
         name: item.displayName,
         type: 'line',
         stack: 'total',
-        data: item.visibleData.map(d => d.value),
+        data: item.alignedData.map(d => d.value),
         areaStyle: {},
         lineStyle: {
           width: 0
@@ -829,10 +848,10 @@ const comparisonChartOption = computed(() => {
         }
       },
       series: selectedData.map((item, idx) => {
-        // Calculate percentages
-        const percentData = item.visibleData.map((d, i) => {
-          const total = selectedData.reduce((sum, c) => sum + c.visibleData[i].value, 0)
-          return (d.value / total) * 100
+        // Calculate percentages using aligned data
+        const percentData = item.alignedData.map((d, i) => {
+          const total = selectedData.reduce((sum, c) => sum + c.alignedData[i].value, 0)
+          return total > 0 ? (d.value / total) * 100 : 0
         })
 
         return {
