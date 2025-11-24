@@ -1,7 +1,7 @@
 <template>
-  <div class="min-h-[calc(100vh-104px)] relative bg-gray-50">
+  <div class="min-h-[calc(100vh-64px)] relative bg-white">
     <!-- Controls Bar - Clean card style -->
-    <div class="bg-white border-b border-gray-200 sticky top-[104px] z-30">
+    <div class="bg-white border-b border-gray-200 sticky top-16 z-30">
       <div class="max-w-7xl mx-auto px-4 py-3">
         <div class="flex items-center justify-between gap-6 flex-wrap">
           <!-- Flow Toggle - Pill style buttons -->
@@ -13,8 +13,8 @@
                 :class="[
                   'px-5 py-2 rounded-md font-semibold text-sm transition-all duration-200',
                   selectedFlow === FLOW_TYPES.IMPORTS
-                    ? 'bg-cyan-600 text-white shadow-sm'
-                    : 'text-gray-600 hover:text-cyan-600'
+                    ? 'bg-blue-500 text-white shadow-sm'
+                    : 'text-gray-600 hover:text-blue-500'
                 ]"
               >
                 Imports
@@ -24,8 +24,8 @@
                 :class="[
                   'px-5 py-2 rounded-md font-semibold text-sm transition-all duration-200',
                   selectedFlow === FLOW_TYPES.EXPORTS
-                    ? 'bg-rose-500 text-white shadow-sm'
-                    : 'text-gray-600 hover:text-rose-500'
+                    ? 'bg-orange-500 text-white shadow-sm'
+                    : 'text-gray-600 hover:text-orange-500'
                 ]"
               >
                 Exports
@@ -561,8 +561,8 @@ const mapOption = computed(() => {
     }
   })
 
-  // Map background color - soft warm tone for ocean
-  const oceanColor = selectedFlow.value === FLOW_TYPES.IMPORTS ? '#e0f7fa' : '#fff5f5'
+  // Map background color - soft tone for ocean
+  const oceanColor = selectedFlow.value === FLOW_TYPES.IMPORTS ? '#eff6ff' : '#fff7ed'
 
   return {
     backgroundColor: oceanColor,
@@ -584,7 +584,7 @@ const mapOption = computed(() => {
           const displayName = country?.originalName || params.name
           const actualValue = country?.value || 0
           const flowLabel = selectedFlow.value === FLOW_TYPES.EXPORTS ? 'Exports' : 'Imports'
-          const flowColor = selectedFlow.value === FLOW_TYPES.EXPORTS ? '#f43f5e' : '#0891b2'
+          const flowColor = selectedFlow.value === FLOW_TYPES.EXPORTS ? '#f97316' : '#3b82f6'
           return `<div style="font-weight: 600; margin-bottom: 4px;">${displayName}</div>
                   <div style="color: ${flowColor}; font-size: 15px; font-weight: 700;">${flowLabel}: $${formatValue(actualValue)}</div>
                   <div style="font-size: 11px; color: #9ca3af; margin-top: 4px;">Click for details</div>`
@@ -613,7 +613,7 @@ const mapOption = computed(() => {
         roam: true,
         itemStyle: {
           areaColor: '#fafaf9',  // Warm gray for countries with no data
-          borderColor: selectedFlow.value === FLOW_TYPES.IMPORTS ? '#a5f3fc' : '#fecdd3',
+          borderColor: selectedFlow.value === FLOW_TYPES.IMPORTS ? '#bfdbfe' : '#fed7aa',
           borderWidth: 0.5,
           borderType: 'solid'
         },
@@ -628,7 +628,7 @@ const mapOption = computed(() => {
           },
           itemStyle: {
             areaColor: '#fbbf24', // Amber highlight on hover
-            borderColor: selectedFlow.value === FLOW_TYPES.IMPORTS ? '#0891b2' : '#f43f5e',
+            borderColor: selectedFlow.value === FLOW_TYPES.IMPORTS ? '#3b82f6' : '#f97316',
             borderWidth: 2
           }
         },
@@ -658,7 +658,7 @@ const mapOption = computed(() => {
               shadowOffsetY: 2
             },
             itemStyle: {
-              borderColor: selectedFlow.value === FLOW_TYPES.IMPORTS ? '#a5f3fc' : '#fecdd3',
+              borderColor: selectedFlow.value === FLOW_TYPES.IMPORTS ? '#bfdbfe' : '#fed7aa',
               borderWidth: 0.5
             },
             emphasis: {
@@ -671,7 +671,7 @@ const mapOption = computed(() => {
               },
               itemStyle: {
                 areaColor: '#fde68a', // Amber-200 on hover
-                borderColor: selectedFlow.value === FLOW_TYPES.IMPORTS ? '#0891b2' : '#f43f5e',
+                borderColor: selectedFlow.value === FLOW_TYPES.IMPORTS ? '#3b82f6' : '#f97316',
                 borderWidth: 2
               }
             }

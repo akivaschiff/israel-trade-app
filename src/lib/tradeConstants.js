@@ -8,25 +8,25 @@
  */
 
 export const TRADE_COLORS = {
-  // Exports: Coral/Rose palette - warm, action-oriented
+  // Exports: Orange palette - warm, outgoing
   EXPORTS: {
-    primary: '#f43f5e',      // rose-500 - vibrant coral
-    light: '#fb7185',        // rose-400
-    lighter: '#fda4af',      // rose-300
-    lightest: '#ffe4e6',     // rose-100
-    dark: '#e11d48',         // rose-600
-    darker: '#be123c',       // rose-700
-    gradient: ['#ffe4e6', '#fecdd3', '#fda4af', '#fb7185', '#f43f5e', '#e11d48', '#be123c'],
+    primary: '#f97316',      // orange-500
+    light: '#fb923c',        // orange-400
+    lighter: '#fdba74',      // orange-300
+    lightest: '#ffedd5',     // orange-100
+    dark: '#ea580c',         // orange-600
+    darker: '#c2410c',       // orange-700
+    gradient: ['#ffedd5', '#fed7aa', '#fdba74', '#fb923c', '#f97316', '#ea580c', '#c2410c'],
   },
-  // Imports: Teal/Cyan palette - cool, trustworthy
+  // Imports: Blue palette - classic, trustworthy
   IMPORTS: {
-    primary: '#0891b2',      // cyan-600 - rich teal
-    light: '#22d3ee',        // cyan-400
-    lighter: '#67e8f9',      // cyan-300
-    lightest: '#cffafe',     // cyan-100
-    dark: '#0e7490',         // cyan-700
-    darker: '#155e75',       // cyan-800
-    gradient: ['#cffafe', '#a5f3fc', '#67e8f9', '#22d3ee', '#06b6d4', '#0891b2', '#0e7490'],
+    primary: '#3b82f6',      // blue-500
+    light: '#60a5fa',        // blue-400
+    lighter: '#93c5fd',      // blue-300
+    lightest: '#dbeafe',     // blue-100
+    dark: '#2563eb',         // blue-600
+    darker: '#1d4ed8',       // blue-700
+    gradient: ['#dbeafe', '#bfdbfe', '#93c5fd', '#60a5fa', '#3b82f6', '#2563eb', '#1d4ed8'],
   },
   // Primary accent: Golden Amber
   PRIMARY: {
