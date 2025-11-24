@@ -137,6 +137,7 @@
             :autoresize="true"
             :update-options="{ notMerge: false, lazyUpdate: false }"
             @click="handleMapClick"
+            @georoam="handleGeoRoam"
             style="height: 100%; width: 100%;"
           />
         </div>
@@ -361,6 +362,24 @@ async function handleMapClick(params) {
 function clearCountrySelection() {
   selectedCountryCode.value = null
   selectedCountryName.value = ''
+}
+
+// Handle geo roam events (zoom/pan) - auto-center when zoomed out to min
+function handleGeoRoam(params) {
+  if (params.zoom && chartRef.value) {
+    const echartsInstance = chartRef.value
+    const option = echartsInstance.getOption()
+    const currentZoom = option.series[0].zoom || 1
+
+    // If zoomed out to minimum (or very close), reset center
+    if (currentZoom <= 1.05) {
+      echartsInstance.setOption({
+        series: [{
+          center: null
+        }]
+      }, { notMerge: false })
+    }
+  }
 }
 
 // Zoom control functions
@@ -611,6 +630,10 @@ const mapOption = computed(() => {
         type: 'map',
         map: 'world',
         roam: true,
+        scaleLimit: {
+          min: 1,  // Can't zoom out beyond default
+          max: 10  // Can zoom in up to 10x
+        },
         itemStyle: {
           areaColor: '#fafafa',  // White for countries with no data
           borderColor: '#d1d5db',  // Gray-300 soft border
