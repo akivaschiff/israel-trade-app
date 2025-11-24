@@ -1,60 +1,142 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
-    <!-- Navigation Tabs -->
-    <nav class="bg-white shadow-md sticky top-0 z-50">
-      <div class="px-6">
-        <div class="flex items-center gap-4">
-          <!-- Logo -->
-          <router-link to="/" class="flex items-center py-2">
-            <img src="/icon.png" alt="Israel Trade" class="h-16 w-16" />
+  <div class="min-h-screen bg-white" :dir="locale === 'he' ? 'rtl' : 'ltr'">
+    <!-- Main Navigation - rise-il style -->
+    <nav class="bg-white border-b border-gray-200 sticky top-0 z-50">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <!-- Logo & Brand -->
+          <router-link to="/" class="flex items-center gap-3">
+            <img src="/icon.png" alt="Israel Trade" class="h-10 w-10" />
           </router-link>
 
-          <!-- Tabs -->
-          <div class="flex space-x-1 overflow-x-auto">
+          <!-- Navigation Tabs - Center -->
+          <div class="hidden md:flex items-center gap-1">
             <router-link
               v-for="tab in tabs"
               :key="tab.path"
               :to="tab.path"
-              class="px-6 py-4 font-semibold text-gray-600 hover:text-indigo-600 hover:bg-indigo-50 transition-colors whitespace-nowrap border-b-4"
-              :class="isActive(tab.path) ? 'border-indigo-600 text-indigo-600 bg-indigo-50' : 'border-transparent'"
+              class="px-4 py-5 text-sm font-medium transition-colors border-b-3"
+              :class="isActive(tab.path)
+                ? 'text-[#053778] border-[#053778]'
+                : 'text-gray-600 hover:text-[#053778] border-transparent hover:border-gray-300'"
             >
-              <span class="mr-2">{{ tab.icon }}</span>
-              {{ tab.name }}
+              <span class="flex items-center gap-2">
+                <span v-if="tab.icon" class="text-lg">{{ tab.icon }}</span>
+                <span>{{ locale === 'he' ? tab.nameHe : tab.name }}</span>
+              </span>
             </router-link>
           </div>
+
+          <!-- Language Toggle - Right side -->
+          <div class="flex items-center gap-4">
+            <button
+              @click="toggleLocale"
+              class="text-[#053778] hover:text-[#042d63] text-sm font-semibold transition-colors"
+            >
+              {{ locale === 'he' ? 'EN' : 'עב' }}
+            </button>
+
+            <!-- Mobile menu button -->
+            <button
+              @click="mobileMenuOpen = !mobileMenuOpen"
+              class="md:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100"
+            >
+              <svg v-if="!mobileMenuOpen" class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+              <svg v-else class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mobile Navigation -->
+      <div v-if="mobileMenuOpen" class="md:hidden border-t border-gray-200 bg-white">
+        <div class="px-4 py-2 space-y-1">
+          <router-link
+            v-for="tab in tabs"
+            :key="tab.path"
+            :to="tab.path"
+            @click="mobileMenuOpen = false"
+            class="block px-4 py-3 rounded-lg text-sm font-medium transition-colors"
+            :class="isActive(tab.path)
+              ? 'bg-[#053778]/10 text-[#053778]'
+              : 'text-gray-600 hover:bg-gray-100'"
+          >
+            <span class="flex items-center gap-2">
+              <span v-if="tab.icon" class="text-lg">{{ tab.icon }}</span>
+              <span>{{ locale === 'he' ? tab.nameHe : tab.name }}</span>
+            </span>
+          </router-link>
         </div>
       </div>
     </nav>
 
     <!-- Page Content -->
-    <div>
+    <main>
       <router-view />
-    </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-50 border-t border-gray-200 py-8 mt-auto">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+          <div class="flex items-center gap-3">
+            <img src="/icon.png" alt="Israel Trade" class="h-8 w-8 opacity-60" />
+            <span class="text-gray-500 text-sm">
+              {{ locale === 'he' ? '© 2024 סחר ישראל. כל הזכויות שמורות.' : '© 2024 Israel Trade. All rights reserved.' }}
+            </span>
+          </div>
+          <div class="flex items-center gap-6 text-sm text-gray-500">
+            <router-link to="/about" class="hover:text-[#053778]">
+              {{ locale === 'he' ? 'אודות' : 'About' }}
+            </router-link>
+            <router-link to="/contact" class="hover:text-[#053778]">
+              {{ locale === 'he' ? 'צור קשר' : 'Contact' }}
+            </router-link>
+          </div>
+        </div>
+      </div>
+    </footer>
   </div>
 </template>
 
 <script setup>
+import { ref, provide } from 'vue'
 import { useRoute } from 'vue-router'
 
 const route = useRoute()
+const mobileMenuOpen = ref(false)
+
+// Locale management
+const locale = ref('en')
+provide('locale', locale)
+
+function toggleLocale() {
+  locale.value = locale.value === 'en' ? 'he' : 'en'
+}
 
 const tabs = [
-  { name: 'World Map', path: '/world-map', icon: '🗺️' },
-  { name: 'AI Chat', path: '/ai-chat', icon: '🤖' },
-  { name: 'About', path: '/about', icon: 'ℹ️' },
-  // Hidden pages (kept in code for later):
-  // { name: 'Product Origins', path: '/product-origin', icon: '🌍' },
-  // { name: 'Trends', path: '/trends', icon: '📉' },
-  // { name: 'HS Code Lookup', path: '/hs-lookup', icon: '🔎' },
+  { name: 'Israel Trade', nameHe: 'סחר ישראל', path: '/', icon: '🏠' },
+  { name: 'World Map', nameHe: 'מפת העולם', path: '/world-map', icon: '' },
+  { name: 'Trade Lookup', nameHe: 'חיפוש סחר', path: '/trade-lookup', icon: '' },
+  { name: 'AI Chat', nameHe: 'צ\'אט AI', path: '/ai-chat', icon: '' },
+  { name: 'About', nameHe: 'אודות', path: '/about', icon: '' },
+  { name: 'Contact', nameHe: 'צור קשר', path: '/contact', icon: '' },
 ]
 
 function isActive(path) {
-  if (path === '/world-map') {
-    return route.path === '/world-map'
+  if (path === '/') {
+    return route.path === '/'
   }
-  if (path === '/about') {
-    return route.path === '/about'
-  }
-  return route.path === path
+  return route.path.startsWith(path)
 }
 </script>
+
+<style scoped>
+.border-b-3 {
+  border-bottom-width: 3px;
+}
+</style>

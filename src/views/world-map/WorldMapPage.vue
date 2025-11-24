@@ -1,113 +1,122 @@
 <template>
-  <div class="min-h-[calc(100vh-64px)] relative bg-gradient-to-b from-slate-50 to-white">
-    <!-- Controls Bar -->
-    <div class="bg-white/90 backdrop-blur-sm border-b border-gray-200 p-4 sticky top-16 z-30 shadow-sm">
-      <div class="max-w-7xl mx-auto flex items-center justify-between gap-4">
-        <!-- Flow Toggle -->
-        <div class="flex gap-2">
-          <button
-            @click="selectedFlow = FLOW_TYPES.EXPORTS"
-            :class="[
-              'px-6 py-2 rounded-lg font-medium transition-colors',
-              selectedFlow === FLOW_TYPES.EXPORTS
-                ? 'text-white'
-                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-            ]"
-            :style="selectedFlow === FLOW_TYPES.EXPORTS ? { backgroundColor: TRADE_COLORS.EXPORTS.primary } : {}"
-          >
-            Exports
-          </button>
-          <button
-            @click="selectedFlow = FLOW_TYPES.IMPORTS"
-            :class="[
-              'px-6 py-2 rounded-lg font-medium transition-colors',
-              selectedFlow === FLOW_TYPES.IMPORTS
-                ? 'text-white'
-                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-            ]"
-            :style="selectedFlow === FLOW_TYPES.IMPORTS ? { backgroundColor: TRADE_COLORS.IMPORTS.primary } : {}"
-          >
-            Imports
-          </button>
-        </div>
-
-        <!-- Time Range Controls -->
-        <div class="flex items-center gap-6">
-          <!-- Month Range Slider -->
-          <div class="flex items-center gap-3">
-            <label class="text-sm font-semibold text-gray-700">Months:</label>
-            <div class="flex items-center gap-2">
-              <input
-                type="range"
-                v-model.number="monthRange"
-                :disabled="dataLoading"
-                min="1"
-                max="12"
-                step="1"
-                class="w-32 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-indigo-600 disabled:opacity-75 disabled:cursor-wait"
-              />
-              <span class="text-sm font-medium text-gray-700 min-w-[3ch] text-center">{{ monthRange }}</span>
+  <div class="min-h-[calc(100vh-104px)] relative bg-gray-50">
+    <!-- Controls Bar - Clean card style -->
+    <div class="bg-white border-b border-gray-200 sticky top-[104px] z-30">
+      <div class="max-w-7xl mx-auto px-4 py-3">
+        <div class="flex items-center justify-between gap-6 flex-wrap">
+          <!-- Flow Toggle - Pill style buttons -->
+          <div class="flex items-center gap-2">
+            <span class="text-sm font-medium text-gray-500 mr-2">View:</span>
+            <div class="flex p-1 bg-gray-100 rounded-lg">
+              <button
+                @click="selectedFlow = FLOW_TYPES.IMPORTS"
+                :class="[
+                  'px-5 py-2 rounded-md font-semibold text-sm transition-all duration-200',
+                  selectedFlow === FLOW_TYPES.IMPORTS
+                    ? 'bg-cyan-600 text-white shadow-sm'
+                    : 'text-gray-600 hover:text-cyan-600'
+                ]"
+              >
+                Imports
+              </button>
+              <button
+                @click="selectedFlow = FLOW_TYPES.EXPORTS"
+                :class="[
+                  'px-5 py-2 rounded-md font-semibold text-sm transition-all duration-200',
+                  selectedFlow === FLOW_TYPES.EXPORTS
+                    ? 'bg-rose-500 text-white shadow-sm'
+                    : 'text-gray-600 hover:text-rose-500'
+                ]"
+              >
+                Exports
+              </button>
             </div>
           </div>
 
-          <!-- End Month Selector -->
-          <div class="flex items-center gap-3">
-            <label class="text-sm font-semibold text-gray-700">Ending:</label>
-            <div class="relative flex items-center gap-2">
-              <select
-                v-model="selectedMonth"
-                :disabled="dataLoading"
-                class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent bg-white disabled:opacity-75 disabled:cursor-wait"
-              >
-                <option
-                  v-for="month in availableMonths"
-                  :key="month.key"
-                  :value="month.key"
+          <!-- Time Range Controls -->
+          <div class="flex items-center gap-6 flex-wrap">
+            <!-- Month Range Slider -->
+            <div class="flex items-center gap-3">
+              <label class="text-sm font-medium text-gray-600">Months:</label>
+              <div class="flex items-center gap-2">
+                <input
+                  type="range"
+                  v-model.number="monthRange"
+                  :disabled="dataLoading"
+                  min="1"
+                  max="12"
+                  step="1"
+                  class="w-28 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#053778] disabled:opacity-50 disabled:cursor-wait"
+                />
+                <span class="text-sm font-semibold text-[#053778] min-w-[2ch] text-center bg-blue-50 px-2 py-0.5 rounded-md">
+                  {{ monthRange }}
+                </span>
+              </div>
+            </div>
+
+            <!-- End Month Selector -->
+            <div class="flex items-center gap-3">
+              <label class="text-sm font-medium text-gray-600">Ending:</label>
+              <div class="relative flex items-center gap-2">
+                <select
+                  v-model="selectedMonth"
+                  :disabled="dataLoading"
+                  class="px-4 py-2 bg-white border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#053778] focus:border-transparent text-sm font-medium text-gray-700 disabled:opacity-50 disabled:cursor-wait appearance-none pr-10 cursor-pointer"
                 >
-                  {{ month.label }}
-                </option>
-              </select>
-              <!-- Small Loading Indicator -->
-              <div v-if="dataLoading" class="flex items-center">
-                <svg class="animate-spin h-5 w-5 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                  <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  <option
+                    v-for="month in availableMonths"
+                    :key="month.key"
+                    :value="month.key"
+                  >
+                    {{ month.label }}
+                  </option>
+                </select>
+                <!-- Custom dropdown arrow -->
+                <svg class="absolute right-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
                 </svg>
+                <!-- Loading Indicator -->
+                <div v-if="dataLoading" class="flex items-center">
+                  <svg class="animate-spin h-5 w-5 text-[#053778]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                  </svg>
+                </div>
               </div>
             </div>
           </div>
-        </div>
 
-        <!-- Legend -->
-        <div class="flex items-center gap-2 text-sm">
-        <span class="text-gray-600">Trade Value:</span>
-        <div class="flex items-center gap-1">
-        <div class="w-4 h-4 bg-white border border-gray-300"></div>
-        <span class="text-xs text-gray-500">None</span>
-        </div>
-        <div class="flex items-center gap-1 ml-2">
-        <div
-        class="w-4 h-4 border border-gray-300"
-        :style="{ backgroundColor: selectedFlow === FLOW_TYPES.EXPORTS ? TRADE_COLORS.EXPORTS.lighter : TRADE_COLORS.IMPORTS.gradient[0] }"
-        ></div>
-        <span class="text-xs text-gray-500">Low</span>
-        </div>
-        <div class="flex items-center gap-1">
-        <div
-        class="w-4 h-4 border border-gray-300"
-        :style="{ backgroundColor: selectedFlow === FLOW_TYPES.EXPORTS ? TRADE_COLORS.EXPORTS.dark : TRADE_COLORS.IMPORTS.gradient[6] }"
-        ></div>
-        <span class="text-xs text-gray-500">High</span>
-        </div>
+          <!-- Legend -->
+          <div class="flex items-center gap-3 text-sm px-4 py-2 bg-gray-50 rounded-lg border border-gray-200">
+            <span class="text-gray-500 font-medium">Trade Value:</span>
+            <div class="flex items-center gap-1">
+              <div class="w-4 h-4 rounded bg-white border border-gray-300"></div>
+              <span class="text-xs text-gray-500">None</span>
+            </div>
+            <div class="flex items-center gap-1 ml-2">
+              <div
+                class="w-4 h-4 rounded"
+                :style="{ backgroundColor: selectedFlow === FLOW_TYPES.EXPORTS ? TRADE_COLORS.EXPORTS.lighter : TRADE_COLORS.IMPORTS.gradient[0] }"
+              ></div>
+              <span class="text-xs text-gray-500">Low</span>
+            </div>
+            <div class="flex items-center gap-1">
+              <div
+                class="w-4 h-4 rounded"
+                :style="{ backgroundColor: selectedFlow === FLOW_TYPES.EXPORTS ? TRADE_COLORS.EXPORTS.dark : TRADE_COLORS.IMPORTS.gradient[6] }"
+              ></div>
+              <span class="text-xs text-gray-500">High</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Initial Loading State (only show on first load) -->
-    <div v-if="loading && !mapReady" class="absolute inset-0 flex items-center justify-center bg-white bg-opacity-75 z-20">
-      <div class="text-center">
-        <div class="inline-block animate-spin rounded-full h-16 w-16 border-b-2 border-indigo-600 mb-4"></div>
-        <p class="text-gray-600 text-lg">Loading map data...</p>
+    <!-- Initial Loading State -->
+    <div v-if="loading && !mapReady" class="absolute inset-0 flex items-center justify-center bg-white/80 z-20 mt-20">
+      <div class="text-center bg-white p-8 rounded-lg shadow-lg">
+        <div class="inline-block animate-spin rounded-full h-12 w-12 border-4 border-gray-200 border-t-[#053778] mb-4"></div>
+        <p class="text-gray-600 font-medium">Loading map data...</p>
       </div>
     </div>
 
@@ -115,56 +124,64 @@
     <div class="relative">
       <div
         v-if="mapReady"
-        style="height: calc(100vh - 180px);"
-        class="w-full transition-opacity duration-300"
-        :class="{ 'opacity-60': dataLoading, 'opacity-100': !dataLoading }"
+        class="bg-white"
+        style="height: calc(100vh - 170px);"
       >
-        <v-chart
-          ref="chartRef"
-          :option="mapOption"
-          :autoresize="true"
-          :update-options="{ notMerge: false, lazyUpdate: false }"
-          @click="handleMapClick"
-          style="height: 100%; width: 100%;"
-        />
+        <div
+          class="w-full h-full transition-opacity duration-300"
+          :class="{ 'opacity-60': dataLoading, 'opacity-100': !dataLoading }"
+        >
+          <v-chart
+            ref="chartRef"
+            :option="mapOption"
+            :autoresize="true"
+            :update-options="{ notMerge: false, lazyUpdate: false }"
+            @click="handleMapClick"
+            style="height: 100%; width: 100%;"
+          />
+        </div>
       </div>
 
-      <!-- Zoom Controls -->
+      <!-- Zoom Controls - Clean card -->
       <div v-if="mapReady" class="absolute bottom-6 right-6 flex flex-col gap-2 z-10">
-        <button
-          @click="zoomIn"
-          class="bg-white hover:bg-gray-100 text-gray-700 font-bold p-3 rounded-lg shadow-lg transition-colors border-2 border-gray-200"
-          aria-label="Zoom in"
-        >
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
-          </svg>
-        </button>
-        <button
-          @click="zoomOut"
-          class="bg-white hover:bg-gray-100 text-gray-700 font-bold p-3 rounded-lg shadow-lg transition-colors border-2 border-gray-200"
-          aria-label="Zoom out"
-        >
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
-          </svg>
-        </button>
-        <button
-          @click="resetZoom"
-          class="bg-white hover:bg-gray-100 text-gray-700 font-bold p-3 rounded-lg shadow-lg transition-colors border-2 border-gray-200"
-          aria-label="Reset zoom"
-        >
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-          </svg>
-        </button>
+        <div class="bg-white rounded-lg shadow-lg border border-gray-200 p-1 flex flex-col gap-1">
+          <button
+            @click="zoomIn"
+            class="p-2.5 rounded-md hover:bg-gray-100 text-gray-600 hover:text-[#053778] transition-colors"
+            aria-label="Zoom in"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+            </svg>
+          </button>
+          <div class="h-px bg-gray-200 mx-2"></div>
+          <button
+            @click="zoomOut"
+            class="p-2.5 rounded-md hover:bg-gray-100 text-gray-600 hover:text-[#053778] transition-colors"
+            aria-label="Zoom out"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
+            </svg>
+          </button>
+          <div class="h-px bg-gray-200 mx-2"></div>
+          <button
+            @click="resetZoom"
+            class="p-2.5 rounded-md hover:bg-gray-100 text-gray-600 hover:text-[#053778] transition-colors"
+            aria-label="Reset zoom"
+          >
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+          </button>
+        </div>
       </div>
 
       <!-- Map Loading -->
-      <div v-else-if="!mapReady" class="h-[calc(100vh-180px)] flex items-center justify-center">
-        <div class="text-center">
-          <div class="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-indigo-600 mb-4"></div>
-          <p class="text-gray-600">Loading world map...</p>
+      <div v-if="!mapReady && !loading" class="h-[calc(100vh-170px)] flex items-center justify-center bg-white">
+        <div class="text-center p-8">
+          <div class="inline-block animate-spin rounded-full h-12 w-12 border-4 border-gray-200 border-t-[#053778] mb-4"></div>
+          <p class="text-gray-600 font-medium">Loading world map...</p>
         </div>
       </div>
     </div>
@@ -227,10 +244,10 @@ const expandedBands = ref({}) // Track which bands are expanded
 onMounted(async () => {
   // Load static countries data
   await loadCountries()
-  
+
   // Load categories data
   await loadCategories()
-  
+
   // Load world map
   try {
     const response = await fetch('https://raw.githubusercontent.com/apache/echarts/master/test/data/map/json/world.json')
@@ -425,10 +442,10 @@ function formatLabelWithFlag(countryCode, value) {
 const mapOption = computed(() => {
   // If map not ready, return empty
   if (!mapReady.value) return {}
-  
+
   // Use current data if available, otherwise use previous data during loading
   const dataToDisplay = countryTotals.value.length > 0 ? countryTotals.value : previousCountryTotals.value
-  
+
   // If no data at all, return empty config
   if (dataToDisplay.length === 0) return {}
 
@@ -519,11 +536,11 @@ const mapOption = computed(() => {
   // Create piecewise visual map from k-means bands
   // Make bands CONTIGUOUS to eliminate gaps (countries falling between bands)
   const sortedBands = [...bands].sort((a, b) => a.min - b.min)
-  
+
   const pieces = sortedBands.map((band, index) => {
     const isMaxBand = index === sortedBands.length - 1
     const nextBand = sortedBands[index + 1]
-    
+
     if (isMaxBand) {
       // Max country band: use buffer for safety
       return {
@@ -533,7 +550,7 @@ const mapOption = computed(() => {
         label: formatValue(band.min)
       }
     }
-    
+
     // Make bands contiguous: extend lte to just below next band's min
     // This eliminates gaps between bands
     return {
@@ -543,19 +560,36 @@ const mapOption = computed(() => {
       label: `${formatValue(band.min)} - ${formatValue(band.max)}`
     }
   })
-  
+
+  // Map background color - soft warm tone for ocean
+  const oceanColor = selectedFlow.value === FLOW_TYPES.IMPORTS ? '#e0f7fa' : '#fff5f5'
+
   return {
-    backgroundColor: '#e0f2fe', // Light blue background (like ocean/water)
+    backgroundColor: oceanColor,
     tooltip: {
       trigger: 'item',
+      backgroundColor: 'rgba(255, 255, 255, 0.95)',
+      borderColor: '#e5e7eb',
+      borderWidth: 1,
+      borderRadius: 12,
+      padding: [12, 16],
+      textStyle: {
+        color: '#374151',
+        fontSize: 13,
+        fontFamily: 'Plus Jakarta Sans, system-ui, sans-serif'
+      },
       formatter: (params) => {
         if (params.value) {
           const country = mapData.find(d => d.name === params.name)
           const displayName = country?.originalName || params.name
           const actualValue = country?.value || 0
-          return `${displayName}<br/>${selectedFlow.value === FLOW_TYPES.EXPORTS ? 'Exports' : 'Imports'}: ${formatValue(actualValue)}<br/><span style="font-size: 11px; color: #666;">Click for details</span>`
+          const flowLabel = selectedFlow.value === FLOW_TYPES.EXPORTS ? 'Exports' : 'Imports'
+          const flowColor = selectedFlow.value === FLOW_TYPES.EXPORTS ? '#f43f5e' : '#0891b2'
+          return `<div style="font-weight: 600; margin-bottom: 4px;">${displayName}</div>
+                  <div style="color: ${flowColor}; font-size: 15px; font-weight: 700;">${flowLabel}: $${formatValue(actualValue)}</div>
+                  <div style="font-size: 11px; color: #9ca3af; margin-top: 4px;">Click for details</div>`
         }
-        return `${params.name}<br/>No trade data`
+        return `<div style="font-weight: 600;">${params.name}</div><div style="color: #9ca3af;">No trade data</div>`
       },
     },
     visualMap: {
@@ -578,15 +612,15 @@ const mapOption = computed(() => {
         map: 'world',
         roam: true,
         itemStyle: {
-          areaColor: '#f8fafc',  // Very light slate for countries with no data
-          borderColor: '#bae6fd',  // Light ocean blue border (sky-200)
+          areaColor: '#fafaf9',  // Warm gray for countries with no data
+          borderColor: selectedFlow.value === FLOW_TYPES.IMPORTS ? '#a5f3fc' : '#fecdd3',
           borderWidth: 0.5,
           borderType: 'solid'
         },
         emphasis: {
           label: {
             show: true,
-            color: '#0f172a',
+            color: '#1c1917',
             fontWeight: 'bold',
             fontSize: 13,
             textBorderColor: '#fff',
@@ -594,7 +628,7 @@ const mapOption = computed(() => {
           },
           itemStyle: {
             areaColor: '#fbbf24', // Amber highlight on hover
-            borderColor: '#3b82f6',
+            borderColor: selectedFlow.value === FLOW_TYPES.IMPORTS ? '#0891b2' : '#f43f5e',
             borderWidth: 2
           }
         },
@@ -613,18 +647,18 @@ const mapOption = computed(() => {
               position: 'inside',
               fontSize: 13,
               fontWeight: 'bold',
-              color: '#0f172a',
+              color: '#1c1917',
               backgroundColor: 'rgba(255, 255, 255, 0.95)',
-              borderColor: '#94a3b8',
+              borderColor: '#d6d3d1',
               borderWidth: 1,
-              borderRadius: 4,
-              padding: [5, 10],
-              shadowColor: 'rgba(0, 0, 0, 0.2)',
-              shadowBlur: 8,
+              borderRadius: 8,
+              padding: [6, 12],
+              shadowColor: 'rgba(0, 0, 0, 0.1)',
+              shadowBlur: 10,
               shadowOffsetY: 2
             },
             itemStyle: {
-              borderColor: '#bae6fd',  // Light ocean blue border
+              borderColor: selectedFlow.value === FLOW_TYPES.IMPORTS ? '#a5f3fc' : '#fecdd3',
               borderWidth: 0.5
             },
             emphasis: {
@@ -633,11 +667,11 @@ const mapOption = computed(() => {
                 fontSize: 13,
                 formatter: () => formatLabelWithFlag(d.country_code, d.value),
                 backgroundColor: 'rgba(255, 255, 255, 1)',
-                shadowBlur: 8
+                shadowBlur: 10
               },
               itemStyle: {
-                areaColor: '#fde68a', // Brighter amber on hover
-                borderColor: '#0ea5e9',  // Sky-500 on hover
+                areaColor: '#fde68a', // Amber-200 on hover
+                borderColor: selectedFlow.value === FLOW_TYPES.IMPORTS ? '#0891b2' : '#f43f5e',
                 borderWidth: 2
               }
             }
