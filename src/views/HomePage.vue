@@ -47,7 +47,7 @@
           to="/world-map"
           class="inline-flex items-center gap-2 bg-[#053778] hover:bg-[#042d63] text-white text-base sm:text-lg px-6 sm:px-8 py-3 rounded-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 transition-all"
         >
-          {{ locale === 'he' ? 'צפייה במפה' : 'View World Map' }}
+          {{ locale === 'he' ? 'מפת העולם' : 'World Map' }}
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" :class="locale === 'he' ? 'rotate-180' : ''">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
           </svg>
@@ -88,7 +88,7 @@
             </p>
           </router-link>
 
-          <!-- Feature 2: Trade Lookup -->
+          <!-- Feature 2: Product Lookup -->
           <router-link to="/trade-lookup" class="card p-6 hover:shadow-lg transition-shadow group">
             <div class="w-14 h-14 bg-[#053778]/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-[#053778]/20 transition-colors">
               <svg class="w-7 h-7 text-[#053778]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -96,7 +96,7 @@
               </svg>
             </div>
             <h3 class="text-xl font-semibold text-gray-800 mb-2">
-              {{ locale === 'he' ? 'חיפוש סחר' : 'Trade Lookup' }}
+              {{ locale === 'he' ? 'חיפוש מוצרים' : 'Product Lookup' }}
             </h3>
             <p class="text-gray-600">
               {{ locale === 'he'
@@ -106,7 +106,7 @@
             </p>
           </router-link>
 
-          <!-- Feature 3: AI Chat -->
+          <!-- Feature 3: AI Analyst -->
           <router-link to="/ai-chat" class="card p-6 hover:shadow-lg transition-shadow group sm:col-span-2 lg:col-span-1">
             <div class="w-14 h-14 bg-[#053778]/10 rounded-xl flex items-center justify-center mb-4 group-hover:bg-[#053778]/20 transition-colors">
               <svg class="w-7 h-7 text-[#053778]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -114,12 +114,12 @@
               </svg>
             </div>
             <h3 class="text-xl font-semibold text-gray-800 mb-2">
-              {{ locale === 'he' ? 'צ\'אט AI' : 'AI Chat' }}
+              {{ locale === 'he' ? 'אנליסט AI' : 'AI Analyst' }}
             </h3>
             <p class="text-gray-600">
               {{ locale === 'he'
-                ? 'שאלו שאלות על נתוני הסחר באמצעות בינה מלאכותית'
-                : 'Ask questions about trade data using artificial intelligence'
+                ? 'נתחו מגמות סחר וקבלו תובנות מיידיות משנים של נתונים'
+                : 'Uncover trade patterns and get instant insights from years of data'
               }}
             </p>
           </router-link>

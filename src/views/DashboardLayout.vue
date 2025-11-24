@@ -5,8 +5,8 @@
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex items-center justify-between h-16">
           <!-- Logo & Brand -->
-          <router-link to="/" class="flex items-center gap-3">
-            <img src="/icon.png" alt="Israel Trade" class="h-10 w-10" />
+          <router-link to="/" class="flex items-center gap-3 -my-2">
+            <img src="/icon.png" alt="Israel Trade" class="h-14 w-14" />
           </router-link>
 
           <!-- Navigation Tabs - Center -->
@@ -86,7 +86,7 @@
           <div class="flex items-center gap-3">
             <img src="/icon.png" alt="Israel Trade" class="h-8 w-8 opacity-60" />
             <span class="text-gray-500 text-sm">
-              {{ locale === 'he' ? '© 2024 סחר ישראל. כל הזכויות שמורות.' : '© 2024 Israel Trade. All rights reserved.' }}
+              {{ locale === 'he' ? '© 2025 סחר ישראל. כל הזכויות שמורות.' : '© 2025 Israel Trade. All rights reserved.' }}
             </span>
           </div>
           <div class="flex items-center gap-6 text-sm text-gray-500">
@@ -119,10 +119,10 @@ function toggleLocale() {
 }
 
 const tabs = [
-  { name: 'Israel Trade', nameHe: 'סחר ישראל', path: '/', icon: '🏠' },
+  { name: 'Israel Trade', nameHe: 'סחר ישראל', path: '/', icon: '' },
   { name: 'World Map', nameHe: 'מפת העולם', path: '/world-map', icon: '' },
-  { name: 'Trade Lookup', nameHe: 'חיפוש סחר', path: '/trade-lookup', icon: '' },
-  { name: 'AI Chat', nameHe: 'צ\'אט AI', path: '/ai-chat', icon: '' },
+  { name: 'Product Lookup', nameHe: 'חיפוש מוצרים', path: '/trade-lookup', icon: '' },
+  { name: 'AI Analyst', nameHe: 'אנליסט AI', path: '/ai-chat', icon: '' },
   { name: 'About', nameHe: 'אודות', path: '/about', icon: '' },
   { name: 'Contact', nameHe: 'צור קשר', path: '/contact', icon: '' },
 ]
