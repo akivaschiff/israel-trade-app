@@ -561,7 +561,7 @@ const mapOption = computed(() => {
     }
   })
 
-  // Map background color - soft tone for ocean
+  // Map background color - light flow-tinted ocean
   const oceanColor = selectedFlow.value === FLOW_TYPES.IMPORTS ? '#eff6ff' : '#fff7ed'
 
   return {
@@ -612,8 +612,8 @@ const mapOption = computed(() => {
         map: 'world',
         roam: true,
         itemStyle: {
-          areaColor: '#fafaf9',  // Warm gray for countries with no data
-          borderColor: selectedFlow.value === FLOW_TYPES.IMPORTS ? '#bfdbfe' : '#fed7aa',
+          areaColor: '#fafafa',  // White for countries with no data
+          borderColor: '#d1d5db',  // Gray-300 soft border
           borderWidth: 0.5,
           borderType: 'solid'
         },
@@ -628,7 +628,7 @@ const mapOption = computed(() => {
           },
           itemStyle: {
             areaColor: '#fbbf24', // Amber highlight on hover
-            borderColor: selectedFlow.value === FLOW_TYPES.IMPORTS ? '#3b82f6' : '#f97316',
+            borderColor: '#9ca3af',  // Gray-400 on hover
             borderWidth: 2
           }
         },
@@ -658,7 +658,7 @@ const mapOption = computed(() => {
               shadowOffsetY: 2
             },
             itemStyle: {
-              borderColor: selectedFlow.value === FLOW_TYPES.IMPORTS ? '#bfdbfe' : '#fed7aa',
+              borderColor: '#d1d5db',  // Gray-300 soft border
               borderWidth: 0.5
             },
             emphasis: {
@@ -671,7 +671,7 @@ const mapOption = computed(() => {
               },
               itemStyle: {
                 areaColor: '#fde68a', // Amber-200 on hover
-                borderColor: selectedFlow.value === FLOW_TYPES.IMPORTS ? '#3b82f6' : '#f97316',
+                borderColor: '#9ca3af',  // Gray-400 on hover
                 borderWidth: 2
               }
             }
