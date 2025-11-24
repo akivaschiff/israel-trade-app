@@ -1,5 +1,7 @@
 import express from 'express'
 import cors from 'cors'
+import helmet from 'helmet'
+import rateLimit from 'express-rate-limit'
 import dotenv from 'dotenv'
 import pkg from 'pg'
 import Anthropic from '@anthropic-ai/sdk'
@@ -23,7 +25,7 @@ app.use(cors({
   origin: function (origin, callback) {
     // Allow requests with no origin (like mobile apps, Postman, etc)
     if (!origin) return callback(null, true)
-    
+
     if (allowedOrigins.indexOf(origin) !== -1) {
       callback(null, true)
     } else {
@@ -35,6 +37,21 @@ app.use(cors({
   methods: ['GET', 'POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }))
+
+// Security headers
+app.use(helmet())
+
+// Rate limiting for AI chat endpoints (prevents API cost abuse)
+const chatLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 30, // 30 requests per 15 minutes per IP
+  message: { error: 'Too many requests, please try again later' },
+  standardHeaders: true,
+  legacyHeaders: false
+})
+
+app.use('/api/chat', chatLimiter)
+app.use('/api/hs-code-lookup', chatLimiter)
 
 app.use(express.json())
 
