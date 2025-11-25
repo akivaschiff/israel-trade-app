@@ -19,6 +19,26 @@
 
     <!-- Main Content -->
     <div class="max-w-7xl mx-auto px-6 -mt-8 relative z-10 pb-16">
+      <!-- Premium Notice Card -->
+      <div class="bg-gradient-to-br from-amber-50 to-white rounded-3xl shadow-2xl shadow-slate-200/80 border border-amber-200 p-8 md:p-10 mb-8">
+        <div class="flex items-start gap-4 mb-6">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-400 to-amber-500 flex items-center justify-center shadow-lg shadow-amber-500/30 flex-shrink-0">
+            <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+          </div>
+          <div class="flex-1">
+            <h3 class="text-xl font-bold text-slate-900 mb-2">Premium Feature</h3>
+            <p class="text-slate-700 leading-relaxed">
+              The AI Analyst is available exclusively for premium users. This feature uses advanced AI to analyze trade data and costs money to operate.
+            </p>
+          </div>
+        </div>
+        <p class="text-center text-slate-600 font-medium">
+          Interested? <a href="/contact" class="text-amber-600 hover:text-amber-700 underline font-semibold">Contact me directly</a> to get access.
+        </p>
+      </div>
+
       <!-- Countdown Card -->
       <div class="bg-white rounded-3xl shadow-2xl shadow-slate-200/80 border border-slate-100 p-8 md:p-10 mb-8">
         <p class="text-lg text-slate-600 mb-6 font-medium text-center">
@@ -66,6 +86,9 @@
                   <path d="M9.983 3v7.391c0 5.704-3.731 9.57-8.983 10.609l-.995-2.151c2.432-.917 3.995-3.638 3.995-5.849h-4v-10h9.983zm14.017 0v7.391c0 5.704-3.748 9.571-9 10.609l-.996-2.151c2.433-.917 3.996-3.638 3.996-5.849h-3.983v-10h9.983z"/>
                 </svg>
                 <span class="text-lg text-slate-700 font-medium">{{ currentQuestion }}</span>
+                <svg class="w-5 h-5 text-amber-500 flex-shrink-0 transform rotate-180" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M9.983 3v7.391c0 5.704-3.731 9.57-8.983 10.609l-.995-2.151c2.432-.917 3.995-3.638 3.995-5.849h-4v-10h9.983zm14.017 0v7.391c0 5.704-3.748 9.571-9 10.609l-.996-2.151c2.433-.917 3.996-3.638 3.996-5.849h-3.983v-10h9.983z"/>
+                </svg>
               </div>
             </transition>
           </div>
@@ -149,11 +172,11 @@ onMounted(() => {
     now.value = Date.now()
   }, 1000)
 
-  // Rotate questions every 3 seconds
+  // Rotate questions every 2 seconds
   questionInterval = setInterval(() => {
     questionIndex = (questionIndex + 1) % questions.length
     currentQuestion.value = questions[questionIndex]
-  }, 3000)
+  }, 2000)
 })
 
 onUnmounted(() => {

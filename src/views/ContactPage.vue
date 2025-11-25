@@ -85,25 +85,11 @@
             <!-- Ship attached to card -->
             <div
               ref="shipElement"
-              class="absolute -bottom-8 -right-4 z-20 transition-transform"
+              class="absolute -bottom-8 -right-4 z-20 transition-transform opacity-70"
             >
               <img src="/icon-ship.png" alt="" class="w-24 h-24 drop-shadow-lg" />
             </div>
           </div>
-        </div>
-
-        <!-- Water/wave effect at bottom -->
-        <div class="absolute bottom-0 left-0 right-0 h-32 pointer-events-none">
-          <svg class="w-full h-full" viewBox="0 0 1200 120" preserveAspectRatio="none">
-            <path
-              d="M0,40 C300,80 400,0 600,40 C800,80 900,0 1200,40 L1200,120 L0,120 Z"
-              class="fill-slate-100/50"
-            />
-            <path
-              d="M0,60 C200,100 500,20 700,60 C900,100 1000,20 1200,60 L1200,120 L0,120 Z"
-              class="fill-slate-100/80"
-            />
-          </svg>
         </div>
       </div>
 

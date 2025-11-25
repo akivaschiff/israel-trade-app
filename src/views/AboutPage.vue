@@ -41,60 +41,96 @@
     </div>
 
     <!-- Content Area -->
-    <div class="max-w-7xl mx-auto px-6 -mt-8 relative z-10 pb-16">
-      <div class="bg-white rounded-3xl shadow-2xl shadow-slate-200/80 border border-slate-100 p-8 md:p-12">
-      <div class="text-right font-hebrew">
-        <!-- Opening -->
-        <p class="text-xl leading-relaxed text-slate-700 mb-8">
-          לפני כמה חודשים נתקלתי במאגר נתונים מסקרן במיוחד - הלמ״ס מפרסם כל חודש את כל הייבוא והייצוא של ישראל. ביליוני דולרים של סחורות שעוברות דרך הנמלים והגבולות שלנו, מתועדים באקסל עם קודים בני שש ספרות שלא הכרתי.
-        </p>
+    <div class="max-w-7xl mx-auto px-6 -mt-8 relative z-10 pb-16 space-y-8">
+      <!-- Opening Card -->
+      <div class="bg-white rounded-3xl shadow-xl shadow-slate-200/60 border border-slate-100 p-8 md:p-10 relative overflow-hidden">
+        <!-- Decorative corner -->
+        <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-amber-50 to-transparent rounded-tr-3xl"></div>
 
-        <p class="text-xl leading-relaxed text-slate-700 mb-8">
-          ואז התחילו השאלות: מאיפה באמת מגיעים האננסים שלנו? איך המלחמה השפיעה על שרשרת האספקה? למה פתאום יש כל כך הרבה עגבניות מטורקיה ואחר כך בכלל אין? מי קונה מאיתנו? ומה בכלל אנחנו מוכרים? ולמי?
-        </p>
+        <div class="relative text-right font-hebrew">
+          <div class="flex items-center gap-3 mb-6 justify-end">
+            <p class="text-slate-700 font-semibold">איך התחיל</p>
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-400 to-amber-500 flex items-center justify-center shadow-lg shadow-amber-500/30">
+              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+            </div>
+          </div>
 
-        <p class="text-xl leading-relaxed text-slate-700 mb-16">
-          הבעיה היא שהתשובות קבורות מתחת לשכבות של קודי HS, מדינות מקוצרות לשתי אותיות, ומיליון וחצי שורות של מידע גולמי באקסלים שונים. אז החלטתי לעשות את מה שאני אוהב - לבנות משהו שהופך את זה לנגיש.
-        </p>
+          <p class="text-xl leading-relaxed text-slate-700 mb-6">
+            לפני כמה חודשים נתקלתי במאגר נתונים מסקרן במיוחד - הלמ״ס מפרסם כל חודש את כל הייבוא והייצוא של ישראל. ביליוני דולרים של סחורות שעוברות דרך הנמלים והגבולות שלנו, מתועדים באקסל עם קודים בני שש ספרות שלא הכרתי.
+          </p>
 
-        <!-- Divider -->
-        <div class="w-16 h-1 bg-amber-400/60 mx-auto my-16 rounded-full"></div>
+          <p class="text-xl leading-relaxed text-slate-700 mb-6">
+            ואז התחילו השאלות: מאיפה באמת מגיעים האננסים שלנו? איך המלחמה השפיעה על שרשרת האספקה? למה פתאום יש כל כך הרבה עגבניות מטורקיה ואחר כך בכלל אין? מי קונה מאיתנו? ומה בכלל אנחנו מוכרים? ולמי?
+          </p>
 
-        <!-- What is this -->
-        <h2 class="text-3xl font-bold text-slate-900 mb-8 mt-16">מה זה האתר הזה</h2>
+          <p class="text-xl leading-relaxed text-slate-700">
+            הבעיה היא שהתשובות קבורות מתחת לשכבות של קודי HS, מדינות מקוצרות לשתי אותיות, ומיליון וחצי שורות של מידע גולמי באקסלים שונים. אז החלטתי לעשות את מה שאני אוהב - לבנות משהו שהופך את זה לנגיש.
+          </p>
+        </div>
+      </div>
 
-        <p class="text-xl leading-relaxed text-slate-700 mb-8">
-          האתר הזה לוקח את כל נתוני המכס של ישראל משלוש השנים האחרונות ומאפשר לחקור אותם בשפה טבעית - בעברית ובאנגלית. במקום לחפש קודים לא מוכרים של "080430" אפשר פשוט לשאול "מאיפה מגיעים האננסים". יש כאן צ׳אט מבוסס AI שעונה על שאלות, מפות אינטראקטיביות, וויזואליזציות שמראות את סיפור הסחר שלנו.
-        </p>
+      <!-- What is this Card -->
+      <div class="bg-white rounded-3xl shadow-xl shadow-slate-200/60 border border-slate-100 p-8 md:p-10 relative overflow-hidden">
+        <!-- Decorative corner -->
+        <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-50 to-transparent rounded-tr-3xl"></div>
 
-        <p class="text-xl leading-relaxed text-slate-700 mb-16">
-          התהליך הזה גם לימד אותי כמה מרתק עולם הסחר הבינלאומי. כל מוצר שאנחנו קונים מגיע דרך שרשרת אספקה מורכבת, דרך נמלים, מכסים, קודים, וחוקים בינלאומיים. יש כאן המון טכנולוגיה שעדיין לא פותחה, המון תהליכים שאפשר לייעל, והמון מידע שאפשר להפוך לתובנות.
-        </p>
+        <div class="relative text-right font-hebrew">
+          <div class="flex items-center gap-3 mb-6 justify-end">
+            <p class="text-slate-700 font-semibold">מה זה האתר הזה</p>
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/30">
+              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+          </div>
 
-        <!-- Divider -->
-        <div class="w-16 h-1 bg-amber-400/60 mx-auto my-16 rounded-full"></div>
+          <p class="text-xl leading-relaxed text-slate-700 mb-6">
+            האתר הזה לוקח את כל נתוני המכס של ישראל משלוש השנים האחרונות ומאפשר לחקור אותם בשפה טבעית - בעברית ובאנגלית. במקום לחפש קודים לא מוכרים של "080430" אפשר פשוט לשאול "מאיפה מגיעים האננסים". יש כאן צ׳אט מבוסס AI שעונה על שאלות, מפות אינטראקטיביות, וויזואליזציות שמראות את סיפור הסחר שלנו.
+          </p>
 
-        <!-- Where I want to go -->
-        <h2 class="text-3xl font-bold text-slate-900 mb-8 mt-16">לאן אני רוצה מזה ללכת</h2>
+          <p class="text-xl leading-relaxed text-slate-700">
+            התהליך הזה גם לימד אותי כמה מרתק עולם הסחר הבינלאומי. כל מוצר שאנחנו קונים מגיע דרך שרשרת אספקה מורכבת, דרך נמלים, מכסים, קודים, וחוקים בינלאומיים. יש כאן המון טכנולוגיה שעדיין לא פותחה, המון תהליכים שאפשר לייעל, והמון מידע שאפשר להפוך לתובנות.
+          </p>
+        </div>
+      </div>
 
-        <p class="text-2xl leading-relaxed text-slate-900 mb-8 font-semibold">
-          אני מחפש את הפרק הבא שלי בטכנולוגיית סחר.
-        </p>
+      <!-- Where I want to go Card -->
+      <div class="bg-white rounded-3xl shadow-xl shadow-slate-200/60 border border-slate-100 p-8 md:p-10 relative overflow-hidden">
+        <!-- Decorative corner -->
+        <div class="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-purple-50 to-transparent rounded-tr-3xl"></div>
 
-        <p class="text-xl leading-relaxed text-slate-700 mb-8">
-          האתר הזה הוא הפרויקט האישי שלי, אבל מה שממש מעניין אותי זה לעבוד עם אנשים שבונים טכנולוגיה בתחום הזה - לוגיסטיקה, ניתוח שרשרות אספקה, פינטק של סחר בינלאומי, מכס דיגיטלי, או כל דבר אחר שקשור לתחום.
-        </p>
+        <div class="relative text-right font-hebrew">
+          <div class="flex items-center gap-3 mb-6 justify-end">
+            <p class="text-slate-700 font-semibold">לאן אני רוצה מזה ללכת</p>
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center shadow-lg shadow-purple-500/30">
+              <svg class="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+              </svg>
+            </div>
+          </div>
 
-        <p class="text-xl leading-relaxed text-slate-700 mb-8">
-          תחום הסחר הוא מצד אחד קריטי למשק ומצד שני לא מפותח מבחינה טכנולוגית. יש המון מקום לבנות דברים חכמים, שקופים, ויעילים יותר.
-        </p>
+          <p class="text-2xl leading-relaxed text-slate-900 mb-6 font-semibold">
+            אני מחפש את הפרק הבא שלי בטכנולוגיית סחר.
+          </p>
 
-        <p class="text-xl leading-relaxed text-slate-700 mb-16">
-          אם אתם עובדים על משהו בתחום, אם יש לכם בעיות שטכנולוגיה יכולה לפתור, או שפשוט רוצים לדבר על איך הופכים מיליוני שורות של נתונים למשהו שימושי - אשמח לדבר.
-        </p>
+          <p class="text-xl leading-relaxed text-slate-700 mb-6">
+            האתר הזה הוא הפרויקט האישי שלי, אבל מה שממש מעניין אותי זה לעבוד עם אנשים שבונים טכנולוגיה בתחום הזה - לוגיסטיקה, ניתוח שרשרות אספקה, פינטק של סחר בינלאומי, מכס דיגיטלי, או כל דבר אחר שקשור לתחום.
+          </p>
 
-        <!-- Contact Links with Ship Animation -->
-        <div class="relative mt-24 pb-12 h-80">
+          <p class="text-xl leading-relaxed text-slate-700 mb-6">
+            תחום הסחר הוא מצד אחד קריטי למשק ומצד שני לא מפותח מבחינה טכנולוגית. יש המון מקום לבנות דברים חכמים, שקופים, ויעילים יותר.
+          </p>
+
+          <p class="text-xl leading-relaxed text-slate-700">
+            אם אתם עובדים על משהו בתחום, אם יש לכם בעיות שטכנולוגיה יכולה לפתור, או שפשוט רוצים לדבר על איך הופכים מיליוני שורות של נתונים למשהו שימושי - אשמח לדבר.
+          </p>
+        </div>
+      </div>
+
+      <!-- Contact Links with Ship Animation -->
+      <div class="relative pb-12 h-80">
           <!-- Animated Container -->
           <div ref="animatedContainer" class="absolute top-0 right-0">
             <div class="relative">
@@ -141,8 +177,6 @@
             </div>
           </div>
         </div>
-      </div>
-      </div>
     </div>
   </div>
 </template>
