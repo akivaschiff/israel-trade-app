@@ -18,7 +18,7 @@
     </div>
 
     <!-- Main Content -->
-    <div class="max-w-4xl mx-auto px-6 -mt-8 relative z-10 pb-16">
+    <div class="max-w-7xl mx-auto px-6 -mt-8 relative z-10 pb-16">
       <!-- Contact Card with Ship Animation -->
       <div class="relative">
         <!-- The animated ship container -->

@@ -41,7 +41,8 @@
     </div>
 
     <!-- Content Area -->
-    <div class="max-w-3xl mx-auto px-6 py-12 relative z-10">
+    <div class="max-w-7xl mx-auto px-6 -mt-8 relative z-10 pb-16">
+      <div class="bg-white rounded-3xl shadow-2xl shadow-slate-200/80 border border-slate-100 p-8 md:p-12">
       <div class="text-right font-hebrew">
         <!-- Opening -->
         <p class="text-xl leading-relaxed text-slate-700 mb-8">
@@ -140,6 +141,7 @@
             </div>
           </div>
         </div>
+      </div>
       </div>
     </div>
   </div>
