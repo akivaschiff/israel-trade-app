@@ -2,20 +2,16 @@
   <div class="about-page min-h-[calc(100vh-64px)] relative overflow-hidden">
     <!-- Hero Header -->
     <div class="relative bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 overflow-hidden" dir="ltr">
-      <!-- Subtle grid pattern -->
-      <div class="absolute inset-0 opacity-10">
-        <div class="absolute inset-0" style="background-image: linear-gradient(rgba(255,255,255,.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px); background-size: 50px 50px;"></div>
-      </div>
-
-      <div class="relative max-w-7xl mx-auto px-6 py-16">
-        <div class="inline-flex items-center gap-2 mb-4 px-3 py-1.5 bg-amber-500/10 border border-amber-500/20 rounded-full">
-          <div class="w-1.5 h-1.5 bg-amber-400 rounded-full animate-pulse"></div>
-          <span class="text-amber-400 text-xs font-semibold tracking-wider uppercase">About This Project</span>
+      <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMtOS45NDEgMC0xOCA4LjA1OS0xOCAxOHM4LjA1OSAxOCAxOCAxOCAxOC04LjA1OSAxOC0xOC04LjA1OS0xOC0xOC0xOHptMCAzMmMtNy43MzIgMC0xNC02LjI2OC0xNC0xNHM2LjI2OC0xNCAxNC0xNCAxNCA2LjI2OCAxNCAxNC02LjI2OCAxNC0xNCAxNHoiIHN0cm9rZT0iIzMzNDQ1NSIgc3Ryb2tlLXdpZHRoPSIuNSIgb3BhY2l0eT0iLjEiLz48L2c+PC9zdmc+')] opacity-30"></div>
+      <div class="relative max-w-7xl mx-auto px-6 py-12">
+        <div class="flex items-center gap-3 mb-2">
+          <div class="w-1 h-8 bg-gradient-to-b from-amber-400 to-amber-600 rounded-full"></div>
+          <span class="text-amber-400 text-sm font-medium tracking-widest uppercase">About This Project</span>
         </div>
-        <h1 class="text-5xl md:text-6xl font-bold text-white tracking-tight mb-3" style="font-family: 'Georgia', serif; letter-spacing: -0.02em;">
+        <h1 class="text-4xl md:text-5xl font-serif font-bold text-white tracking-tight">
           The Story Behind
         </h1>
-        <p class="text-slate-400 text-lg max-w-2xl leading-relaxed">
+        <p class="text-slate-400 mt-3 text-lg max-w-2xl">
           A personal exploration of Israel's international trade data
         </p>
       </div>

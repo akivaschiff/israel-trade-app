@@ -119,8 +119,7 @@ function toggleLocale() {
 }
 
 const tabs = [
-  { name: 'Israel Trade', nameHe: 'סחר ישראל', path: '/', icon: '' },
-  { name: 'World Map', nameHe: 'מפת העולם', path: '/world-map', icon: '' },
+  { name: 'Israel Trade Map', nameHe: 'מפת סחר ישראל', path: '/world-map', icon: '' },
   { name: 'Product Lookup', nameHe: 'חיפוש מוצרים', path: '/trade-lookup', icon: '' },
   { name: 'AI Analyst', nameHe: 'אנליסט AI', path: '/ai-chat', icon: '' },
   { name: 'About', nameHe: 'אודות', path: '/about', icon: '' },
