@@ -6,6 +6,7 @@ import TrendsPage from '@/views/trends/TrendsPage.vue'
 import AIPage from '@/views/AIPage.vue'
 import AboutPage from '@/views/AboutPage.vue'
 import ContactPage from '@/views/ContactPage.vue'
+import { usePostHog } from '@/composables/usePostHog'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -53,5 +54,7 @@ const router = createRouter({
     }
   ],
 })
+
+const { posthog } = usePostHog()
 
 export default router
