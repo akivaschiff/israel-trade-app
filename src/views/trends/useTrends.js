@@ -7,6 +7,7 @@ export function useTrends() {
   const trendsData = ref([])
   const categoriesData = ref(null)
   const countriesMap = ref(new Map())
+  const productsData = ref([]) // All products loaded in memory
   const availableTimeRange = ref(null)
   const relevantCountries = ref([]) // Countries that have the selected products
   const availableMonths = ref([]) // All available months in the database
@@ -32,38 +33,65 @@ export function useTrends() {
     }
   }
 
-  // Search products by text - returns flat list for SmartProductSelector
-  async function searchProducts(searchTerm) {
-    if (!searchTerm || searchTerm.length < 2) return []
-    
+  // Load products from JSON file
+  async function loadProducts() {
     try {
-      const { data, error: queryError } = await supabase
-        .rpc('search_products', { p_search_term: searchTerm })
-
-      if (queryError) throw queryError
-      
-      // Return flat list of products with full details
-      return data.map(product => {
-        // Get chapter info
-        const chapterCode = product.hs_chapter
-        const categoryInfo = categoriesData.value?.find(c => 
-          c.chapters.some(ch => ch.code === chapterCode)
-        )
-        const chapterInfo = categoryInfo?.chapters.find(ch => ch.code === chapterCode)
-        
-        return {
-          code: product.hs_code,
-          description: product.description,
-          chapter: chapterCode,
-          chapter_name: chapterInfo?.name || `Chapter ${chapterCode}`,
-          category: product.category,
-          heading: product.hs_heading
-        }
-      }).sort((a, b) => a.code.localeCompare(b.code))
+      const response = await fetch('/data/products.json')
+      productsData.value = await response.json()
     } catch (e) {
-      console.error('Error searching products:', e)
-      return []
+      console.error('Error loading products:', e)
     }
+  }
+
+  // Search products in memory - returns flat list for SmartProductSelector
+  function searchProducts(searchTerm) {
+    if (!searchTerm || searchTerm.length < 2) return []
+
+    const lowerSearchTerm = searchTerm.toLowerCase()
+
+    // Search through products in memory
+    const results = productsData.value.filter(product => {
+      // Search in HS code
+      if (product.hs_code.includes(searchTerm)) return true
+
+      // Search in description
+      if (product.description.toLowerCase().includes(lowerSearchTerm)) return true
+
+      // Search in search labels
+      if (product.search_labels?.some(label =>
+        label.toLowerCase().includes(lowerSearchTerm)
+      )) return true
+
+      // Search in Hebrew search labels
+      if (product.hebrew_search_labels?.some(label =>
+        label.includes(searchTerm)
+      )) return true
+
+      // Search in category
+      if (product.category?.toLowerCase().includes(lowerSearchTerm)) return true
+
+      return false
+    })
+
+    // Get chapter info from categories
+    return results.map(product => {
+      const chapterCode = product.hs_chapter
+      const categoryInfo = categoriesData.value?.find(c =>
+        c.chapters.some(ch => ch.code === chapterCode)
+      )
+      const chapterInfo = categoryInfo?.chapters.find(ch => ch.code === chapterCode)
+
+      return {
+        code: product.hs_code,
+        description: product.description,
+        chapter: chapterCode,
+        chapter_name: chapterInfo?.name || `Chapter ${chapterCode}`,
+        category: product.category,
+        heading: product.hs_heading
+      }
+    })
+    .sort((a, b) => a.code.localeCompare(b.code))
+    .slice(0, 100) // Limit to 100 results for performance
   }
 
   // Get countries that have traded the selected products in the last year
@@ -218,6 +246,7 @@ export function useTrends() {
     availableMonths,
     loadCategories,
     loadCountries,
+    loadProducts,
     searchProducts,
     fetchRelevantCountries,
     fetchAvailableMonths,

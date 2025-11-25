@@ -282,6 +282,7 @@ const {
   availableMonths,
   loadCategories,
   loadCountries,
+  loadProducts,
   searchProducts,
   fetchRelevantCountries,
   fetchAvailableMonths,
@@ -302,6 +303,7 @@ let fetchCountriesTimeout = null
 onMounted(async () => {
   await loadCategories()
   await loadCountries()
+  await loadProducts()
   await fetchAvailableMonths()
   
   // Set default range to last 12 months
