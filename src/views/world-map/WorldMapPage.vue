@@ -1,7 +1,16 @@
 <template>
   <div class="min-h-[calc(100vh-64px)] relative bg-slate-50">
+    <!-- Full Screen Initial Loading -->
+    <div v-if="isInitialLoading" class="fixed inset-0 z-50 flex items-center justify-center bg-gradient-to-br from-slate-50 to-slate-100">
+      <div class="text-center">
+        <div class="inline-block animate-spin rounded-full h-16 w-16 border-4 border-slate-200 border-t-slate-700 mb-6"></div>
+        <h2 class="text-xl font-semibold text-slate-700 mb-2">Loading World Map</h2>
+        <p class="text-sm text-slate-500">Preparing trade data visualization...</p>
+      </div>
+    </div>
+
     <!-- Hero Header -->
-    <div class="relative bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 overflow-hidden">
+    <div v-show="!isInitialLoading" class="relative bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 overflow-hidden">
       <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMtOS45NDEgMC0xOCA4LjA1OS0xOCAxOHM4LjA1OSAxOCAxOCAxOCAxOC04LjA1OSAxOC0xOC04LjA1OS0xOC0xOC0xOHptMCAzMmMtNy43MzIgMC0xNC02LjI2OC0xNC0xNHM2LjI2OC0xNCAxNC0xNCAxNCA2LjI2OCAxNCAxNC02LjI2OCAxNC0xNCAxNHoiIHN0cm9rZT0iIzMzNDQ1NSIgc3Ryb2tlLXdpZHRoPSIuNSIgb3BhY2l0eT0iLjEiLz48L2c+PC9zdmc+')] opacity-30"></div>
       <div class="relative max-w-7xl mx-auto px-6 py-12">
         <div class="flex items-center justify-between flex-wrap gap-4">
@@ -56,7 +65,7 @@
     </div>
 
     <!-- Controls Bar -->
-    <div class="bg-white border-b border-slate-200 sticky top-16 z-30 shadow-sm">
+    <div v-show="!isInitialLoading" class="bg-white border-b border-slate-200 sticky top-16 z-30 shadow-sm">
       <div class="max-w-7xl mx-auto px-4 py-3">
         <div class="flex items-center justify-between gap-6 flex-wrap">
           <!-- Time Range Controls -->
@@ -138,14 +147,6 @@
       </div>
     </div>
 
-    <!-- Initial Loading State -->
-    <div v-if="loading && !mapReady" class="absolute inset-0 flex items-center justify-center bg-slate-50/80 z-20 mt-20">
-      <div class="text-center bg-white p-8 rounded-2xl shadow-xl border border-slate-100">
-        <div class="inline-block animate-spin rounded-full h-12 w-12 border-4 border-slate-200 border-t-slate-700 mb-4"></div>
-        <p class="text-slate-600 font-medium">Loading map data...</p>
-      </div>
-    </div>
-
     <!-- Map Container -->
     <div class="relative">
       <div
@@ -170,7 +171,7 @@
       </div>
 
       <!-- Zoom Controls -->
-      <div v-if="mapReady" class="absolute bottom-6 right-6 flex flex-col gap-2 z-10">
+      <div v-if="mapReady && !isInitialLoading" class="absolute bottom-6 right-6 flex flex-col gap-2 z-10">
         <div class="bg-white rounded-xl shadow-lg border border-slate-200 p-1.5 flex flex-col gap-1">
           <button
             @click="zoomIn"
@@ -201,14 +202,6 @@
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
             </svg>
           </button>
-        </div>
-      </div>
-
-      <!-- Map Loading -->
-      <div v-if="!mapReady && !loading" class="h-[calc(100vh-220px)] flex items-center justify-center bg-slate-50">
-        <div class="text-center p-8 bg-white rounded-2xl shadow-xl border border-slate-100">
-          <div class="inline-block animate-spin rounded-full h-12 w-12 border-4 border-slate-200 border-t-slate-700 mb-4"></div>
-          <p class="text-slate-600 font-medium">Loading world map...</p>
         </div>
       </div>
     </div>
@@ -259,6 +252,7 @@ const previousCountryTotals = ref([]) // Keep previous data during loading
 const selectedCountryCode = ref(null)
 const selectedCountryName = ref('')
 const chartRef = ref(null) // Reference to the chart component
+const hasLoadedOnce = ref(false) // Track if initial load is complete
 
 // K-Means distribution data for visualization
 const colorBands = ref([])
@@ -267,6 +261,11 @@ const minTradeValue = ref(0)
 const totalCountriesWithData = ref(0)
 const allTradeValues = ref([]) // Store all values for histogram
 const expandedBands = ref({}) // Track which bands are expanded
+
+// Computed property for initial loading state
+const isInitialLoading = computed(() => {
+  return !hasLoadedOnce.value && (loading.value || !mapReady.value || countryTotals.value.length === 0)
+})
 
 onMounted(async () => {
   // Load static countries data
@@ -363,6 +362,12 @@ watch([selectedFlow, selectedMonth, monthRange], async ([newFlow, newMonth, newR
     // Store current data as previous for next transition
     previousCountryTotals.value = [...countryTotals.value]
     clearCountrySelection() // Close modal when switching
+
+    // Mark initial load as complete
+    if (!hasLoadedOnce.value && countryTotals.value.length > 0) {
+      hasLoadedOnce.value = true
+    }
+
     // Small delay to let the visual update happen
     setTimeout(() => {
       dataLoading.value = false

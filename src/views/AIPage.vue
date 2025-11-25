@@ -9,10 +9,10 @@
           <span class="text-amber-400 text-sm font-medium tracking-widest uppercase">AI Analyst</span>
         </div>
         <h1 class="text-4xl md:text-5xl font-serif font-bold text-white tracking-tight">
-          Coming Soon
+          AI Trade Analyst
         </h1>
         <p class="text-slate-400 mt-3 text-lg max-w-2xl">
-          Natural language interface for trade data analysis.
+          Use natural language to get deep insights on trade data.
         </p>
       </div>
     </div>
@@ -30,38 +30,13 @@
           <div class="flex-1">
             <h3 class="text-xl font-bold text-slate-900 mb-2">Premium Feature</h3>
             <p class="text-slate-700 leading-relaxed">
-              The AI Analyst is available exclusively for premium users. This feature uses advanced AI to analyze trade data and costs money to operate.
+              The AI Analyst connects Claude—Anthropic's most advanced AI model—directly to Israel's complete trade database, enabling sophisticated analysis of import/export patterns, economic trends, and market dynamics. Available exclusively for premium users.
             </p>
           </div>
         </div>
         <p class="text-center text-slate-600 font-medium">
           Interested? <a href="/contact" class="text-amber-600 hover:text-amber-700 underline font-semibold">Contact me directly</a> to get access.
         </p>
-      </div>
-
-      <!-- Countdown Card -->
-      <div class="bg-white rounded-3xl shadow-2xl shadow-slate-200/80 border border-slate-100 p-8 md:p-10 mb-8">
-        <p class="text-lg text-slate-600 mb-6 font-medium text-center">
-          Launching This Thursday
-        </p>
-        <div class="flex justify-center gap-3 md:gap-4">
-          <div class="bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl p-4 min-w-[70px] md:min-w-[85px] border border-slate-200">
-            <div class="text-3xl md:text-4xl font-bold text-slate-800">{{ days }}</div>
-            <div class="text-xs text-slate-500 font-medium uppercase tracking-wider mt-1">Days</div>
-          </div>
-          <div class="bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl p-4 min-w-[70px] md:min-w-[85px] border border-slate-200">
-            <div class="text-3xl md:text-4xl font-bold text-slate-800">{{ hours }}</div>
-            <div class="text-xs text-slate-500 font-medium uppercase tracking-wider mt-1">Hours</div>
-          </div>
-          <div class="bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl p-4 min-w-[70px] md:min-w-[85px] border border-slate-200">
-            <div class="text-3xl md:text-4xl font-bold text-slate-800">{{ minutes }}</div>
-            <div class="text-xs text-slate-500 font-medium uppercase tracking-wider mt-1">Min</div>
-          </div>
-          <div class="bg-gradient-to-br from-slate-50 to-slate-100 rounded-2xl p-4 min-w-[70px] md:min-w-[85px] border border-slate-200">
-            <div class="text-3xl md:text-4xl font-bold text-slate-800">{{ seconds }}</div>
-            <div class="text-xs text-slate-500 font-medium uppercase tracking-wider mt-1">Sec</div>
-          </div>
-        </div>
       </div>
 
       <!-- Example Questions Card -->
@@ -79,18 +54,35 @@
             <p class="text-slate-700 font-semibold">Example Questions</p>
           </div>
 
-          <div class="relative h-20 flex items-center justify-center bg-slate-50 rounded-2xl border border-slate-100">
-            <transition name="fade" mode="out-in">
-              <div :key="currentQuestion" class="flex items-center gap-3 px-6">
-                <svg class="w-5 h-5 text-amber-500 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M9.983 3v7.391c0 5.704-3.731 9.57-8.983 10.609l-.995-2.151c2.432-.917 3.995-3.638 3.995-5.849h-4v-10h9.983zm14.017 0v7.391c0 5.704-3.748 9.571-9 10.609l-.996-2.151c2.433-.917 3.996-3.638 3.996-5.849h-3.983v-10h9.983z"/>
-                </svg>
-                <span class="text-lg text-slate-700 font-medium">{{ currentQuestion }}</span>
-                <svg class="w-5 h-5 text-amber-500 flex-shrink-0 transform rotate-180" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M9.983 3v7.391c0 5.704-3.731 9.57-8.983 10.609l-.995-2.151c2.432-.917 3.995-3.638 3.995-5.849h-4v-10h9.983zm14.017 0v7.391c0 5.704-3.748 9.571-9 10.609l-.996-2.151c2.433-.917 3.996-3.638 3.996-5.849h-3.983v-10h9.983z"/>
-                </svg>
-              </div>
-            </transition>
+          <div class="space-y-4">
+            <div class="relative h-20 flex items-center justify-center bg-slate-50 rounded-2xl border border-slate-100">
+              <transition name="fade" mode="out-in">
+                <div :key="currentQuestion" class="flex items-center gap-3 px-6">
+                  <svg class="w-5 h-5 text-amber-500 flex-shrink-0 transform rotate-180" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M9.983 3v7.391c0 5.704-3.731 9.57-8.983 10.609l-.995-2.151c2.432-.917 3.995-3.638 3.995-5.849h-4v-10h9.983zm14.017 0v7.391c0 5.704-3.748 9.571-9 10.609l-.996-2.151c2.433-.917 3.996-3.638 3.996-5.849h-3.983v-10h9.983z"/>
+                  </svg>
+                  <span class="text-lg text-slate-700 font-medium">{{ currentQuestion }}</span>
+                  <svg class="w-5 h-5 text-amber-500 flex-shrink-0" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M9.983 3v7.391c0 5.704-3.731 9.57-8.983 10.609l-.995-2.151c2.432-.917 3.995-3.638 3.995-5.849h-4v-10h9.983zm14.017 0v7.391c0 5.704-3.748 9.571-9 10.609l-.996-2.151c2.433-.917 3.996-3.638 3.996-5.849h-3.983v-10h9.983z"/>
+                  </svg>
+                </div>
+              </transition>
+            </div>
+
+            <!-- Rotation Dots -->
+            <div class="flex items-center justify-center gap-2">
+              <button
+                v-for="(_, index) in questions"
+                :key="index"
+                @click="goToQuestion(index)"
+                class="transition-all duration-300 cursor-pointer hover:scale-125"
+                :class="[
+                  index === questionIndex ? 'w-2 h-2 bg-amber-500' : 'w-1.5 h-1.5 bg-slate-300 hover:bg-slate-400',
+                  'rounded-full'
+                ]"
+                :aria-label="`Go to question ${index + 1}`"
+              ></button>
+            </div>
           </div>
         </div>
       </div>
@@ -109,78 +101,51 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted, computed } from 'vue'
-
-// Countdown logic
-const now = ref(Date.now())
-let interval = null
-
-// Set target to next Wednesday at midnight
-const getNextWednesday = () => {
-  const today = new Date()
-  const dayOfWeek = today.getDay()
-  const daysUntilWednesday = (4 - dayOfWeek + 7) % 7 || 7 // 3 = Wednesday
-  const nextWednesday = new Date(today)
-  nextWednesday.setDate(today.getDate() + daysUntilWednesday)
-  nextWednesday.setHours(0, 0, 0, 0)
-  return nextWednesday.getTime()
-}
-
-const targetDate = getNextWednesday()
-
-const days = computed(() => {
-  const diff = Math.max(0, targetDate - now.value)
-  return Math.floor(diff / (1000 * 60 * 60 * 24))
-})
-
-const hours = computed(() => {
-  const diff = Math.max(0, targetDate - now.value)
-  return Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
-})
-
-const minutes = computed(() => {
-  const diff = Math.max(0, targetDate - now.value)
-  return Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60))
-})
-
-const seconds = computed(() => {
-  const diff = Math.max(0, targetDate - now.value)
-  return Math.floor((diff % (1000 * 60)) / 1000)
-})
+import { ref, onMounted, onUnmounted } from 'vue'
 
 // Question rotation logic
 const questions = [
-  "Where does Israel import most electronics from?",
-  "What are the top 5 countries we export to?",
-  "Which countries does Israel trade with the most?",
-  "Show me import trends for vehicles over the last year",
-  "Show me the trend of diamond exports",
-  "What products does Israel import from the United States?",
-  "Which countries buy Israeli agricultural products?",
-  "What's the trade balance with China?",
-  "Show me monthly import trends for petroleum",
-  "How much does Israel export in medical equipment?"
+  "Which imports typically peak in January and why?",
+  "How did the war in October 2023 impact Israel's supply chains?",
+  "What patterns emerge when comparing pre-war and post-war trade data?",
+  "Which countries have become more strategic trading partners since 2023?",
+  "Are there seasonal patterns in agricultural imports that could inform policy?",
+  "What does the electronics import data suggest about Israel's tech manufacturing gaps?",
+  "How has the diamond export market evolved over the past two years?",
+  "Which emerging markets show the most growth potential for Israeli exports?",
+  "What economic indicators can we derive from petroleum import fluctuations?",
+  "How might current trade patterns predict next quarter's economic trends?",
+  "Which product categories show the most resilience during economic uncertainty?",
+  "What opportunities exist in markets where Israel currently has low export presence?"
 ]
 
 const currentQuestion = ref(questions[0])
-let questionIndex = 0
+const questionIndex = ref(0)
 let questionInterval = null
 
-onMounted(() => {
-  // Update countdown every second
-  interval = setInterval(() => {
-    now.value = Date.now()
-  }, 1000)
+function startRotation() {
+  // Clear existing interval if any
+  if (questionInterval) clearInterval(questionInterval)
 
-  // Rotate questions every 2 seconds
+  // Rotate questions every 4 seconds
   questionInterval = setInterval(() => {
-    questionIndex = (questionIndex + 1) % questions.length
-    currentQuestion.value = questions[questionIndex]
-  }, 2000)
+    questionIndex.value = (questionIndex.value + 1) % questions.length
+    currentQuestion.value = questions[questionIndex.value]
+  }, 4000)
+}
+
+function goToQuestion(index) {
+  questionIndex.value = index
+  currentQuestion.value = questions[index]
+  // Restart rotation from this question
+  startRotation()
+}
+
+onMounted(() => {
+  startRotation()
 })
 
 onUnmounted(() => {
-  if (interval) clearInterval(interval)
   if (questionInterval) clearInterval(questionInterval)
 })
 </script>

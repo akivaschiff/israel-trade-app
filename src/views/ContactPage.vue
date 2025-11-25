@@ -12,7 +12,7 @@
           Let's Connect
         </h1>
         <p class="text-slate-400 mt-3 text-lg max-w-2xl">
-          Get in touch about trade technology and data visualization.
+          Get in touch about building data experiences, integrating AI into processes and pipelines, and creating technology that makes complex information accessible.
         </p>
       </div>
     </div>
@@ -33,10 +33,10 @@
 
             <!-- Name -->
             <div class="relative">
-              <h2 class="text-3xl font-serif font-bold text-slate-900 mb-2">
+              <h2 class="text-3xl font-serif font-bold text-slate-900 mb-8">
                 Akiva Schiff-Blass
               </h2>
-              <p class="text-slate-500 mb-8">Builder of data experiences</p>
+<!--              <p class="text-slate-500 mb-8">Builder of data experiences</p>-->
 
               <!-- Contact Links -->
               <div class="space-y-5">
