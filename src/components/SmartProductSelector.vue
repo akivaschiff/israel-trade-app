@@ -58,14 +58,35 @@
         <h3 class="text-sm font-semibold text-indigo-900">
           Selected: {{ modelValue.size }} {{ modelValue.size === 1 ? 'product' : 'products' }}
         </h3>
-        <button
-          @click="clearAll"
-          class="text-xs text-indigo-600 hover:text-indigo-800 font-medium"
-        >
-          Clear All
-        </button>
+        <div class="flex items-center gap-2">
+          <button
+            v-if="modelValue.size > 5"
+            @click="selectedProductsExpanded = !selectedProductsExpanded"
+            class="text-xs text-indigo-600 hover:text-indigo-800 font-medium flex items-center gap-1"
+          >
+            <span>{{ selectedProductsExpanded ? 'Show Less' : 'Show All' }}</span>
+            <svg
+              class="w-3 h-3 transition-transform"
+              :class="{ 'rotate-180': selectedProductsExpanded }"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          <button
+            @click="clearAll"
+            class="text-xs text-indigo-600 hover:text-indigo-800 font-medium"
+          >
+            Clear All
+          </button>
+        </div>
       </div>
-      <div class="space-y-1.5">
+      <div
+        class="space-y-1.5 overflow-y-auto transition-all duration-300"
+        :class="{ 'max-h-[220px]': !selectedProductsExpanded && modelValue.size > 5 }"
+      >
         <div
           v-for="code in Array.from(modelValue)"
           :key="code"
@@ -114,6 +135,7 @@ const searchTerm = ref('')
 const rawSearchResults = ref([])
 const searching = ref(false)
 const expandedItems = ref(new Set())
+const selectedProductsExpanded = ref(false)
 
 let searchTimeout = null
 
