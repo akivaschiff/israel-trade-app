@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import DashboardLayout from '@/views/DashboardLayout.vue'
 import HomePage from '@/views/HomePage.vue'
 import WorldMapPage from '@/views/world-map/WorldMapPage.vue'
-import TradeLookupPage from '@/views/TradeLookupPage.vue'
+import TrendsPage from '@/views/trends/TrendsPage.vue'
 import AIPage from '@/views/AIPage.vue'
 import AboutPage from '@/views/AboutPage.vue'
 import ContactPage from '@/views/ContactPage.vue'
@@ -27,7 +27,7 @@ const router = createRouter({
         {
           path: 'trade-lookup',
           name: 'trade-lookup',
-          component: TradeLookupPage
+          component: TrendsPage
         },
         {
           path: 'ai-chat',

@@ -1,46 +1,63 @@
 <template>
-  <div class="min-h-[calc(100vh-64px)] bg-gray-50">
-    <!-- Header -->
-    <div class="bg-white border-b border-gray-200 p-6">
-      <div class="max-w-7xl mx-auto">
-        <h1 class="text-3xl font-bold text-gray-900">Trends</h1>
-        <p class="text-gray-600 mt-2">Track product trade flows over time across different countries</p>
+  <div class="trends-page min-h-[calc(100vh-64px)] bg-slate-50">
+    <!-- Hero Header -->
+    <div class="relative overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+      <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48ZyBmaWxsPSJub25lIiBmaWxsLXJ1bGU9ImV2ZW5vZGQiPjxwYXRoIGQ9Ik0zNiAxOGMtOS45NDEgMC0xOCA4LjA1OS0xOCAxOHM4LjA1OSAxOCAxOCAxOCAxOC04LjA1OSAxOC0xOC04LjA1OS0xOC0xOC0xOHptMCAzMmMtNy43MzIgMC0xNC02LjI2OC0xNC0xNHM2LjI2OC0xNCAxNC0xNCAxNCA2LjI2OCAxNCAxNC02LjI2OCAxNC0xNCAxNHoiIHN0cm9rZT0iIzMzNDQ1NSIgc3Ryb2tlLXdpZHRoPSIuNSIgb3BhY2l0eT0iLjEiLz48L2c+PC9zdmc+')] opacity-30"></div>
+      <div class="relative max-w-7xl mx-auto px-6 py-12">
+        <div class="flex items-center justify-between flex-wrap gap-4">
+          <div>
+            <div class="flex items-center gap-3 mb-2">
+              <div class="w-1 h-8 bg-gradient-to-b from-amber-400 to-amber-600 rounded-full"></div>
+              <span class="text-amber-400 text-sm font-medium tracking-widest uppercase">Trade Analysis</span>
+            </div>
+            <h1 class="text-4xl md:text-5xl font-serif font-bold text-white tracking-tight">
+              Product Trends
+            </h1>
+            <p class="text-slate-400 mt-3 text-lg max-w-2xl">
+              Track trade patterns and compare products across countries.
+            </p>
+          </div>
+
+          <!-- Flow Toggle in Header -->
+          <div class="flex items-center gap-3">
+            <div class="flex p-1 bg-slate-800/50 rounded-xl border border-slate-700">
+              <button
+                @click="selectedFlow = FLOW_TYPES.IMPORTS"
+                :class="[
+                  'flex items-center gap-2 px-5 py-2.5 rounded-lg font-semibold text-sm transition-all duration-200',
+                  selectedFlow === FLOW_TYPES.IMPORTS
+                    ? 'bg-blue-500 text-white shadow-lg shadow-blue-500/30'
+                    : 'text-slate-400 hover:text-white'
+                ]"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+                </svg>
+                Imports
+              </button>
+              <button
+                @click="selectedFlow = FLOW_TYPES.EXPORTS"
+                :class="[
+                  'flex items-center gap-2 px-5 py-2.5 rounded-lg font-semibold text-sm transition-all duration-200',
+                  selectedFlow === FLOW_TYPES.EXPORTS
+                    ? 'bg-orange-500 text-white shadow-lg shadow-orange-500/30'
+                    : 'text-slate-400 hover:text-white'
+                ]"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+                </svg>
+                Exports
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
     <!-- Controls -->
-    <div class="max-w-7xl mx-auto p-6">
-      <div class="bg-white rounded-lg shadow-sm p-6 space-y-6">
-        <!-- Flow Selection -->
-        <div>
-          <label class="block text-sm font-semibold text-gray-700 mb-2">Trade Flow</label>
-          <div class="flex gap-2">
-            <button
-              @click="selectedFlow = FLOW_TYPES.IMPORTS"
-              :class="[
-                'px-6 py-2 rounded-lg font-medium transition-colors',
-                selectedFlow === FLOW_TYPES.IMPORTS
-                  ? 'text-white'
-                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-              ]"
-              :style="selectedFlow === FLOW_TYPES.IMPORTS ? { backgroundColor: TRADE_COLORS.IMPORTS.primary } : {}"
-            >
-              Imports
-            </button>
-            <button
-              @click="selectedFlow = FLOW_TYPES.EXPORTS"
-              :class="[
-                'px-6 py-2 rounded-lg font-medium transition-colors',
-                selectedFlow === FLOW_TYPES.EXPORTS
-                  ? 'text-white'
-                  : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-              ]"
-              :style="selectedFlow === FLOW_TYPES.EXPORTS ? { backgroundColor: TRADE_COLORS.EXPORTS.primary } : {}"
-            >
-              Exports
-            </button>
-          </div>
-        </div>
+    <div class="max-w-7xl mx-auto px-6 -mt-6 relative z-10">
+      <div class="bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-200/60 p-8 space-y-8">
 
         <!-- Product Selection with Search -->
         <SmartProductSelector
@@ -51,103 +68,132 @@
 
         <!-- Country Selection -->
         <div>
-          <div class="flex items-center justify-between mb-2">
-            <label class="text-sm font-semibold text-gray-700">
+          <div class="flex items-center justify-between mb-3">
+            <label class="text-xs font-semibold text-slate-500 uppercase tracking-wider">
               Select Countries to Compare
-              <span v-if="selectedCountries.length > 0" class="text-indigo-600 font-normal">
+              <span v-if="selectedCountries.length > 0" class="text-blue-600 normal-case tracking-normal ml-2">
                 ({{ selectedCountries.length }} selected)
               </span>
             </label>
             <button
               v-if="sortedCountries.length > 0"
               @click="toggleSelectAll"
-              class="text-xs text-indigo-600 hover:text-indigo-800 font-medium"
+              class="text-xs font-medium text-blue-600 hover:text-blue-800 transition-colors"
             >
               {{ allCountriesSelected ? 'Deselect All' : 'Select All' }}
             </button>
           </div>
-          
+
           <!-- No products selected message -->
-          <div v-if="!hasProducts" class="text-sm text-gray-500 italic py-8 text-center border border-gray-300 rounded-lg">
-            Select products first to see available countries
+          <div v-if="!hasProducts" class="text-sm text-slate-400 py-12 text-center border-2 border-dashed border-slate-200 rounded-xl bg-slate-50/50">
+            <svg class="w-8 h-8 mx-auto mb-3 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+            Search for products above to see available countries
           </div>
-          
+
           <!-- Loading countries -->
-          <div v-else-if="fetchingCountries" class="text-center py-8">
-            <div class="inline-block animate-spin rounded-full h-6 w-6 border-b-2 border-indigo-600"></div>
-            <p class="text-sm text-gray-500 mt-2">Loading countries...</p>
+          <div v-else-if="fetchingCountries" class="text-center py-12 border-2 border-dashed border-slate-200 rounded-xl bg-slate-50/50">
+            <div class="inline-block animate-spin rounded-full h-8 w-8 border-2 border-blue-600 border-t-transparent"></div>
+            <p class="text-sm text-slate-500 mt-3">Finding trading partners...</p>
           </div>
-          
+
           <!-- Countries list -->
           <div v-else-if="sortedCountries.length > 0">
-            <div class="text-xs text-gray-500 mb-2">
-              {{ sortedCountries.length }} countries traded these products in the last year (sorted by value)
+            <div class="text-xs text-slate-500 mb-3">
+              {{ sortedCountries.length }} countries traded these products (sorted by trade value)
             </div>
-            <div class="max-h-60 overflow-y-auto border border-gray-300 rounded-lg p-2 space-y-1">
+            <div class="max-h-64 overflow-y-auto border border-slate-200 rounded-xl bg-slate-50/30 divide-y divide-slate-100">
               <label
                 v-for="[code, country] in sortedCountries"
                 :key="code"
-                class="flex items-center gap-2 p-2 hover:bg-gray-50 rounded cursor-pointer"
+                class="flex items-center gap-3 px-4 py-3 hover:bg-white cursor-pointer transition-colors group"
               >
                 <input
                   type="checkbox"
                   :value="code"
                   v-model="selectedCountries"
-                  class="rounded"
+                  class="w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500 focus:ring-offset-0"
                 />
-                <span class="text-sm text-gray-800 flex-1">{{ country.name }}</span>
-                <span class="text-xs text-gray-500">{{ formatValue(country.total_value) }}</span>
+                <span class="text-sm text-slate-700 flex-1 group-hover:text-slate-900 transition-colors">{{ country.name }}</span>
+                <span class="text-xs font-medium text-slate-400 tabular-nums">{{ formatValue(country.total_value) }}</span>
               </label>
             </div>
           </div>
-          
+
           <!-- No countries found -->
-          <div v-else class="text-sm text-gray-500 italic py-8 text-center border border-gray-300 rounded-lg">
-            No countries found trading these products in the last year
+          <div v-else class="text-sm text-slate-400 py-12 text-center border-2 border-dashed border-slate-200 rounded-xl bg-slate-50/50">
+            <svg class="w-8 h-8 mx-auto mb-3 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            No trading partners found for these products
           </div>
         </div>
 
         <!-- Load Button -->
-        <div class="flex justify-end">
+        <div class="flex justify-end pt-4 border-t border-slate-100">
           <button
             @click="loadTrends"
             :disabled="!canLoadTrends || loading"
-            class="px-8 py-3 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+            class="group relative px-10 py-4 bg-gradient-to-r from-slate-900 to-slate-800 text-white font-semibold rounded-xl hover:from-slate-800 hover:to-slate-700 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200 shadow-lg shadow-slate-900/20 hover:shadow-xl hover:shadow-slate-900/30 disabled:shadow-none"
           >
-            <span v-if="loading">Loading...</span>
-            <span v-else>Show Trends</span>
+            <span v-if="loading" class="flex items-center gap-2">
+              <svg class="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
+                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              </svg>
+              Loading Trends...
+            </span>
+            <span v-else class="flex items-center gap-2">
+              Show Trends
+              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+              </svg>
+            </span>
           </button>
         </div>
       </div>
 
       <!-- Chart Area -->
-      <div v-if="trendsData.length > 0" class="mt-6 bg-white rounded-lg shadow-sm p-6">
-        <h2 class="text-xl font-bold text-gray-900 mb-4">
-          {{ selectedFlow === FLOW_TYPES.EXPORTS ? 'Export' : 'Import' }} Trends
-        </h2>
-        <div style="height: 500px;">
+      <div v-if="trendsData.length > 0" class="mt-8 bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-200/60 overflow-hidden">
+        <!-- Chart Header -->
+        <div class="px-8 py-6 border-b border-slate-100 bg-gradient-to-r from-slate-50 to-white">
+          <div class="flex items-center gap-3">
+            <div :class="[
+              'w-3 h-3 rounded-full',
+              selectedFlow === FLOW_TYPES.EXPORTS ? 'bg-amber-500' : 'bg-blue-600'
+            ]"></div>
+            <h2 class="text-2xl font-serif font-bold text-slate-900">
+              {{ selectedFlow === FLOW_TYPES.EXPORTS ? 'Export' : 'Import' }} Trends
+            </h2>
+          </div>
+          <p class="text-sm text-slate-500 mt-1 ml-6">Trade values over time by country</p>
+        </div>
+
+        <!-- Chart -->
+        <div class="p-6" style="height: 520px;">
           <v-chart :option="chartOption" :autoresize="true" />
         </div>
 
-        <!-- Time Range Selector - Below Chart -->
-        <div v-if="availableMonths.length > 0" class="mt-8 pt-6 border-t border-gray-200">
+        <!-- Time Range Selector -->
+        <div v-if="availableMonths.length > 0" class="px-8 py-6 bg-slate-50 border-t border-slate-100">
           <div class="flex items-center justify-between mb-4">
-            <label class="text-sm font-semibold text-gray-700">Time Range</label>
+            <label class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Adjust Time Range</label>
             <button
               @click="resetToDefaultRange"
-              class="text-xs text-indigo-600 hover:text-indigo-800 font-medium"
+              class="text-xs font-medium text-blue-600 hover:text-blue-800 transition-colors"
             >
-              Reset to Last Year
+              Reset to Last 12 Months
             </button>
           </div>
-          
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 items-end">
+
+          <div class="flex flex-wrap items-end gap-4">
             <!-- Start Month -->
-            <div>
-              <label class="block text-xs text-gray-600 mb-1">From</label>
+            <div class="flex-1 min-w-[140px]">
+              <label class="block text-xs text-slate-500 mb-2">From</label>
               <select
                 v-model="selectedStartMonth"
-                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                class="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow"
               >
                 <option
                   v-for="(month, index) in availableMonths"
@@ -160,12 +206,18 @@
               </select>
             </div>
 
+            <div class="hidden md:flex items-center pb-2.5">
+              <svg class="w-5 h-5 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+            </div>
+
             <!-- End Month -->
-            <div>
-              <label class="block text-xs text-gray-600 mb-1">To</label>
+            <div class="flex-1 min-w-[140px]">
+              <label class="block text-xs text-slate-500 mb-2">To</label>
               <select
                 v-model="selectedEndMonth"
-                class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                class="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-lg text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-shadow"
               >
                 <option
                   v-for="(month, index) in availableMonths"
@@ -182,7 +234,7 @@
             <button
               @click="applyTimeRange"
               :disabled="loading"
-              class="px-6 py-2 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              class="px-6 py-2.5 bg-slate-900 text-white text-sm font-medium rounded-lg hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               <span v-if="loading">Updating...</span>
               <span v-else>Apply Range</span>
@@ -192,14 +244,19 @@
       </div>
 
       <!-- Empty State -->
-      <div v-else-if="!loading" class="mt-6 bg-white rounded-lg shadow-sm p-12 text-center">
-        <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
-        </svg>
-        <h3 class="mt-2 text-sm font-medium text-gray-900">No trends to display</h3>
-        <p class="mt-1 text-sm text-gray-500">Search for products and select countries, then click "Show Trends"</p>
+      <div v-else-if="!loading" class="mt-8 bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-200/60 p-16 text-center">
+        <div class="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-slate-100 to-slate-50 flex items-center justify-center">
+          <svg class="w-10 h-10 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+          </svg>
+        </div>
+        <h3 class="text-xl font-serif font-semibold text-slate-900">No trends to display</h3>
+        <p class="mt-2 text-slate-500 max-w-sm mx-auto">Search for products and select countries above, then click "Show Trends" to visualize trade patterns.</p>
       </div>
     </div>
+
+    <!-- Bottom spacing -->
+    <div class="h-12"></div>
   </div>
 </template>
 

@@ -8,6 +8,7 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Plus Jakarta Sans', 'system-ui', 'sans-serif'],
+        serif: ['DM Serif Display', 'Georgia', 'serif'],
         display: ['Cal Sans', 'Plus Jakarta Sans', 'system-ui', 'sans-serif'],
         hebrew: ['Rubik', 'system-ui', 'sans-serif'],
       },
