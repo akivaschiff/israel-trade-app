@@ -56,8 +56,8 @@
     </div>
 
     <!-- Controls -->
-    <div class="max-w-7xl mx-auto px-6 -mt-6 relative z-10">
-      <div class="bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-200/60 p-8 space-y-8">
+    <div class="max-w-7xl mx-auto px-6 -mt-8 relative z-10">
+      <div class="bg-white rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-200/60 p-8 space-y-8">
 
         <!-- Product Selection with Search -->
         <SmartProductSelector
@@ -65,97 +65,10 @@
           :on-search="searchProducts"
           :categoriesData="categoriesData"
         />
-
-        <!-- Country Selection -->
-        <div>
-          <div class="flex items-center justify-between mb-3">
-            <label class="text-xs font-semibold text-slate-500 uppercase tracking-wider">
-              Select Countries to Compare
-              <span v-if="selectedCountries.length > 0" class="text-blue-600 normal-case tracking-normal ml-2">
-                ({{ selectedCountries.length }} selected)
-              </span>
-            </label>
-            <button
-              v-if="sortedCountries.length > 0"
-              @click="toggleSelectAll"
-              class="text-xs font-medium text-blue-600 hover:text-blue-800 transition-colors"
-            >
-              {{ allCountriesSelected ? 'Deselect All' : 'Select All' }}
-            </button>
-          </div>
-
-          <!-- No products selected message -->
-          <div v-if="!hasProducts" class="text-sm text-slate-400 py-12 text-center border-2 border-dashed border-slate-200 rounded-xl bg-slate-50/50">
-            <svg class="w-8 h-8 mx-auto mb-3 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-            Search for products above to see available countries
-          </div>
-
-          <!-- Loading countries -->
-          <div v-else-if="fetchingCountries" class="text-center py-12 border-2 border-dashed border-slate-200 rounded-xl bg-slate-50/50">
-            <div class="inline-block animate-spin rounded-full h-8 w-8 border-2 border-blue-600 border-t-transparent"></div>
-            <p class="text-sm text-slate-500 mt-3">Finding trading partners...</p>
-          </div>
-
-          <!-- Countries list -->
-          <div v-else-if="sortedCountries.length > 0">
-            <div class="text-xs text-slate-500 mb-3">
-              {{ sortedCountries.length }} countries traded these products (sorted by trade value)
-            </div>
-            <div class="max-h-64 overflow-y-auto border border-slate-200 rounded-xl bg-slate-50/30 divide-y divide-slate-100">
-              <label
-                v-for="[code, country] in sortedCountries"
-                :key="code"
-                class="flex items-center gap-3 px-4 py-3 hover:bg-white cursor-pointer transition-colors group"
-              >
-                <input
-                  type="checkbox"
-                  :value="code"
-                  v-model="selectedCountries"
-                  class="w-4 h-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500 focus:ring-offset-0"
-                />
-                <span class="text-sm text-slate-700 flex-1 group-hover:text-slate-900 transition-colors">{{ country.name }}</span>
-                <span class="text-xs font-medium text-slate-400 tabular-nums">{{ formatValue(country.total_value) }}</span>
-              </label>
-            </div>
-          </div>
-
-          <!-- No countries found -->
-          <div v-else class="text-sm text-slate-400 py-12 text-center border-2 border-dashed border-slate-200 rounded-xl bg-slate-50/50">
-            <svg class="w-8 h-8 mx-auto mb-3 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            No trading partners found for these products
-          </div>
-        </div>
-
-        <!-- Load Button -->
-        <div class="flex justify-end pt-4 border-t border-slate-100">
-          <button
-            @click="loadTrends"
-            :disabled="!canLoadTrends || loading"
-            class="group relative px-10 py-4 bg-gradient-to-r from-slate-900 to-slate-800 text-white font-semibold rounded-xl hover:from-slate-800 hover:to-slate-700 disabled:opacity-40 disabled:cursor-not-allowed transition-all duration-200 shadow-lg shadow-slate-900/20 hover:shadow-xl hover:shadow-slate-900/30 disabled:shadow-none"
-          >
-            <span v-if="loading" class="flex items-center gap-2">
-              <svg class="animate-spin h-4 w-4" fill="none" viewBox="0 0 24 24">
-                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-              </svg>
-              Loading Trends...
-            </span>
-            <span v-else class="flex items-center gap-2">
-              Show Trends
-              <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
-              </svg>
-            </span>
-          </button>
-        </div>
       </div>
 
       <!-- Chart Area -->
-      <div v-if="trendsData.length > 0" class="mt-8 bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-200/60 overflow-hidden">
+      <div v-if="trendsData.length > 0" class="mt-8 bg-white rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-200/60 overflow-hidden">
         <!-- Chart Header -->
         <div class="px-8 py-6 border-b border-slate-100 bg-gradient-to-r from-slate-50 to-white">
           <div class="flex items-center gap-3">
@@ -206,12 +119,6 @@
               </select>
             </div>
 
-            <div class="hidden md:flex items-center pb-2.5">
-              <svg class="w-5 h-5 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </div>
-
             <!-- End Month -->
             <div class="flex-1 min-w-[140px]">
               <label class="block text-xs text-slate-500 mb-2">To</label>
@@ -230,28 +137,67 @@
               </select>
             </div>
 
-            <!-- Apply Button -->
+          </div>
+        </div>
+
+        <!-- Country Breakdown (Optional) -->
+        <div class="px-8 py-6 bg-white border-t border-slate-100">
+          <div class="flex items-center justify-between mb-4">
+            <label class="text-xs font-semibold text-slate-500 uppercase tracking-wider">Break Down by Country (Optional)</label>
             <button
-              @click="applyTimeRange"
-              :disabled="loading"
-              class="px-6 py-2.5 bg-slate-900 text-white text-sm font-medium rounded-lg hover:bg-slate-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              v-if="sortedCountries.length > 0"
+              @click="toggleSelectAll"
+              class="text-xs font-medium text-blue-600 hover:text-blue-800 transition-colors"
             >
-              <span v-if="loading">Updating...</span>
-              <span v-else>Apply Range</span>
+              {{ allCountriesSelected ? 'Deselect All' : 'Select All' }}
+            </button>
+          </div>
+
+          <div v-if="fetchingCountries" class="text-center py-4">
+            <div class="inline-block w-8 h-8 border-3 border-slate-200 border-t-blue-600 rounded-full animate-spin"></div>
+            <p class="text-sm text-slate-500 mt-2">Loading countries...</p>
+          </div>
+
+          <div v-else-if="sortedCountries.length === 0" class="text-center py-4 text-sm text-slate-500">
+            No countries available for selected products
+          </div>
+
+          <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 max-h-64 overflow-y-auto">
+            <button
+              v-for="[code, country] in sortedCountries"
+              :key="code"
+              @click="toggleCountry(code)"
+              :class="[
+                'flex items-center gap-3 p-3 rounded-lg border transition-all duration-200 text-left',
+                selectedCountries.includes(code)
+                  ? 'border-blue-500 bg-blue-50 shadow-sm'
+                  : 'border-slate-200 bg-white hover:bg-slate-50 opacity-60'
+              ]"
+            >
+              <div class="flex-1 min-w-0">
+                <div :class="[
+                  'text-sm font-medium truncate',
+                  selectedCountries.includes(code) ? 'text-blue-900' : 'text-slate-600'
+                ]">{{ country.name }}</div>
+                <div :class="[
+                  'text-xs',
+                  selectedCountries.includes(code) ? 'text-blue-600' : 'text-slate-400'
+                ]">{{ formatValue(country.total_value) }}</div>
+              </div>
             </button>
           </div>
         </div>
       </div>
 
       <!-- Empty State -->
-      <div v-else-if="!loading" class="mt-8 bg-white rounded-2xl shadow-xl shadow-slate-200/50 border border-slate-200/60 p-16 text-center">
+      <div v-else-if="!loading" class="mt-8 bg-white rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-200/60 p-16 text-center">
         <div class="w-20 h-20 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-slate-100 to-slate-50 flex items-center justify-center">
           <svg class="w-10 h-10 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
           </svg>
         </div>
         <h3 class="text-xl font-serif font-semibold text-slate-900">No trends to display</h3>
-        <p class="mt-2 text-slate-500 max-w-sm mx-auto">Search for products and select countries above, then click "Show Trends" to visualize trade patterns.</p>
+        <p class="mt-2 text-slate-500 max-w-sm mx-auto">Search for and select products above to visualize trade patterns.</p>
       </div>
     </div>
 
@@ -294,6 +240,11 @@ const selectedProducts = ref(new Set())
 const selectedCountries = ref([])
 const fetchingCountries = ref(false)
 
+// Store all fetched country data to avoid re-fetching when toggling countries
+const allCountryData = ref([])
+const totalLine = ref(null)
+const allTimeSeriesData = ref([]) // Store ALL fetched data (not filtered by time)
+
 // Time range as indices into availableMonths array
 const selectedStartMonth = ref(0)
 const selectedEndMonth = ref(0)
@@ -315,6 +266,48 @@ onMounted(async () => {
 // Helper computed
 const hasProducts = computed(() => selectedProducts.value.size > 0)
 
+// Filter data by selected time range (like the modal does)
+const visibleTrendsData = computed(() => {
+  if (!totalLine.value || allCountryData.value.length === 0) return []
+
+  // Get the time range boundaries
+  const startMonth = availableMonths.value[selectedStartMonth.value]
+  const endMonth = availableMonths.value[selectedEndMonth.value]
+
+  if (!startMonth || !endMonth) return []
+
+  const startIndex = startMonth.index
+  const endIndex = endMonth.index
+
+  // Filter total line data points
+  const filteredTotalPoints = totalLine.value.data_points.filter(point => {
+    const pointIndex = (point.year * 12) + point.period
+    return pointIndex >= startIndex && pointIndex <= endIndex
+  })
+
+  const filteredTotal = {
+    ...totalLine.value,
+    data_points: filteredTotalPoints
+  }
+
+  // Filter country data points
+  const filteredCountries = allCountryData.value
+    .filter(country => selectedCountries.value.includes(country.country_code))
+    .map(country => ({
+      ...country,
+      data_points: country.data_points.filter(point => {
+        const pointIndex = (point.year * 12) + point.period
+        return pointIndex >= startIndex && pointIndex <= endIndex
+      })
+    }))
+
+  if (selectedCountries.value.length > 0) {
+    return [filteredTotal, ...filteredCountries]
+  } else {
+    return [filteredTotal]
+  }
+})
+
 // Sorted countries for display
 const sortedCountries = computed(() => {
   return relevantCountries.value
@@ -322,14 +315,14 @@ const sortedCountries = computed(() => {
     .sort((a, b) => b[1].total_value - a[1].total_value)
 })
 
-// Can load trends if we have products and countries
+// Can load trends if we have products
 const canLoadTrends = computed(() => {
-  return hasProducts.value && selectedCountries.value.length > 0
+  return hasProducts.value
 })
 
 // Check if all countries are selected
 const allCountriesSelected = computed(() => {
-  return sortedCountries.value.length > 0 && 
+  return sortedCountries.value.length > 0 &&
          selectedCountries.value.length === sortedCountries.value.length
 })
 
@@ -342,29 +335,75 @@ function toggleSelectAll() {
   }
 }
 
-// Watch for product/flow changes to fetch relevant countries (debounced)
-watch([selectedProducts, selectedFlow], ([products, flow]) => {
+// Toggle individual country selection
+function toggleCountry(code) {
+  if (selectedCountries.value.includes(code)) {
+    // Remove: create new array without this code
+    selectedCountries.value = selectedCountries.value.filter(c => c !== code)
+  } else {
+    // Add: create new array with this code
+    selectedCountries.value = [...selectedCountries.value, code]
+  }
+}
+
+// Watch for product/flow changes to fetch relevant countries and load total trends
+watch([selectedProducts, selectedFlow], ([products, flow], [oldProducts, oldFlow]) => {
   clearTimeout(fetchCountriesTimeout)
-  
+
+  // If only flow changed (not products), reset everything
+  if (flow !== oldFlow && products.size > 0) {
+    selectedProducts.value = new Set()
+    relevantCountries.value = []
+    selectedCountries.value = []
+    fetchingCountries.value = false
+    trendsData.value = []
+    allCountryData.value = []
+    totalLine.value = null
+    return
+  }
+
   if (products.size === 0) {
     relevantCountries.value = []
     selectedCountries.value = []
     fetchingCountries.value = false
+    trendsData.value = []
     return
   }
-  
+
   fetchingCountries.value = true
-  
+
   fetchCountriesTimeout = setTimeout(async () => {
+    // Fetch relevant countries
     await fetchRelevantCountries(Array.from(products), flow)
-    
+
     // Remove any selected countries that are no longer relevant
     const relevantCodes = new Set(relevantCountries.value.map(c => c.code))
     selectedCountries.value = selectedCountries.value.filter(code => relevantCodes.has(code))
-    
+
     fetchingCountries.value = false
+
+    // Automatically load total trends
+    await loadTrends()
   }, 500)
 }, { deep: true })
+
+// Watch for country selection changes to update the chart (without re-fetching)
+watch(selectedCountries, () => {
+  if (hasProducts.value && allCountryData.value.length > 0) {
+    updateDisplayedTrends()
+  }
+})
+
+// Auto-select top 2 countries when relevant countries are loaded
+watch(relevantCountries, (countries) => {
+  if (countries.length >= 2) {
+    selectedCountries.value = countries.slice(0, 2).map(c => c.code)
+  } else if (countries.length === 1) {
+    selectedCountries.value = [countries[0].code]
+  }
+})
+
+// Time range changes don't need to re-fetch data - visibleTrendsData computed handles filtering
 
 // Format month label from index
 function formatMonthLabel(index) {
@@ -377,46 +416,76 @@ function formatMonthLabel(index) {
 // Reset to default range (last 12 months)
 function resetToDefaultRange() {
   if (availableMonths.value.length === 0) return
-  
+
   selectedEndMonth.value = 0 // Latest month (months are sorted newest first)
   selectedStartMonth.value = Math.min(11, availableMonths.value.length - 1) // 12 months back
 }
 
-// Apply time range and reload trends
-async function applyTimeRange() {
-  if (!canLoadTrends.value) return
-  
-  const startMonth = availableMonths.value[selectedStartMonth.value]
-  const endMonth = availableMonths.value[selectedEndMonth.value]
-  
-  await fetchTrends(
-    Array.from(selectedProducts.value),
-    selectedCountries.value,
-    selectedFlow.value,
-    startMonth.year,
-    startMonth.period,
-    endMonth.year,
-    endMonth.period
-  )
+// Update displayed trends without re-fetching (just filters what's shown)
+function updateDisplayedTrends() {
+  if (!totalLine.value) return
+
+  // If countries are selected, add their individual lines
+  if (selectedCountries.value.length > 0) {
+    const selectedCountryData = allCountryData.value.filter(d =>
+      selectedCountries.value.includes(d.country_code)
+    )
+    trendsData.value = [totalLine.value, ...selectedCountryData]
+  } else {
+    // Only show total
+    trendsData.value = [totalLine.value]
+  }
 }
 
-// Load trends data with default time range
+// Load trends data - fetches ALL available data (filtering happens in visibleTrendsData computed)
 async function loadTrends() {
   if (!canLoadTrends.value) return
-  
-  // Use current time range
-  const startMonth = availableMonths.value[selectedStartMonth.value]
-  const endMonth = availableMonths.value[selectedEndMonth.value]
-  
-  await fetchTrends(
-    Array.from(selectedProducts.value),
-    selectedCountries.value,
+
+  const productCodes = Array.from(selectedProducts.value)
+
+  // Get all relevant country codes for total
+  const allCountryCodes = relevantCountries.value.map(c => c.code)
+
+  // Fetch ALL data without time filtering (pass null for time params)
+  const fetchedData = await fetchTrends(
+    productCodes,
+    allCountryCodes,
     selectedFlow.value,
-    startMonth.year,
-    startMonth.period,
-    endMonth.year,
-    endMonth.period
+    null,  // startYear - null means fetch all
+    null,  // startPeriod
+    null,  // endYear
+    null   // endPeriod
   )
+
+  // Store the fetched data
+  allCountryData.value = fetchedData
+
+  // Aggregate data by date to create "Total" line
+  const dateMap = new Map()
+  for (const country of fetchedData) {
+    for (const point of country.data_points) {
+      const key = point.date
+      if (!dateMap.has(key)) {
+        dateMap.set(key, { ...point, value: 0 })
+      }
+      dateMap.get(key).value += point.value
+    }
+  }
+
+  const totalDataPoints = Array.from(dateMap.values()).sort((a, b) => {
+    if (a.year !== b.year) return a.year - b.year
+    return a.period - b.period
+  })
+
+  // Store the total line
+  totalLine.value = {
+    country_code: 'TOTAL',
+    country_name: 'Total (All Countries)',
+    data_points: totalDataPoints
+  }
+
+  // Update what's displayed
+  updateDisplayedTrends()
 }
 
 // Format value for display
@@ -434,16 +503,16 @@ function formatValue(value) {
 
 // Chart configuration
 const chartOption = computed(() => {
-  if (trendsData.value.length === 0) return {}
+  if (visibleTrendsData.value.length === 0) return {}
 
   // Collect all unique dates from all countries and sort them
   const allDatesSet = new Set()
-  trendsData.value.forEach(country => {
+  visibleTrendsData.value.forEach(country => {
     country.data_points.forEach(point => {
       allDatesSet.add(point.date)
     })
   })
-  
+
   const sortedDates = Array.from(allDatesSet).sort((a, b) => {
     const [yearA, monthA] = a.split('-').map(Number)
     const [yearB, monthB] = b.split('-').map(Number)
@@ -452,7 +521,7 @@ const chartOption = computed(() => {
   })
 
   // Generate series for each country
-  const series = trendsData.value.map((country, index) => {
+  const series = visibleTrendsData.value.map((country, index) => {
     const colors = [
       '#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6',
       '#ec4899', '#14b8a6', '#f97316', '#6366f1', '#84cc16'
@@ -485,6 +554,9 @@ const chartOption = computed(() => {
   })
 
   return {
+    animation: true,
+    animationDuration: 750,
+    animationEasing: 'cubicOut',
     tooltip: {
       trigger: 'axis',
       axisPointer: {
@@ -508,7 +580,7 @@ const chartOption = computed(() => {
       }
     },
     legend: {
-      data: trendsData.value.map(c => c.country_name),
+      data: visibleTrendsData.value.map(c => c.country_name),
       top: 0,
       type: 'scroll'
     },
