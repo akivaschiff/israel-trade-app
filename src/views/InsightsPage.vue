@@ -55,7 +55,7 @@
 </template>
 
 <script setup>
-import { ref, inject, onMounted } from 'vue'
+import { ref, inject, onMounted, nextTick } from 'vue'
 import InsightCard from '@/components/InsightCard.vue'
 import InsightModal from '@/components/InsightModal.vue'
 
@@ -204,12 +204,16 @@ function closeModal() {
 }
 
 // Check URL hash on mount to open specific insight
-onMounted(() => {
+onMounted(async () => {
+  await nextTick() // Ensure DOM is ready
   const hash = window.location.hash.slice(1) // Remove the # symbol
   if (hash) {
     const insight = insights.value.find(i => i.id === hash)
     if (insight) {
-      openModal(insight)
+      // Small delay to ensure component is fully mounted
+      setTimeout(() => {
+        openModal(insight)
+      }, 100)
     }
   }
 })
