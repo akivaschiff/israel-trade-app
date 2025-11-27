@@ -4,6 +4,7 @@ import HomePage from '@/views/HomePage.vue'
 import WorldMapPage from '@/views/world-map/WorldMapPage.vue'
 import TrendsPage from '@/views/trends/TrendsPage.vue'
 import AIPage from '@/views/AIPage.vue'
+import InsightsPage from '@/views/InsightsPage.vue'
 import AboutPage from '@/views/AboutPage.vue'
 import ContactPage from '@/views/ContactPage.vue'
 import { usePostHog } from '@/composables/usePostHog'
@@ -34,6 +35,11 @@ const router = createRouter({
           path: 'ai-chat',
           name: 'ai-chat',
           component: AIPage
+        },
+        {
+          path: 'insights',
+          name: 'insights',
+          component: InsightsPage
         },
         {
           path: 'about',
