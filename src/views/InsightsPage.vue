@@ -64,6 +64,54 @@ const locale = inject('locale', 'en')
 // Insights data
 const insights = ref([
   {
+    id: 'radar-germany',
+    title: 'Israel Sells Radar to Germany: A $90 Million Month',
+    titleHe: 'ישראל מוכרת מכ״ם לגרמניה: חודש של 90 מיליון דולר',
+    date: '2025-01-25',
+    thumbnailImage: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800',
+    chartImage: null,
+    shortDescription: 'A single month. $90.5 million. Israel\'s radar exports to Germany spiked in July 2025 — part of the largest defense deal in Israeli history.',
+    shortDescriptionHe: 'חודש אחד. 90.5 מיליון דולר. יצוא המכ״ם הישראלי לגרמניה זינק ביולי 2025 — חלק מעסקת הביטחון הגדולה בתולדות ישראל.',
+    description: 'Look at July 2025. That spike isn\'t a glitch — it\'s a $90.5 million radar delivery to Germany in a single month. For context, most months hover between $0.1M and $3M.\n\nThis is the Arrow 3 story playing out in trade data. In late 2023, Germany signed a $3.8 billion deal for Israel\'s Arrow 3 missile defense system — the largest defense export in Israeli history. The system, developed by Israel Aerospace Industries\' ELTA subsidiary, includes sophisticated radar arrays capable of tracking ballistic missiles in space.\n\nThe data shows the delivery timeline: small baseline exports through 2024, then the floodgates open in mid-2025. September 2025 shows another elevated month at $10.9M — likely follow-on components or maintenance equipment.\n\nBut Germany isn\'t Israel\'s only radar customer. India leads with $258M in radar imports since 2024. Ukraine received $70M — steady monthly shipments starting March 2024, a quiet signal of military cooperation during the war. South Korea ($45M) and Czechia ($44M) round out NATO and allied buyers.\n\nIsraeli defense exports hit a record $14.8 billion in 2024, with 54% going to Europe. Radar and electronic warfare systems account for about 10% of total defense exports — but as the Germany spike shows, individual deliveries can be massive.',
+    descriptionHe: 'תסתכלו על יולי 2025. הזינוק הזה הוא לא טעות — זו משלוח מכ״ם בשווי 90.5 מיליון דולר לגרמניה בחודש אחד. לשם השוואה, רוב החודשים נעים בין 0.1 ל-3 מיליון דולר.\n\nזה סיפור החץ 3 מתגלם בנתוני הסחר. בסוף 2023, גרמניה חתמה על עסקה בשווי 3.8 מיליארד דולר למערכת הגנה מפני טילים חץ 3 של ישראל — יצוא הביטחון הגדול בתולדות ישראל. המערכת, שפותחה על ידי חברת הבת של תעשייה אווירית אלת״א, כוללת מערכי מכ״ם מתוחכמים המסוגלים לעקוב אחרי טילים בליסטיים בחלל.\n\nהנתונים מראים את לוח הזמנים של המשלוח: יצוא בסיסי קטן לאורך 2024, ואז השערים נפתחים באמצע 2025. ספטמבר 2025 מראה חודש מוגבר נוסף עם 10.9 מיליון דולר — כנראה רכיבים נלווים או ציוד תחזוקה.\n\nאבל גרמניה היא לא לקוחת המכ״ם היחידה של ישראל. הודו מובילה עם 258 מיליון דולר ביבוא מכ״ם מאז 2024. אוקראינה קיבלה 70 מיליון דולר — משלוחים חודשיים קבועים החל ממרץ 2024, אות שקט לשיתוף פעולה צבאי במהלך המלחמה. דרום קוריאה (45 מיליון דולר) וצ\'כיה (44 מיליון דולר) משלימות את רשימת הקונים מנאט״ו ובעלות הברית.\n\nיצוא הביטחון הישראלי הגיע לשיא של 14.8 מיליארד דולר ב-2024, כאשר 54% הלכו לאירופה. מערכות מכ״ם ולוחמה אלקטרונית מהוות כ-10% מסך יצוא הביטחון — אבל כפי שהזינוק לגרמניה מראה, משלוחים בודדים יכולים להיות עצומים.',
+    readMoreUrl: 'https://breakingdefense.com/2023/11/israel-finalizes-arrow-3-deal-with-germany-aims-for-late-2025-delivery/',
+    chartData: {
+      monthly: [
+        { month: 'Jan 24', value: 0.05 },
+        { month: 'Feb 24', value: 0.10 },
+        { month: 'Mar 24', value: 0.00 },
+        { month: 'Apr 24', value: 0.30 },
+        { month: 'May 24', value: 3.63 },
+        { month: 'Jun 24', value: 0.03 },
+        { month: 'Jul 24', value: 3.26 },
+        { month: 'Aug 24', value: 7.32 },
+        { month: 'Sep 24', value: 0.18 },
+        { month: 'Oct 24', value: 0.57 },
+        { month: 'Nov 24', value: 1.88 },
+        { month: 'Dec 24', value: 0.97 },
+        { month: 'Jan 25', value: 0.03 },
+        { month: 'Feb 25', value: 0.24 },
+        { month: 'Mar 25', value: 0.13 },
+        { month: 'Apr 25', value: 0.73 },
+        { month: 'May 25', value: 0.34 },
+        { month: 'Jun 25', value: 0.31 },
+        { month: 'Jul 25', value: 90.54, peak: true },
+        { month: 'Aug 25', value: 0.35 },
+        { month: 'Sep 25', value: 10.90 }
+      ],
+      byCountry: [
+        { country: 'India', value: 257.6, color: '#f97316' },
+        { country: 'Germany', value: 121.9, color: '#000000' },
+        { country: 'United States', value: 90.4, color: '#3b82f6' },
+        { country: 'Ukraine', value: 69.7, color: '#eab308' },
+        { country: 'South Korea', value: 44.7, color: '#ef4444' },
+        { country: 'Czechia', value: 44.2, color: '#22c55e' }
+      ],
+      hsCode: '852610',
+      product: 'Radar Apparatus'
+    }
+  },
+  {
     id: 'passover-beef',
     title: 'The Passover Effect: How Jewish Holidays Shape Israel\'s Beef Imports',
     titleHe: 'אפקט הפסח: איך החגים היהודיים מעצבים את יבוא הבשר לישראל',
