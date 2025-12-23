@@ -3,6 +3,7 @@ import DashboardLayout from '@/views/DashboardLayout.vue'
 import HomePage from '@/views/HomePage.vue'
 import WorldMapPage from '@/views/world-map/WorldMapPage.vue'
 import TrendsPage from '@/views/trends/TrendsPage.vue'
+import OverviewPage from '@/views/overview/OverviewPage.vue'
 import AIPage from '@/views/AIPage.vue'
 import InsightsPage from '@/views/InsightsPage.vue'
 import AboutPage from '@/views/AboutPage.vue'
@@ -30,6 +31,11 @@ const router = createRouter({
           path: 'trade-lookup',
           name: 'trade-lookup',
           component: TrendsPage
+        },
+        {
+          path: 'overview',
+          name: 'overview',
+          component: OverviewPage
         },
         {
           path: 'ai-chat',
