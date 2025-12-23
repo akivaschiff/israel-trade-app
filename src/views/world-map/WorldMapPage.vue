@@ -65,7 +65,7 @@
     </div>
 
     <!-- Controls Bar -->
-    <div v-show="!isInitialLoading" class="bg-white border-b border-slate-200 sticky top-16 z-30 shadow-sm">
+    <div v-show="!isInitialLoading" class="bg-white border-b border-slate-200 shadow-sm">
       <div class="max-w-7xl mx-auto px-4 py-3">
         <div class="flex items-center justify-between gap-6 flex-wrap">
           <!-- Time Range Controls -->
@@ -206,7 +206,7 @@
       </div>
     </div>
 
-    <!-- Country Trend Modal -->
+    <!-- Country Details (Inline Below Map) -->
     <CountryTrendModal
       :country-code="selectedCountryCode"
       :country-name="selectedCountryName"
@@ -215,6 +215,9 @@
       :current-month-label="currentMonthLabel"
       @close="clearCountrySelection"
     />
+
+    <!-- Bottom Spacing -->
+    <div class="h-12"></div>
   </div>
 </template>
 
@@ -386,6 +389,14 @@ async function handleMapClick(params) {
     if (country) {
       selectedCountryCode.value = country.country_code
       selectedCountryName.value = country.country_name
+
+      // Auto-scroll to country details after a brief delay
+      setTimeout(() => {
+        const detailsElement = document.getElementById('country-details')
+        if (detailsElement) {
+          detailsElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        }
+      }, 100)
     }
   }
 }

@@ -1,51 +1,50 @@
 <template>
-  <transition name="modal-fade">
-    <div
-      v-if="countryCode && countryCode !== null"
-      class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-60 p-4"
-      @click.self="$emit('close')"
-    >
-      <div class="bg-white rounded-2xl shadow-2xl w-full max-w-7xl max-h-[90vh] overflow-hidden flex flex-col">
-        <!-- Header -->
-        <div
-          class="text-white p-6"
-          :class="flowType === 1
-            ? 'bg-gradient-to-r from-blue-500 to-blue-600'
-            : 'bg-gradient-to-r from-orange-500 to-orange-600'"
-        >
-          <div class="flex items-start justify-between">
-            <div>
-              <h2 class="text-3xl font-bold mb-2">{{ countryName }}</h2>
-              <div class="flex items-center gap-6 text-sm">
-                <span class="text-indigo-100">{{ flowLabel }}</span>
-                <span class="text-white font-semibold">Showing {{ visibleMonths }} months</span>
-                <span class="text-indigo-100">Avg: {{ formatValue(averageValue) }}</span>
-                <span :class="trendPercentage >= 0 ? 'text-green-300' : 'text-red-300'" class="font-semibold">
-                  {{ trendPercentage >= 0 ? '📈' : '📉' }} {{ trendPercentage >= 0 ? '+' : '' }}{{ trendPercentage.toFixed(1) }}% trend
-                </span>
-              </div>
+  <div
+    v-if="countryCode && countryCode !== null"
+    id="country-details"
+    class="bg-slate-50"
+  >
+    <div class="max-w-7xl mx-auto">
+      <!-- Header -->
+      <div
+        class="text-white px-6 py-8"
+        :class="flowType === 1
+          ? 'bg-gradient-to-r from-blue-500 to-blue-600'
+          : 'bg-gradient-to-r from-orange-500 to-orange-600'"
+      >
+        <div class="flex items-start justify-between">
+          <div>
+            <h2 class="text-2xl md:text-3xl font-bold mb-2">{{ countryName }}</h2>
+            <div class="flex flex-wrap items-center gap-3 md:gap-6 text-xs md:text-sm">
+              <span class="text-indigo-100">{{ flowLabel }}</span>
+              <span class="text-white font-semibold">{{ visibleMonths }} months</span>
+              <span class="text-indigo-100">Avg: {{ formatValue(averageValue) }}</span>
+              <span :class="trendPercentage >= 0 ? 'text-green-300' : 'text-red-300'" class="font-semibold">
+                {{ trendPercentage >= 0 ? '📈' : '📉' }} {{ trendPercentage >= 0 ? '+' : '' }}{{ trendPercentage.toFixed(1) }}%
+              </span>
             </div>
-            <button
-              @click="$emit('close')"
-              class="text-white hover:text-indigo-200 transition-colors p-2"
-            >
-              <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
           </div>
+          <button
+            @click="$emit('close')"
+            class="text-white hover:text-indigo-200 transition-colors p-2 flex-shrink-0"
+          >
+            <svg class="w-6 h-6 md:w-8 md:h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
         </div>
+      </div>
 
-        <!-- Loading State -->
-        <div v-if="loading" class="flex-1 flex items-center justify-center p-12">
-          <div class="text-center">
-            <div class="inline-block animate-spin rounded-full h-16 w-16 border-b-4 border-indigo-600 mb-4"></div>
-            <p class="text-gray-600 text-lg">Loading trend data...</p>
-          </div>
+      <!-- Loading State -->
+      <div v-if="loading" class="flex items-center justify-center p-12">
+        <div class="text-center">
+          <div class="inline-block animate-spin rounded-full h-16 w-16 border-b-4 border-indigo-600 mb-4"></div>
+          <p class="text-gray-600 text-lg">Loading trend data...</p>
         </div>
+      </div>
 
-        <!-- Content -->
-        <div v-else class="flex-1 overflow-y-auto p-8">
+      <!-- Content -->
+      <div v-else class="px-4 md:px-8 py-8">
           <!-- Month Range Slider -->
           <div class="mb-6 bg-white border-2 border-indigo-200 rounded-xl p-4">
             <div class="flex items-center gap-4">
@@ -96,9 +95,9 @@
           </div>
 
           <!-- Breakdown Section -->
-          <div class="grid grid-cols-12 gap-6">
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
             <!-- Left: Chapter/Heading Selector -->
-            <div class="col-span-4">
+            <div class="order-2 lg:order-1 lg:col-span-4">
               <h3 class="text-xl font-bold text-gray-900 mb-4">Select Items to Compare</h3>
               <div class="bg-white border-2 border-gray-200 rounded-xl overflow-hidden">
                 <div class="max-h-[500px] overflow-y-auto">
@@ -135,7 +134,7 @@
 
                         <!-- Chapter Info -->
                         <div class="flex-1 min-w-0">
-                          <div class="font-semibold text-gray-900 text-sm mb-1">
+                          <div class="font-semibold text-gray-900 text-sm mb-1 break-words">
                             Ch {{ chapter.chapter_code }}: {{ chapter.chapter_name }}
                           </div>
                           <div class="flex items-center justify-between gap-2 mb-2">
@@ -168,7 +167,7 @@
 
                           <!-- Heading Info -->
                           <div class="flex-1 min-w-0">
-                            <div class="font-medium text-gray-800 text-sm mb-1">
+                            <div class="font-medium text-gray-800 text-sm mb-1 break-words">
                               {{ heading.heading_code }}: {{ heading.heading_name }}
                             </div>
                             <div class="flex items-center justify-between gap-2 mb-2">
@@ -191,7 +190,7 @@
             </div>
 
             <!-- Right: Comparison Chart -->
-            <div class="col-span-8">
+            <div class="order-1 lg:order-2 lg:col-span-8">
               <div class="flex items-center justify-between mb-4">
                 <h3 class="text-xl font-bold text-gray-900">Chapter Comparison</h3>
                 <div class="flex gap-2">
@@ -227,7 +226,6 @@
         </div>
       </div>
     </div>
-  </transition>
 </template>
 
 <script setup>
@@ -665,9 +663,9 @@ const comparisonChartOption = computed(() => {
       const chapterCode = id.substring(3)
       const chapter = chaptersWithStats.value.find(c => c.chapter_code === chapterCode)
       if (chapter) {
-        // Align chapter data with total time series months
+        // Use visibleData which is already aligned with the time window
         const alignedData = months.map(month => {
-          const dataPoint = chapter.monthly_data.find(d => d.month === month)
+          const dataPoint = chapter.visibleData.find(d => d.month === month)
           return { month, value: dataPoint?.value || 0 }
         })
         selectedData.push({
@@ -679,19 +677,20 @@ const comparisonChartOption = computed(() => {
         })
       }
     } else if (id.startsWith('hd-')) {
-      // It's a heading
+      // It's a heading - need to get it with stats
       const headingCode = id.substring(3)
-      const heading = headingData.value.find(h => h.heading_code === headingCode)
+      // Get the chapter code to find headings
+      const chapterCode = headingCode.substring(0, 2)
+      const headings = getHeadingsForChapter(chapterCode)
+      const heading = headings.find(h => h.heading_code === headingCode)
       if (heading) {
-        // Align heading data with total time series months
+        // Use visibleData which is already aligned with the time window
         const alignedData = months.map(month => {
-          const dataPoint = heading.monthly_data.find(d => d.month === month)
+          const dataPoint = heading.visibleData.find(d => d.month === month)
           return { month, value: dataPoint?.value || 0 }
         })
-        const stats = calculateSeriesStats(heading.monthly_data)
         selectedData.push({
           ...heading,
-          ...stats,
           id,
           displayName: heading.heading_name || heading.heading_code,
           color: '#8b5cf6',
@@ -914,27 +913,3 @@ const comparisonChartOption = computed(() => {
 })
 </script>
 
-<style scoped>
-.modal-fade-enter-active,
-.modal-fade-leave-active {
-  transition: opacity 0.3s ease;
-}
-
-.modal-fade-enter-from,
-.modal-fade-leave-to {
-  opacity: 0;
-}
-
-.modal-fade-enter-active .bg-white,
-.modal-fade-leave-active .bg-white {
-  transition: transform 0.3s ease;
-}
-
-.modal-fade-enter-from .bg-white {
-  transform: scale(0.95);
-}
-
-.modal-fade-leave-to .bg-white {
-  transform: scale(0.95);
-}
-</style>
