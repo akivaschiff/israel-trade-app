@@ -423,11 +423,12 @@ const chartOption = computed(() => {
         type: 'line',
         smooth: false,
         symbol: 'circle',
-        symbolSize: 6,
+        symbolSize: 5,
         showSymbol: true,
         lineStyle: {
-          width: 2.5,
-          color: '#3b82f6'
+          width: 2,
+          color: '#3b82f6',
+          type: 'dashed'
         },
         itemStyle: {
           color: '#3b82f6'
@@ -439,11 +440,12 @@ const chartOption = computed(() => {
         type: 'line',
         smooth: false,
         symbol: 'circle',
-        symbolSize: 6,
+        symbolSize: 5,
         showSymbol: true,
         lineStyle: {
-          width: 2.5,
-          color: '#f97316'
+          width: 2,
+          color: '#f97316',
+          type: 'dashed'
         },
         itemStyle: {
           color: '#f97316'
@@ -455,10 +457,10 @@ const chartOption = computed(() => {
         type: 'line',
         smooth: false,
         symbol: 'circle',
-        symbolSize: 6,
+        symbolSize: 7,
         showSymbol: true,
         lineStyle: {
-          width: 2.5
+          width: 3
         },
         itemStyle: {
           color: (params) => {
