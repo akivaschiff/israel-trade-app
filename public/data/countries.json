@@ -1,1402 +1,810 @@
 [
   {
-    "code": "AF",
-    "name": "Afghanistan",
-    "region": "Asia",
-    "sub_region": "Southern Asia",
-    "iso_alpha3": "AFG"
-  },
-  {
-    "code": "AL",
-    "name": "Albania",
-    "region": "Europe",
-    "sub_region": "Southern Europe",
-    "iso_alpha3": "ALB"
-  },
-  {
-    "code": "DZ",
-    "name": "Algeria",
-    "region": "Africa",
-    "sub_region": "Northern Africa",
-    "iso_alpha3": "DZA"
-  },
-  {
     "code": "AD",
-    "name": "Andorra",
-    "region": "Europe",
-    "sub_region": "Southern Europe",
-    "iso_alpha3": "AND"
-  },
-  {
-    "code": "AO",
-    "name": "Angola",
-    "region": "Africa",
-    "sub_region": "Sub-Saharan Africa",
-    "iso_alpha3": "AGO"
-  },
-  {
-    "code": "AG",
-    "name": "Antigua and Barbuda",
-    "region": "Americas",
-    "sub_region": "Latin America and the Caribbean",
-    "iso_alpha3": "ATG"
-  },
-  {
-    "code": "AR",
-    "name": "Argentina",
-    "region": "Americas",
-    "sub_region": "Latin America and the Caribbean",
-    "iso_alpha3": "ARG"
-  },
-  {
-    "code": "AM",
-    "name": "Armenia",
-    "region": "Asia",
-    "sub_region": "Western Asia",
-    "iso_alpha3": "ARM"
-  },
-  {
-    "code": "AU",
-    "name": "Australia",
-    "region": "Oceania",
-    "sub_region": "Australia and New Zealand",
-    "iso_alpha3": "AUS"
-  },
-  {
-    "code": "AT",
-    "name": "Austria",
-    "region": "Europe",
-    "sub_region": "Western Europe",
-    "iso_alpha3": "AUT"
-  },
-  {
-    "code": "AZ",
-    "name": "Azerbaijan",
-    "region": "Asia",
-    "sub_region": "Western Asia",
-    "iso_alpha3": "AZE"
-  },
-  {
-    "code": "BS",
-    "name": "Bahamas",
-    "region": "Americas",
-    "sub_region": "Latin America and the Caribbean",
-    "iso_alpha3": "BHS"
-  },
-  {
-    "code": "BH",
-    "name": "Bahrain",
-    "region": "Asia",
-    "sub_region": "Western Asia",
-    "iso_alpha3": "BHR"
-  },
-  {
-    "code": "BD",
-    "name": "Bangladesh",
-    "region": "Asia",
-    "sub_region": "Southern Asia",
-    "iso_alpha3": "BGD"
-  },
-  {
-    "code": "BB",
-    "name": "Barbados",
-    "region": "Americas",
-    "sub_region": "Latin America and the Caribbean",
-    "iso_alpha3": "BRB"
-  },
-  {
-    "code": "BY",
-    "name": "Belarus",
-    "region": "Europe",
-    "sub_region": "Eastern Europe",
-    "iso_alpha3": "BLR"
-  },
-  {
-    "code": "BE",
-    "name": "Belgium",
-    "region": "Europe",
-    "sub_region": "Western Europe",
-    "iso_alpha3": "BEL"
-  },
-  {
-    "code": "BZ",
-    "name": "Belize",
-    "region": "Americas",
-    "sub_region": "Latin America and the Caribbean",
-    "iso_alpha3": "BLZ"
-  },
-  {
-    "code": "BJ",
-    "name": "Benin",
-    "region": "Africa",
-    "sub_region": "Sub-Saharan Africa",
-    "iso_alpha3": "BEN"
-  },
-  {
-    "code": "BT",
-    "name": "Bhutan",
-    "region": "Asia",
-    "sub_region": "Southern Asia",
-    "iso_alpha3": "BTN"
-  },
-  {
-    "code": "BO",
-    "name": "Bolivia, Plurinational State of",
-    "region": "Americas",
-    "sub_region": "Latin America and the Caribbean",
-    "iso_alpha3": "BOL"
-  },
-  {
-    "code": "BA",
-    "name": "Bosnia and Herzegovina",
-    "region": "Europe",
-    "sub_region": "Southern Europe",
-    "iso_alpha3": "BIH"
-  },
-  {
-    "code": "BW",
-    "name": "Botswana",
-    "region": "Africa",
-    "sub_region": "Sub-Saharan Africa",
-    "iso_alpha3": "BWA"
-  },
-  {
-    "code": "BR",
-    "name": "Brazil",
-    "region": "Americas",
-    "sub_region": "Latin America and the Caribbean",
-    "iso_alpha3": "BRA"
-  },
-  {
-    "code": "BN",
-    "name": "Brunei Darussalam",
-    "region": "Asia",
-    "sub_region": "South-eastern Asia",
-    "iso_alpha3": "BRN"
-  },
-  {
-    "code": "BG",
-    "name": "Bulgaria",
-    "region": "Europe",
-    "sub_region": "Eastern Europe",
-    "iso_alpha3": "BGR"
-  },
-  {
-    "code": "BF",
-    "name": "Burkina Faso",
-    "region": "Africa",
-    "sub_region": "Sub-Saharan Africa",
-    "iso_alpha3": "BFA"
-  },
-  {
-    "code": "BI",
-    "name": "Burundi",
-    "region": "Africa",
-    "sub_region": "Sub-Saharan Africa",
-    "iso_alpha3": "BDI"
-  },
-  {
-    "code": "CV",
-    "name": "Cabo Verde",
-    "region": "Africa",
-    "sub_region": "Sub-Saharan Africa",
-    "iso_alpha3": "CPV"
-  },
-  {
-    "code": "KH",
-    "name": "Cambodia",
-    "region": "Asia",
-    "sub_region": "South-eastern Asia",
-    "iso_alpha3": "KHM"
-  },
-  {
-    "code": "CM",
-    "name": "Cameroon",
-    "region": "Africa",
-    "sub_region": "Sub-Saharan Africa",
-    "iso_alpha3": "CMR"
-  },
-  {
-    "code": "CA",
-    "name": "Canada",
-    "region": "Americas",
-    "sub_region": "Northern America",
-    "iso_alpha3": "CAN"
-  },
-  {
-    "code": "CF",
-    "name": "Central African Republic",
-    "region": "Africa",
-    "sub_region": "Sub-Saharan Africa",
-    "iso_alpha3": "CAF"
-  },
-  {
-    "code": "TD",
-    "name": "Chad",
-    "region": "Africa",
-    "sub_region": "Sub-Saharan Africa",
-    "iso_alpha3": "TCD"
-  },
-  {
-    "code": "CL",
-    "name": "Chile",
-    "region": "Americas",
-    "sub_region": "Latin America and the Caribbean",
-    "iso_alpha3": "CHL"
-  },
-  {
-    "code": "CN",
-    "name": "China",
-    "region": "Asia",
-    "sub_region": "Eastern Asia",
-    "iso_alpha3": "CHN"
-  },
-  {
-    "code": "CO",
-    "name": "Colombia",
-    "region": "Americas",
-    "sub_region": "Latin America and the Caribbean",
-    "iso_alpha3": "COL"
-  },
-  {
-    "code": "KM",
-    "name": "Comoros",
-    "region": "Africa",
-    "sub_region": "Sub-Saharan Africa",
-    "iso_alpha3": "COM"
-  },
-  {
-    "code": "CG",
-    "name": "Congo",
-    "region": "Africa",
-    "sub_region": "Sub-Saharan Africa",
-    "iso_alpha3": "COG"
-  },
-  {
-    "code": "CD",
-    "name": "Congo, Democratic Republic of the",
-    "region": "Africa",
-    "sub_region": "Sub-Saharan Africa",
-    "iso_alpha3": "COD"
-  },
-  {
-    "code": "CR",
-    "name": "Costa Rica",
-    "region": "Americas",
-    "sub_region": "Latin America and the Caribbean",
-    "iso_alpha3": "CRI"
-  },
-  {
-    "code": "HR",
-    "name": "Croatia",
-    "region": "Europe",
-    "sub_region": "Southern Europe",
-    "iso_alpha3": "HRV"
-  },
-  {
-    "code": "CU",
-    "name": "Cuba",
-    "region": "Americas",
-    "sub_region": "Latin America and the Caribbean",
-    "iso_alpha3": "CUB"
-  },
-  {
-    "code": "CY",
-    "name": "Cyprus",
-    "region": "Asia",
-    "sub_region": "Western Asia",
-    "iso_alpha3": "CYP"
-  },
-  {
-    "code": "CZ",
-    "name": "Czechia",
-    "region": "Europe",
-    "sub_region": "Eastern Europe",
-    "iso_alpha3": "CZE"
-  },
-  {
-    "code": "CI",
-    "name": "Côte d'Ivoire",
-    "region": "Africa",
-    "sub_region": "Sub-Saharan Africa",
-    "iso_alpha3": "CIV"
-  },
-  {
-    "code": "DK",
-    "name": "Denmark",
-    "region": "Europe",
-    "sub_region": "Northern Europe",
-    "iso_alpha3": "DNK"
-  },
-  {
-    "code": "DJ",
-    "name": "Djibouti",
-    "region": "Africa",
-    "sub_region": "Sub-Saharan Africa",
-    "iso_alpha3": "DJI"
-  },
-  {
-    "code": "DM",
-    "name": "Dominica",
-    "region": "Americas",
-    "sub_region": "Latin America and the Caribbean",
-    "iso_alpha3": "DMA"
-  },
-  {
-    "code": "DO",
-    "name": "Dominican Republic",
-    "region": "Americas",
-    "sub_region": "Latin America and the Caribbean",
-    "iso_alpha3": "DOM"
-  },
-  {
-    "code": "EC",
-    "name": "Ecuador",
-    "region": "Americas",
-    "sub_region": "Latin America and the Caribbean",
-    "iso_alpha3": "ECU"
-  },
-  {
-    "code": "EG",
-    "name": "Egypt",
-    "region": "Africa",
-    "sub_region": "Northern Africa",
-    "iso_alpha3": "EGY"
-  },
-  {
-    "code": "SV",
-    "name": "El Salvador",
-    "region": "Americas",
-    "sub_region": "Latin America and the Caribbean",
-    "iso_alpha3": "SLV"
-  },
-  {
-    "code": "GQ",
-    "name": "Equatorial Guinea",
-    "region": "Africa",
-    "sub_region": "Sub-Saharan Africa",
-    "iso_alpha3": "GNQ"
-  },
-  {
-    "code": "ER",
-    "name": "Eritrea",
-    "region": "Africa",
-    "sub_region": "Sub-Saharan Africa",
-    "iso_alpha3": "ERI"
-  },
-  {
-    "code": "EE",
-    "name": "Estonia",
-    "region": "Europe",
-    "sub_region": "Northern Europe",
-    "iso_alpha3": "EST"
-  },
-  {
-    "code": "SZ",
-    "name": "Eswatini",
-    "region": "Africa",
-    "sub_region": "Sub-Saharan Africa",
-    "iso_alpha3": "SWZ"
-  },
-  {
-    "code": "ET",
-    "name": "Ethiopia",
-    "region": "Africa",
-    "sub_region": "Sub-Saharan Africa",
-    "iso_alpha3": "ETH"
-  },
-  {
-    "code": "FJ",
-    "name": "Fiji",
-    "region": "Oceania",
-    "sub_region": "Melanesia",
-    "iso_alpha3": "FJI"
-  },
-  {
-    "code": "FI",
-    "name": "Finland",
-    "region": "Europe",
-    "sub_region": "Northern Europe",
-    "iso_alpha3": "FIN"
-  },
-  {
-    "code": "FR",
-    "name": "France",
-    "region": "Europe",
-    "sub_region": "Western Europe",
-    "iso_alpha3": "FRA"
-  },
-  {
-    "code": "GA",
-    "name": "Gabon",
-    "region": "Africa",
-    "sub_region": "Sub-Saharan Africa",
-    "iso_alpha3": "GAB"
-  },
-  {
-    "code": "GM",
-    "name": "Gambia",
-    "region": "Africa",
-    "sub_region": "Sub-Saharan Africa",
-    "iso_alpha3": "GMB"
-  },
-  {
-    "code": "GE",
-    "name": "Georgia",
-    "region": "Asia",
-    "sub_region": "Western Asia",
-    "iso_alpha3": "GEO"
-  },
-  {
-    "code": "DE",
-    "name": "Germany",
-    "region": "Europe",
-    "sub_region": "Western Europe",
-    "iso_alpha3": "DEU"
-  },
-  {
-    "code": "GH",
-    "name": "Ghana",
-    "region": "Africa",
-    "sub_region": "Sub-Saharan Africa",
-    "iso_alpha3": "GHA"
-  },
-  {
-    "code": "GR",
-    "name": "Greece",
-    "region": "Europe",
-    "sub_region": "Southern Europe",
-    "iso_alpha3": "GRC"
-  },
-  {
-    "code": "GD",
-    "name": "Grenada",
-    "region": "Americas",
-    "sub_region": "Latin America and the Caribbean",
-    "iso_alpha3": "GRD"
-  },
-  {
-    "code": "GT",
-    "name": "Guatemala",
-    "region": "Americas",
-    "sub_region": "Latin America and the Caribbean",
-    "iso_alpha3": "GTM"
-  },
-  {
-    "code": "GN",
-    "name": "Guinea",
-    "region": "Africa",
-    "sub_region": "Sub-Saharan Africa",
-    "iso_alpha3": "GIN"
-  },
-  {
-    "code": "GW",
-    "name": "Guinea-Bissau",
-    "region": "Africa",
-    "sub_region": "Sub-Saharan Africa",
-    "iso_alpha3": "GNB"
-  },
-  {
-    "code": "GY",
-    "name": "Guyana",
-    "region": "Americas",
-    "sub_region": "Latin America and the Caribbean",
-    "iso_alpha3": "GUY"
-  },
-  {
-    "code": "HT",
-    "name": "Haiti",
-    "region": "Americas",
-    "sub_region": "Latin America and the Caribbean",
-    "iso_alpha3": "HTI"
-  },
-  {
-    "code": "VA",
-    "name": "Holy See",
-    "region": "Europe",
-    "sub_region": "Southern Europe",
-    "iso_alpha3": "VAT"
-  },
-  {
-    "code": "HN",
-    "name": "Honduras",
-    "region": "Americas",
-    "sub_region": "Latin America and the Caribbean",
-    "iso_alpha3": "HND"
-  },
-  {
-    "code": "HK",
-    "name": "Hong Kong",
-    "region": "Asia",
-    "sub_region": "Eastern Asia",
-    "iso_alpha3": "HKG"
-  },
-  {
-    "code": "HU",
-    "name": "Hungary",
-    "region": "Europe",
-    "sub_region": "Eastern Europe",
-    "iso_alpha3": "HUN"
-  },
-  {
-    "code": "IS",
-    "name": "Iceland",
-    "region": "Europe",
-    "sub_region": "Northern Europe",
-    "iso_alpha3": "ISL"
-  },
-  {
-    "code": "IN",
-    "name": "India",
-    "region": "Asia",
-    "sub_region": "Southern Asia",
-    "iso_alpha3": "IND"
-  },
-  {
-    "code": "ID",
-    "name": "Indonesia",
-    "region": "Asia",
-    "sub_region": "South-eastern Asia",
-    "iso_alpha3": "IDN"
-  },
-  {
-    "code": "IR",
-    "name": "Iran, Islamic Republic of",
-    "region": "Asia",
-    "sub_region": "Southern Asia",
-    "iso_alpha3": "IRN"
-  },
-  {
-    "code": "IQ",
-    "name": "Iraq",
-    "region": "Asia",
-    "sub_region": "Western Asia",
-    "iso_alpha3": "IRQ"
-  },
-  {
-    "code": "IE",
-    "name": "Ireland",
-    "region": "Europe",
-    "sub_region": "Northern Europe",
-    "iso_alpha3": "IRL"
-  },
-  {
-    "code": "IL",
-    "name": "Israel",
-    "region": "Asia",
-    "sub_region": "Western Asia",
-    "iso_alpha3": "ISR"
-  },
-  {
-    "code": "IT",
-    "name": "Italy",
-    "region": "Europe",
-    "sub_region": "Southern Europe",
-    "iso_alpha3": "ITA"
-  },
-  {
-    "code": "JM",
-    "name": "Jamaica",
-    "region": "Americas",
-    "sub_region": "Latin America and the Caribbean",
-    "iso_alpha3": "JAM"
-  },
-  {
-    "code": "JP",
-    "name": "Japan",
-    "region": "Asia",
-    "sub_region": "Eastern Asia",
-    "iso_alpha3": "JPN"
-  },
-  {
-    "code": "JO",
-    "name": "Jordan",
-    "region": "Asia",
-    "sub_region": "Western Asia",
-    "iso_alpha3": "JOR"
-  },
-  {
-    "code": "KZ",
-    "name": "Kazakhstan",
-    "region": "Asia",
-    "sub_region": "Central Asia",
-    "iso_alpha3": "KAZ"
-  },
-  {
-    "code": "KE",
-    "name": "Kenya",
-    "region": "Africa",
-    "sub_region": "Sub-Saharan Africa",
-    "iso_alpha3": "KEN"
-  },
-  {
-    "code": "KI",
-    "name": "Kiribati",
-    "region": "Oceania",
-    "sub_region": "Micronesia",
-    "iso_alpha3": "KIR"
-  },
-  {
-    "code": "KP",
-    "name": "Korea, Democratic People's Republic of",
-    "region": "Asia",
-    "sub_region": "Eastern Asia",
-    "iso_alpha3": "PRK"
-  },
-  {
-    "code": "KR",
-    "name": "Korea, Republic of",
-    "region": "Asia",
-    "sub_region": "Eastern Asia",
-    "iso_alpha3": "KOR"
-  },
-  {
-    "code": "KW",
-    "name": "Kuwait",
-    "region": "Asia",
-    "sub_region": "Western Asia",
-    "iso_alpha3": "KWT"
-  },
-  {
-    "code": "KG",
-    "name": "Kyrgyzstan",
-    "region": "Asia",
-    "sub_region": "Central Asia",
-    "iso_alpha3": "KGZ"
-  },
-  {
-    "code": "LA",
-    "name": "Lao People's Democratic Republic",
-    "region": "Asia",
-    "sub_region": "South-eastern Asia",
-    "iso_alpha3": "LAO"
-  },
-  {
-    "code": "LV",
-    "name": "Latvia",
-    "region": "Europe",
-    "sub_region": "Northern Europe",
-    "iso_alpha3": "LVA"
-  },
-  {
-    "code": "LB",
-    "name": "Lebanon",
-    "region": "Asia",
-    "sub_region": "Western Asia",
-    "iso_alpha3": "LBN"
-  },
-  {
-    "code": "LS",
-    "name": "Lesotho",
-    "region": "Africa",
-    "sub_region": "Sub-Saharan Africa",
-    "iso_alpha3": "LSO"
-  },
-  {
-    "code": "LR",
-    "name": "Liberia",
-    "region": "Africa",
-    "sub_region": "Sub-Saharan Africa",
-    "iso_alpha3": "LBR"
-  },
-  {
-    "code": "LY",
-    "name": "Libya",
-    "region": "Africa",
-    "sub_region": "Northern Africa",
-    "iso_alpha3": "LBY"
-  },
-  {
-    "code": "LI",
-    "name": "Liechtenstein",
-    "region": "Europe",
-    "sub_region": "Western Europe",
-    "iso_alpha3": "LIE"
-  },
-  {
-    "code": "LT",
-    "name": "Lithuania",
-    "region": "Europe",
-    "sub_region": "Northern Europe",
-    "iso_alpha3": "LTU"
-  },
-  {
-    "code": "LU",
-    "name": "Luxembourg",
-    "region": "Europe",
-    "sub_region": "Western Europe",
-    "iso_alpha3": "LUX"
-  },
-  {
-    "code": "MO",
-    "name": "Macao",
-    "region": "Asia",
-    "sub_region": "Eastern Asia",
-    "iso_alpha3": "MAC"
-  },
-  {
-    "code": "MG",
-    "name": "Madagascar",
-    "region": "Africa",
-    "sub_region": "Sub-Saharan Africa",
-    "iso_alpha3": "MDG"
-  },
-  {
-    "code": "MW",
-    "name": "Malawi",
-    "region": "Africa",
-    "sub_region": "Sub-Saharan Africa",
-    "iso_alpha3": "MWI"
-  },
-  {
-    "code": "MY",
-    "name": "Malaysia",
-    "region": "Asia",
-    "sub_region": "South-eastern Asia",
-    "iso_alpha3": "MYS"
-  },
-  {
-    "code": "MV",
-    "name": "Maldives",
-    "region": "Asia",
-    "sub_region": "Southern Asia",
-    "iso_alpha3": "MDV"
-  },
-  {
-    "code": "ML",
-    "name": "Mali",
-    "region": "Africa",
-    "sub_region": "Sub-Saharan Africa",
-    "iso_alpha3": "MLI"
-  },
-  {
-    "code": "MT",
-    "name": "Malta",
-    "region": "Europe",
-    "sub_region": "Southern Europe",
-    "iso_alpha3": "MLT"
-  },
-  {
-    "code": "MH",
-    "name": "Marshall Islands",
-    "region": "Oceania",
-    "sub_region": "Micronesia",
-    "iso_alpha3": "MHL"
-  },
-  {
-    "code": "MR",
-    "name": "Mauritania",
-    "region": "Africa",
-    "sub_region": "Sub-Saharan Africa",
-    "iso_alpha3": "MRT"
-  },
-  {
-    "code": "MU",
-    "name": "Mauritius",
-    "region": "Africa",
-    "sub_region": "Sub-Saharan Africa",
-    "iso_alpha3": "MUS"
-  },
-  {
-    "code": "MX",
-    "name": "Mexico",
-    "region": "Americas",
-    "sub_region": "Latin America and the Caribbean",
-    "iso_alpha3": "MEX"
-  },
-  {
-    "code": "FM",
-    "name": "Micronesia, Federated States of",
-    "region": "Oceania",
-    "sub_region": "Micronesia",
-    "iso_alpha3": "FSM"
-  },
-  {
-    "code": "MD",
-    "name": "Moldova, Republic of",
-    "region": "Europe",
-    "sub_region": "Eastern Europe",
-    "iso_alpha3": "MDA"
-  },
-  {
-    "code": "MC",
-    "name": "Monaco",
-    "region": "Europe",
-    "sub_region": "Western Europe",
-    "iso_alpha3": "MCO"
-  },
-  {
-    "code": "MN",
-    "name": "Mongolia",
-    "region": "Asia",
-    "sub_region": "Eastern Asia",
-    "iso_alpha3": "MNG"
-  },
-  {
-    "code": "ME",
-    "name": "Montenegro",
-    "region": "Europe",
-    "sub_region": "Southern Europe",
-    "iso_alpha3": "MNE"
-  },
-  {
-    "code": "MA",
-    "name": "Morocco",
-    "region": "Africa",
-    "sub_region": "Northern Africa",
-    "iso_alpha3": "MAR"
-  },
-  {
-    "code": "MZ",
-    "name": "Mozambique",
-    "region": "Africa",
-    "sub_region": "Sub-Saharan Africa",
-    "iso_alpha3": "MOZ"
-  },
-  {
-    "code": "MM",
-    "name": "Myanmar",
-    "region": "Asia",
-    "sub_region": "South-eastern Asia",
-    "iso_alpha3": "MMR"
-  },
-  {
-    "code": "nan",
-    "name": "Namibia",
-    "region": "Africa",
-    "sub_region": "Sub-Saharan Africa",
-    "iso_alpha3": "NAM"
-  },
-  {
-    "code": "NR",
-    "name": "Nauru",
-    "region": "Oceania",
-    "sub_region": "Micronesia",
-    "iso_alpha3": "NRU"
-  },
-  {
-    "code": "NP",
-    "name": "Nepal",
-    "region": "Asia",
-    "sub_region": "Southern Asia",
-    "iso_alpha3": "NPL"
-  },
-  {
-    "code": "NL",
-    "name": "Netherlands, Kingdom of the",
-    "region": "Europe",
-    "sub_region": "Western Europe",
-    "iso_alpha3": "NLD"
-  },
-  {
-    "code": "NZ",
-    "name": "New Zealand",
-    "region": "Oceania",
-    "sub_region": "Australia and New Zealand",
-    "iso_alpha3": "NZL"
-  },
-  {
-    "code": "NI",
-    "name": "Nicaragua",
-    "region": "Americas",
-    "sub_region": "Latin America and the Caribbean",
-    "iso_alpha3": "NIC"
-  },
-  {
-    "code": "NE",
-    "name": "Niger",
-    "region": "Africa",
-    "sub_region": "Sub-Saharan Africa",
-    "iso_alpha3": "NER"
-  },
-  {
-    "code": "NG",
-    "name": "Nigeria",
-    "region": "Africa",
-    "sub_region": "Sub-Saharan Africa",
-    "iso_alpha3": "NGA"
-  },
-  {
-    "code": "MK",
-    "name": "North Macedonia",
-    "region": "Europe",
-    "sub_region": "Southern Europe",
-    "iso_alpha3": "MKD"
-  },
-  {
-    "code": "NO",
-    "name": "Norway",
-    "region": "Europe",
-    "sub_region": "Northern Europe",
-    "iso_alpha3": "NOR"
-  },
-  {
-    "code": "OM",
-    "name": "Oman",
-    "region": "Asia",
-    "sub_region": "Western Asia",
-    "iso_alpha3": "OMN"
-  },
-  {
-    "code": "PK",
-    "name": "Pakistan",
-    "region": "Asia",
-    "sub_region": "Southern Asia",
-    "iso_alpha3": "PAK"
-  },
-  {
-    "code": "PW",
-    "name": "Palau",
-    "region": "Oceania",
-    "sub_region": "Micronesia",
-    "iso_alpha3": "PLW"
-  },
-  {
-    "code": "PS",
-    "name": "Palestine, State of",
-    "region": "Asia",
-    "sub_region": "Western Asia",
-    "iso_alpha3": "PSE"
-  },
-  {
-    "code": "PA",
-    "name": "Panama",
-    "region": "Americas",
-    "sub_region": "Latin America and the Caribbean",
-    "iso_alpha3": "PAN"
-  },
-  {
-    "code": "PG",
-    "name": "Papua New Guinea",
-    "region": "Oceania",
-    "sub_region": "Melanesia",
-    "iso_alpha3": "PNG"
-  },
-  {
-    "code": "PY",
-    "name": "Paraguay",
-    "region": "Americas",
-    "sub_region": "Latin America and the Caribbean",
-    "iso_alpha3": "PRY"
-  },
-  {
-    "code": "PE",
-    "name": "Peru",
-    "region": "Americas",
-    "sub_region": "Latin America and the Caribbean",
-    "iso_alpha3": "PER"
-  },
-  {
-    "code": "PH",
-    "name": "Philippines",
-    "region": "Asia",
-    "sub_region": "South-eastern Asia",
-    "iso_alpha3": "PHL"
-  },
-  {
-    "code": "PL",
-    "name": "Poland",
-    "region": "Europe",
-    "sub_region": "Eastern Europe",
-    "iso_alpha3": "POL"
-  },
-  {
-    "code": "PT",
-    "name": "Portugal",
-    "region": "Europe",
-    "sub_region": "Southern Europe",
-    "iso_alpha3": "PRT"
-  },
-  {
-    "code": "QA",
-    "name": "Qatar",
-    "region": "Asia",
-    "sub_region": "Western Asia",
-    "iso_alpha3": "QAT"
-  },
-  {
-    "code": "RO",
-    "name": "Romania",
-    "region": "Europe",
-    "sub_region": "Eastern Europe",
-    "iso_alpha3": "ROU"
-  },
-  {
-    "code": "RU",
-    "name": "Russian Federation",
-    "region": "Europe",
-    "sub_region": "Eastern Europe",
-    "iso_alpha3": "RUS"
-  },
-  {
-    "code": "RW",
-    "name": "Rwanda",
-    "region": "Africa",
-    "sub_region": "Sub-Saharan Africa",
-    "iso_alpha3": "RWA"
-  },
-  {
-    "code": "KN",
-    "name": "Saint Kitts and Nevis",
-    "region": "Americas",
-    "sub_region": "Latin America and the Caribbean",
-    "iso_alpha3": "KNA"
-  },
-  {
-    "code": "LC",
-    "name": "Saint Lucia",
-    "region": "Americas",
-    "sub_region": "Latin America and the Caribbean",
-    "iso_alpha3": "LCA"
-  },
-  {
-    "code": "VC",
-    "name": "Saint Vincent and the Grenadines",
-    "region": "Americas",
-    "sub_region": "Latin America and the Caribbean",
-    "iso_alpha3": "VCT"
-  },
-  {
-    "code": "WS",
-    "name": "Samoa",
-    "region": "Oceania",
-    "sub_region": "Polynesia",
-    "iso_alpha3": "WSM"
-  },
-  {
-    "code": "SM",
-    "name": "San Marino",
-    "region": "Europe",
-    "sub_region": "Southern Europe",
-    "iso_alpha3": "SMR"
-  },
-  {
-    "code": "ST",
-    "name": "Sao Tome and Principe",
-    "region": "Africa",
-    "sub_region": "Sub-Saharan Africa",
-    "iso_alpha3": "STP"
-  },
-  {
-    "code": "SA",
-    "name": "Saudi Arabia",
-    "region": "Asia",
-    "sub_region": "Western Asia",
-    "iso_alpha3": "SAU"
-  },
-  {
-    "code": "SN",
-    "name": "Senegal",
-    "region": "Africa",
-    "sub_region": "Sub-Saharan Africa",
-    "iso_alpha3": "SEN"
-  },
-  {
-    "code": "RS",
-    "name": "Serbia",
-    "region": "Europe",
-    "sub_region": "Southern Europe",
-    "iso_alpha3": "SRB"
-  },
-  {
-    "code": "SC",
-    "name": "Seychelles",
-    "region": "Africa",
-    "sub_region": "Sub-Saharan Africa",
-    "iso_alpha3": "SYC"
-  },
-  {
-    "code": "SL",
-    "name": "Sierra Leone",
-    "region": "Africa",
-    "sub_region": "Sub-Saharan Africa",
-    "iso_alpha3": "SLE"
-  },
-  {
-    "code": "SG",
-    "name": "Singapore",
-    "region": "Asia",
-    "sub_region": "South-eastern Asia",
-    "iso_alpha3": "SGP"
-  },
-  {
-    "code": "SK",
-    "name": "Slovakia",
-    "region": "Europe",
-    "sub_region": "Eastern Europe",
-    "iso_alpha3": "SVK"
-  },
-  {
-    "code": "SI",
-    "name": "Slovenia",
-    "region": "Europe",
-    "sub_region": "Southern Europe",
-    "iso_alpha3": "SVN"
-  },
-  {
-    "code": "SB",
-    "name": "Solomon Islands",
-    "region": "Oceania",
-    "sub_region": "Melanesia",
-    "iso_alpha3": "SLB"
-  },
-  {
-    "code": "SO",
-    "name": "Somalia",
-    "region": "Africa",
-    "sub_region": "Sub-Saharan Africa",
-    "iso_alpha3": "SOM"
-  },
-  {
-    "code": "ZA",
-    "name": "South Africa",
-    "region": "Africa",
-    "sub_region": "Sub-Saharan Africa",
-    "iso_alpha3": "ZAF"
-  },
-  {
-    "code": "SS",
-    "name": "South Sudan",
-    "region": "Africa",
-    "sub_region": "Sub-Saharan Africa",
-    "iso_alpha3": "SSD"
-  },
-  {
-    "code": "ES",
-    "name": "Spain",
-    "region": "Europe",
-    "sub_region": "Southern Europe",
-    "iso_alpha3": "ESP"
-  },
-  {
-    "code": "LK",
-    "name": "Sri Lanka",
-    "region": "Asia",
-    "sub_region": "Southern Asia",
-    "iso_alpha3": "LKA"
-  },
-  {
-    "code": "SD",
-    "name": "Sudan",
-    "region": "Africa",
-    "sub_region": "Northern Africa",
-    "iso_alpha3": "SDN"
-  },
-  {
-    "code": "SR",
-    "name": "Suriname",
-    "region": "Americas",
-    "sub_region": "Latin America and the Caribbean",
-    "iso_alpha3": "SUR"
-  },
-  {
-    "code": "SE",
-    "name": "Sweden",
-    "region": "Europe",
-    "sub_region": "Northern Europe",
-    "iso_alpha3": "SWE"
-  },
-  {
-    "code": "CH",
-    "name": "Switzerland",
-    "region": "Europe",
-    "sub_region": "Western Europe",
-    "iso_alpha3": "CHE"
-  },
-  {
-    "code": "SY",
-    "name": "Syrian Arab Republic",
-    "region": "Asia",
-    "sub_region": "Western Asia",
-    "iso_alpha3": "SYR"
-  },
-  {
-    "code": "TW",
-    "name": "Taiwan, Province of China",
-    "region": "Other",
-    "sub_region": null,
-    "iso_alpha3": "TWN"
-  },
-  {
-    "code": "TJ",
-    "name": "Tajikistan",
-    "region": "Asia",
-    "sub_region": "Central Asia",
-    "iso_alpha3": "TJK"
-  },
-  {
-    "code": "TZ",
-    "name": "Tanzania, United Republic of",
-    "region": "Africa",
-    "sub_region": "Sub-Saharan Africa",
-    "iso_alpha3": "TZA"
-  },
-  {
-    "code": "TH",
-    "name": "Thailand",
-    "region": "Asia",
-    "sub_region": "South-eastern Asia",
-    "iso_alpha3": "THA"
-  },
-  {
-    "code": "TL",
-    "name": "Timor-Leste",
-    "region": "Asia",
-    "sub_region": "South-eastern Asia",
-    "iso_alpha3": "TLS"
-  },
-  {
-    "code": "TG",
-    "name": "Togo",
-    "region": "Africa",
-    "sub_region": "Sub-Saharan Africa",
-    "iso_alpha3": "TGO"
-  },
-  {
-    "code": "TO",
-    "name": "Tonga",
-    "region": "Oceania",
-    "sub_region": "Polynesia",
-    "iso_alpha3": "TON"
-  },
-  {
-    "code": "TT",
-    "name": "Trinidad and Tobago",
-    "region": "Americas",
-    "sub_region": "Latin America and the Caribbean",
-    "iso_alpha3": "TTO"
-  },
-  {
-    "code": "TN",
-    "name": "Tunisia",
-    "region": "Africa",
-    "sub_region": "Northern Africa",
-    "iso_alpha3": "TUN"
-  },
-  {
-    "code": "TM",
-    "name": "Turkmenistan",
-    "region": "Asia",
-    "sub_region": "Central Asia",
-    "iso_alpha3": "TKM"
-  },
-  {
-    "code": "TV",
-    "name": "Tuvalu",
-    "region": "Oceania",
-    "sub_region": "Polynesia",
-    "iso_alpha3": "TUV"
-  },
-  {
-    "code": "TR",
-    "name": "Türkiye",
-    "region": "Asia",
-    "sub_region": "Western Asia",
-    "iso_alpha3": "TUR"
-  },
-  {
-    "code": "UG",
-    "name": "Uganda",
-    "region": "Africa",
-    "sub_region": "Sub-Saharan Africa",
-    "iso_alpha3": "UGA"
-  },
-  {
-    "code": "UA",
-    "name": "Ukraine",
-    "region": "Europe",
-    "sub_region": "Eastern Europe",
-    "iso_alpha3": "UKR"
+    "name": "Andorra"
   },
   {
     "code": "AE",
-    "name": "United Arab Emirates",
-    "region": "Asia",
-    "sub_region": "Western Asia",
-    "iso_alpha3": "ARE"
+    "name": "United Arab Emirates"
+  },
+  {
+    "code": "AF",
+    "name": "Afghanistan"
+  },
+  {
+    "code": "AG",
+    "name": "Antigua and Barbuda"
+  },
+  {
+    "code": "AL",
+    "name": "Albania"
+  },
+  {
+    "code": "AM",
+    "name": "Armenia"
+  },
+  {
+    "code": "AO",
+    "name": "Angola"
+  },
+  {
+    "code": "AR",
+    "name": "Argentina"
+  },
+  {
+    "code": "AS",
+    "name": "American Samoa"
+  },
+  {
+    "code": "AT",
+    "name": "Austria"
+  },
+  {
+    "code": "AU",
+    "name": "Australia"
+  },
+  {
+    "code": "AZ",
+    "name": "Azerbaijan"
+  },
+  {
+    "code": "BA",
+    "name": "Bosnia and Herzegovina"
+  },
+  {
+    "code": "BB",
+    "name": "Barbados"
+  },
+  {
+    "code": "BD",
+    "name": "Bangladesh"
+  },
+  {
+    "code": "BE",
+    "name": "Belgium"
+  },
+  {
+    "code": "BF",
+    "name": "Burkina Faso"
+  },
+  {
+    "code": "BG",
+    "name": "Bulgaria"
+  },
+  {
+    "code": "BH",
+    "name": "Bahrain"
+  },
+  {
+    "code": "BI",
+    "name": "Burundi"
+  },
+  {
+    "code": "BJ",
+    "name": "Benin"
+  },
+  {
+    "code": "BM",
+    "name": "Bermuda"
+  },
+  {
+    "code": "BN",
+    "name": "Brunei Darussalam"
+  },
+  {
+    "code": "BO",
+    "name": "Bolivia, Plurinational State of"
+  },
+  {
+    "code": "BR",
+    "name": "Brazil"
+  },
+  {
+    "code": "BS",
+    "name": "Bahamas"
+  },
+  {
+    "code": "BT",
+    "name": "Bhutan"
+  },
+  {
+    "code": "BW",
+    "name": "Botswana"
+  },
+  {
+    "code": "BY",
+    "name": "Belarus"
+  },
+  {
+    "code": "BZ",
+    "name": "Belize"
+  },
+  {
+    "code": "CA",
+    "name": "Canada"
+  },
+  {
+    "code": "CD",
+    "name": "Congo, Democratic Republic of the"
+  },
+  {
+    "code": "CF",
+    "name": "Central African Republic"
+  },
+  {
+    "code": "CG",
+    "name": "Congo"
+  },
+  {
+    "code": "CH",
+    "name": "Switzerland"
+  },
+  {
+    "code": "CI",
+    "name": "Côte d'Ivoire"
+  },
+  {
+    "code": "CK",
+    "name": "Cook Islands"
+  },
+  {
+    "code": "CL",
+    "name": "Chile"
+  },
+  {
+    "code": "CM",
+    "name": "Cameroon"
+  },
+  {
+    "code": "CN",
+    "name": "China"
+  },
+  {
+    "code": "CO",
+    "name": "Colombia"
+  },
+  {
+    "code": "CR",
+    "name": "Costa Rica"
+  },
+  {
+    "code": "CU",
+    "name": "Cuba"
+  },
+  {
+    "code": "CV",
+    "name": "Cabo Verde"
+  },
+  {
+    "code": "CY",
+    "name": "Cyprus"
+  },
+  {
+    "code": "CZ",
+    "name": "Czechia"
+  },
+  {
+    "code": "DE",
+    "name": "Germany"
+  },
+  {
+    "code": "DJ",
+    "name": "Djibouti"
+  },
+  {
+    "code": "DK",
+    "name": "Denmark"
+  },
+  {
+    "code": "DM",
+    "name": "Dominica"
+  },
+  {
+    "code": "DO",
+    "name": "Dominican Republic"
+  },
+  {
+    "code": "DZ",
+    "name": "Algeria"
+  },
+  {
+    "code": "EC",
+    "name": "Ecuador"
+  },
+  {
+    "code": "EE",
+    "name": "Estonia"
+  },
+  {
+    "code": "EG",
+    "name": "Egypt"
+  },
+  {
+    "code": "ER",
+    "name": "Eritrea"
+  },
+  {
+    "code": "ES",
+    "name": "Spain"
+  },
+  {
+    "code": "ET",
+    "name": "Ethiopia"
+  },
+  {
+    "code": "FI",
+    "name": "Finland"
+  },
+  {
+    "code": "FJ",
+    "name": "Fiji"
+  },
+  {
+    "code": "FM",
+    "name": "Micronesia, Federated States of"
+  },
+  {
+    "code": "FO",
+    "name": "Faroe Islands"
+  },
+  {
+    "code": "FR",
+    "name": "France"
+  },
+  {
+    "code": "GA",
+    "name": "Gabon"
   },
   {
     "code": "GB",
-    "name": "United Kingdom of Great Britain and Northern Ireland",
-    "region": "Europe",
-    "sub_region": "Northern Europe",
-    "iso_alpha3": "GBR"
+    "name": "United Kingdom of Great Britain and Northern Ireland"
+  },
+  {
+    "code": "GD",
+    "name": "Grenada"
+  },
+  {
+    "code": "GE",
+    "name": "Georgia"
+  },
+  {
+    "code": "GF",
+    "name": "French Guiana"
+  },
+  {
+    "code": "GH",
+    "name": "Ghana"
+  },
+  {
+    "code": "GI",
+    "name": "Gibraltar"
+  },
+  {
+    "code": "GM",
+    "name": "Gambia"
+  },
+  {
+    "code": "GN",
+    "name": "Guinea"
+  },
+  {
+    "code": "GP",
+    "name": "Guadeloupe"
+  },
+  {
+    "code": "GQ",
+    "name": "Equatorial Guinea"
+  },
+  {
+    "code": "GR",
+    "name": "Greece"
+  },
+  {
+    "code": "GT",
+    "name": "Guatemala"
+  },
+  {
+    "code": "GU",
+    "name": "Guam"
+  },
+  {
+    "code": "GW",
+    "name": "Guinea-Bissau"
+  },
+  {
+    "code": "GY",
+    "name": "Guyana"
+  },
+  {
+    "code": "HK",
+    "name": "Hong Kong"
+  },
+  {
+    "code": "HN",
+    "name": "Honduras"
+  },
+  {
+    "code": "HR",
+    "name": "Croatia"
+  },
+  {
+    "code": "HT",
+    "name": "Haiti"
+  },
+  {
+    "code": "HU",
+    "name": "Hungary"
+  },
+  {
+    "code": "ID",
+    "name": "Indonesia"
+  },
+  {
+    "code": "IE",
+    "name": "Ireland"
+  },
+  {
+    "code": "IN",
+    "name": "India"
+  },
+  {
+    "code": "IS",
+    "name": "Iceland"
+  },
+  {
+    "code": "IT",
+    "name": "Italy"
+  },
+  {
+    "code": "JM",
+    "name": "Jamaica"
+  },
+  {
+    "code": "JO",
+    "name": "Jordan"
+  },
+  {
+    "code": "JP",
+    "name": "Japan"
+  },
+  {
+    "code": "KE",
+    "name": "Kenya"
+  },
+  {
+    "code": "KG",
+    "name": "Kyrgyzstan"
+  },
+  {
+    "code": "KH",
+    "name": "Cambodia"
+  },
+  {
+    "code": "KI",
+    "name": "Kiribati"
+  },
+  {
+    "code": "KM",
+    "name": "Comoros"
+  },
+  {
+    "code": "KN",
+    "name": "Saint Kitts and Nevis"
+  },
+  {
+    "code": "KR",
+    "name": "Korea, Republic of"
+  },
+  {
+    "code": "KY",
+    "name": "Cayman Islands"
+  },
+  {
+    "code": "KZ",
+    "name": "Kazakhstan"
+  },
+  {
+    "code": "LA",
+    "name": "Lao People's Democratic Republic"
+  },
+  {
+    "code": "LC",
+    "name": "Saint Lucia"
+  },
+  {
+    "code": "LI",
+    "name": "Liechtenstein"
+  },
+  {
+    "code": "LK",
+    "name": "Sri Lanka"
+  },
+  {
+    "code": "LR",
+    "name": "Liberia"
+  },
+  {
+    "code": "LS",
+    "name": "Lesotho"
+  },
+  {
+    "code": "LT",
+    "name": "Lithuania"
+  },
+  {
+    "code": "LU",
+    "name": "Luxembourg"
+  },
+  {
+    "code": "LV",
+    "name": "Latvia"
+  },
+  {
+    "code": "MA",
+    "name": "Morocco"
+  },
+  {
+    "code": "MC",
+    "name": "Monaco"
+  },
+  {
+    "code": "MD",
+    "name": "Moldova, Republic of"
+  },
+  {
+    "code": "ME",
+    "name": "Montenegro"
+  },
+  {
+    "code": "MG",
+    "name": "Madagascar"
+  },
+  {
+    "code": "MH",
+    "name": "Marshall Islands"
+  },
+  {
+    "code": "MK",
+    "name": "North Macedonia"
+  },
+  {
+    "code": "ML",
+    "name": "Mali"
+  },
+  {
+    "code": "MM",
+    "name": "Myanmar"
+  },
+  {
+    "code": "MN",
+    "name": "Mongolia"
+  },
+  {
+    "code": "MO",
+    "name": "Macao"
+  },
+  {
+    "code": "MQ",
+    "name": "Martinique"
+  },
+  {
+    "code": "MR",
+    "name": "Mauritania"
+  },
+  {
+    "code": "MS",
+    "name": "Montserrat"
+  },
+  {
+    "code": "MT",
+    "name": "Malta"
+  },
+  {
+    "code": "MU",
+    "name": "Mauritius"
+  },
+  {
+    "code": "MV",
+    "name": "Maldives"
+  },
+  {
+    "code": "MW",
+    "name": "Malawi"
+  },
+  {
+    "code": "MX",
+    "name": "Mexico"
+  },
+  {
+    "code": "MY",
+    "name": "Malaysia"
+  },
+  {
+    "code": "MZ",
+    "name": "Mozambique"
+  },
+  {
+    "code": "NC",
+    "name": "New Caledonia"
+  },
+  {
+    "code": "NE",
+    "name": "Niger"
+  },
+  {
+    "code": "NF",
+    "name": "Norfolk Island"
+  },
+  {
+    "code": "NG",
+    "name": "Nigeria"
+  },
+  {
+    "code": "NI",
+    "name": "Nicaragua"
+  },
+  {
+    "code": "NL",
+    "name": "Netherlands, Kingdom of the"
+  },
+  {
+    "code": "NO",
+    "name": "Norway"
+  },
+  {
+    "code": "NP",
+    "name": "Nepal"
+  },
+  {
+    "code": "NR",
+    "name": "Nauru"
+  },
+  {
+    "code": "NZ",
+    "name": "New Zealand"
+  },
+  {
+    "code": "PA",
+    "name": "Panama"
+  },
+  {
+    "code": "PE",
+    "name": "Peru"
+  },
+  {
+    "code": "PF",
+    "name": "French Polynesia"
+  },
+  {
+    "code": "PG",
+    "name": "Papua New Guinea"
+  },
+  {
+    "code": "PH",
+    "name": "Philippines"
+  },
+  {
+    "code": "PK",
+    "name": "Pakistan"
+  },
+  {
+    "code": "PL",
+    "name": "Poland"
+  },
+  {
+    "code": "PR",
+    "name": "Puerto Rico"
+  },
+  {
+    "code": "PT",
+    "name": "Portugal"
+  },
+  {
+    "code": "PW",
+    "name": "Palau"
+  },
+  {
+    "code": "PY",
+    "name": "Paraguay"
+  },
+  {
+    "code": "RE",
+    "name": "Réunion"
+  },
+  {
+    "code": "RO",
+    "name": "Romania"
+  },
+  {
+    "code": "RS",
+    "name": "Serbia"
+  },
+  {
+    "code": "RU",
+    "name": "Russian Federation"
+  },
+  {
+    "code": "RW",
+    "name": "Rwanda"
+  },
+  {
+    "code": "SB",
+    "name": "Solomon Islands"
+  },
+  {
+    "code": "SC",
+    "name": "Seychelles"
+  },
+  {
+    "code": "SE",
+    "name": "Sweden"
+  },
+  {
+    "code": "SG",
+    "name": "Singapore"
+  },
+  {
+    "code": "SH",
+    "name": "Saint Helena, Ascension and Tristan da Cunha"
+  },
+  {
+    "code": "SI",
+    "name": "Slovenia"
+  },
+  {
+    "code": "SK",
+    "name": "Slovakia"
+  },
+  {
+    "code": "SL",
+    "name": "Sierra Leone"
+  },
+  {
+    "code": "SM",
+    "name": "San Marino"
+  },
+  {
+    "code": "SN",
+    "name": "Senegal"
+  },
+  {
+    "code": "SO",
+    "name": "Somalia"
+  },
+  {
+    "code": "SR",
+    "name": "Suriname"
+  },
+  {
+    "code": "SS",
+    "name": "South Sudan"
+  },
+  {
+    "code": "ST",
+    "name": "Sao Tome and Principe"
+  },
+  {
+    "code": "SV",
+    "name": "El Salvador"
+  },
+  {
+    "code": "SZ",
+    "name": "Eswatini"
+  },
+  {
+    "code": "TC",
+    "name": "Turks and Caicos Islands"
+  },
+  {
+    "code": "TD",
+    "name": "Chad"
+  },
+  {
+    "code": "TG",
+    "name": "Togo"
+  },
+  {
+    "code": "TH",
+    "name": "Thailand"
+  },
+  {
+    "code": "TJ",
+    "name": "Tajikistan"
+  },
+  {
+    "code": "TL",
+    "name": "Timor-Leste"
+  },
+  {
+    "code": "TM",
+    "name": "Turkmenistan"
+  },
+  {
+    "code": "TN",
+    "name": "Tunisia"
+  },
+  {
+    "code": "TO",
+    "name": "Tonga"
+  },
+  {
+    "code": "TR",
+    "name": "Türkiye"
+  },
+  {
+    "code": "TT",
+    "name": "Trinidad and Tobago"
+  },
+  {
+    "code": "TV",
+    "name": "Tuvalu"
+  },
+  {
+    "code": "TW",
+    "name": "Taiwan, Province of China"
+  },
+  {
+    "code": "TZ",
+    "name": "Tanzania, United Republic of"
+  },
+  {
+    "code": "UA",
+    "name": "Ukraine"
+  },
+  {
+    "code": "UG",
+    "name": "Uganda"
   },
   {
     "code": "US",
-    "name": "United States of America",
-    "region": "Americas",
-    "sub_region": "Northern America",
-    "iso_alpha3": "USA"
+    "name": "United States of America"
   },
   {
     "code": "UY",
-    "name": "Uruguay",
-    "region": "Americas",
-    "sub_region": "Latin America and the Caribbean",
-    "iso_alpha3": "URY"
+    "name": "Uruguay"
   },
   {
     "code": "UZ",
-    "name": "Uzbekistan",
-    "region": "Asia",
-    "sub_region": "Central Asia",
-    "iso_alpha3": "UZB"
+    "name": "Uzbekistan"
   },
   {
-    "code": "VU",
-    "name": "Vanuatu",
-    "region": "Oceania",
-    "sub_region": "Melanesia",
-    "iso_alpha3": "VUT"
+    "code": "VA",
+    "name": "Holy See"
+  },
+  {
+    "code": "VC",
+    "name": "Saint Vincent and the Grenadines"
   },
   {
     "code": "VE",
-    "name": "Venezuela, Bolivarian Republic of",
-    "region": "Americas",
-    "sub_region": "Latin America and the Caribbean",
-    "iso_alpha3": "VEN"
+    "name": "Venezuela, Bolivarian Republic of"
+  },
+  {
+    "code": "VI",
+    "name": "Virgin Islands (U.S.)"
   },
   {
     "code": "VN",
-    "name": "Viet Nam",
-    "region": "Asia",
-    "sub_region": "South-eastern Asia",
-    "iso_alpha3": "VNM"
+    "name": "Viet Nam"
   },
   {
-    "code": "EH",
-    "name": "Western Sahara",
-    "region": "Africa",
-    "sub_region": "Northern Africa",
-    "iso_alpha3": "ESH"
+    "code": "VU",
+    "name": "Vanuatu"
   },
   {
-    "code": "YE",
-    "name": "Yemen",
-    "region": "Asia",
-    "sub_region": "Western Asia",
-    "iso_alpha3": "YEM"
+    "code": "WS",
+    "name": "Samoa"
+  },
+  {
+    "code": "ZA",
+    "name": "South Africa"
   },
   {
     "code": "ZM",
-    "name": "Zambia",
-    "region": "Africa",
-    "sub_region": "Sub-Saharan Africa",
-    "iso_alpha3": "ZMB"
+    "name": "Zambia"
   },
   {
     "code": "ZW",
-    "name": "Zimbabwe",
-    "region": "Africa",
-    "sub_region": "Sub-Saharan Africa",
-    "iso_alpha3": "ZWE"
-  },
-  {
-    "code": "AX",
-    "name": "Åland Islands",
-    "region": "Europe",
-    "sub_region": "Northern Europe",
-    "iso_alpha3": "ALA"
+    "name": "Zimbabwe"
   }
 ]
