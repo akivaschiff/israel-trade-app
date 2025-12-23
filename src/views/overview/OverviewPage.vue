@@ -343,10 +343,39 @@ function formatValue(value) {
   return `$${Math.round(actualValue)}`
 }
 
-// Format value in billions for Y-axis
-function formatBillions(value) {
+// Smart Y-axis formatter that adapts to data scale
+function formatYAxis(value, maxValue) {
   const actualValue = value * 1000 // Convert from thousands to actual
-  return `$${(actualValue / 1e9).toFixed(1)}B`
+  const actualMax = maxValue * 1000
+
+  if (actualMax >= 1e9) {
+    // Billions
+    return `$${(actualValue / 1e9).toFixed(1)}B`
+  } else if (actualMax >= 1e6) {
+    // Millions
+    return `$${(actualValue / 1e6).toFixed(1)}M`
+  } else if (actualMax >= 1e3) {
+    // Thousands
+    return `$${(actualValue / 1e3).toFixed(0)}K`
+  } else {
+    // Dollars
+    return `$${Math.round(actualValue)}`
+  }
+}
+
+// Get Y-axis label based on data scale
+function getYAxisLabel(maxValue) {
+  const actualMax = maxValue * 1000
+
+  if (actualMax >= 1e9) {
+    return 'Value (Billions USD)'
+  } else if (actualMax >= 1e6) {
+    return 'Value (Millions USD)'
+  } else if (actualMax >= 1e3) {
+    return 'Value (Thousands USD)'
+  } else {
+    return 'Value (USD)'
+  }
 }
 
 // Chart configuration
@@ -357,6 +386,9 @@ const chartOption = computed(() => {
   const imports = chartData.value.map(d => d.import_value)
   const exports = chartData.value.map(d => d.export_value)
   const balances = chartData.value.map(d => Math.abs(d.balance))
+
+  // Find max value to determine scale
+  const maxValue = Math.max(...imports, ...exports, ...balances)
 
   return {
     animation: true,
@@ -408,13 +440,13 @@ const chartOption = computed(() => {
     },
     yAxis: {
       type: 'value',
-      name: 'Value (Billions USD)',
+      name: getYAxisLabel(maxValue),
       nameTextStyle: {
         fontSize: 12,
         color: '#64748b'
       },
       axisLabel: {
-        formatter: (value) => formatBillions(value)
+        formatter: (value) => formatYAxis(value, maxValue)
       }
     },
     series: [

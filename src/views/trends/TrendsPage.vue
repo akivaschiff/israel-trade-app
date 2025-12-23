@@ -71,16 +71,39 @@
       <div v-if="trendsData.length > 0" class="mt-8 bg-white rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-200/60 overflow-hidden">
         <!-- Chart Header -->
         <div class="px-8 py-6 border-b border-slate-100 bg-gradient-to-r from-slate-50 to-white">
-          <div class="flex items-center gap-3">
-            <div :class="[
-              'w-3 h-3 rounded-full',
-              selectedFlow === FLOW_TYPES.EXPORTS ? 'bg-amber-500' : 'bg-blue-600'
-            ]"></div>
-            <h2 class="text-2xl font-serif font-bold text-slate-900">
-              {{ selectedFlow === FLOW_TYPES.EXPORTS ? 'Export' : 'Import' }} Trends
-            </h2>
+          <div class="flex items-center justify-between">
+            <div>
+              <div class="flex items-center gap-3">
+                <div :class="[
+                  'w-3 h-3 rounded-full',
+                  selectedFlow === FLOW_TYPES.EXPORTS ? 'bg-amber-500' : 'bg-blue-600'
+                ]"></div>
+                <h2 class="text-2xl font-serif font-bold text-slate-900">
+                  {{ selectedFlow === FLOW_TYPES.EXPORTS ? 'Export' : 'Import' }} Trends
+                </h2>
+              </div>
+              <p class="text-sm text-slate-500 mt-1 ml-6">Trade values over time by country</p>
+            </div>
+            <!-- View Mode Toggle -->
+            <div class="flex gap-2">
+              <button
+                v-for="mode in [
+                  { value: 'lines', label: 'Lines' },
+                  { value: 'stacked', label: 'Area' }
+                ]"
+                :key="mode.value"
+                @click="viewMode = mode.value"
+                :class="[
+                  'px-4 py-2 rounded-lg font-medium text-sm transition-all',
+                  viewMode === mode.value
+                    ? 'bg-indigo-600 text-white shadow-md'
+                    : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
+                ]"
+              >
+                {{ mode.label }}
+              </button>
+            </div>
           </div>
-          <p class="text-sm text-slate-500 mt-1 ml-6">Trade values over time by country</p>
         </div>
 
         <!-- Chart -->
@@ -210,14 +233,14 @@
 import { ref, computed, onMounted, watch } from 'vue'
 import { use } from 'echarts/core'
 import { CanvasRenderer } from 'echarts/renderers'
-import { LineChart } from 'echarts/charts'
+import { LineChart, BarChart } from 'echarts/charts'
 import { GridComponent, TooltipComponent, LegendComponent, DataZoomComponent } from 'echarts/components'
 import VChart from 'vue-echarts'
 import { useTrends } from './useTrends'
 import { TRADE_COLORS, FLOW_TYPES } from '@/lib/tradeConstants'
 import SmartProductSelector from '@/components/SmartProductSelector.vue'
 
-use([CanvasRenderer, LineChart, GridComponent, TooltipComponent, LegendComponent, DataZoomComponent])
+use([CanvasRenderer, LineChart, BarChart, GridComponent, TooltipComponent, LegendComponent, DataZoomComponent])
 
 const {
   loading,
@@ -239,6 +262,7 @@ const selectedFlow = ref(FLOW_TYPES.IMPORTS) // Default to IMPORTS
 const selectedProducts = ref(new Set())
 const selectedCountries = ref([])
 const fetchingCountries = ref(false)
+const viewMode = ref('lines') // 'lines', 'bars', 'stacked'
 
 // Store all fetched country data to avoid re-fetching when toggling countries
 const allCountryData = ref([])
@@ -520,38 +544,105 @@ const chartOption = computed(() => {
     return monthA - monthB
   })
 
-  // Generate series for each country
-  const series = visibleTrendsData.value.map((country, index) => {
-    const colors = [
-      '#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6',
-      '#ec4899', '#14b8a6', '#f97316', '#6366f1', '#84cc16'
-    ]
-    
-    // Create a map of date to value for this country
+  const colors = [
+    '#3b82f6', '#ef4444', '#10b981', '#f59e0b', '#8b5cf6',
+    '#ec4899', '#14b8a6', '#f97316', '#6366f1', '#84cc16'
+  ]
+
+  // Create stable color mapping based on ALL available countries (not just visible ones)
+  // This ensures colors don't shift when countries are toggled on/off
+  const colorMap = new Map()
+  const allCountryCodes = [...new Set(allCountryData.value.map(c => c.country_code))]
+    .filter(code => code !== 'TOTAL')
+    .sort()
+  allCountryCodes.forEach((code, index) => {
+    colorMap.set(code, colors[index % colors.length])
+  })
+
+  // Prepare data for each country
+  const countryDataArrays = visibleTrendsData.value.map(country => {
     const dataMap = new Map()
     country.data_points.forEach(point => {
       dataMap.set(point.date, point.value)
     })
-    
-    // Map sorted dates to values (null if country has no data for that date)
-    const data = sortedDates.map(date => dataMap.get(date) ?? null)
-    
     return {
       name: country.country_name,
-      type: 'line',
-      smooth: true,
-      symbol: 'circle',
-      symbolSize: 6,
-      connectNulls: true, // Connect across missing data points
-      lineStyle: {
-        width: 3
-      },
-      itemStyle: {
-        color: colors[index % colors.length]
-      },
-      data: data
+      code: country.country_code,
+      data: sortedDates.map(date => dataMap.get(date) ?? null)
     }
   })
+
+  // Generate series based on view mode
+  let series = []
+
+  if (viewMode.value === 'lines') {
+    // Lines mode - all as lines
+    series = countryDataArrays.map(country => ({
+      name: country.name,
+      type: 'line',
+      smooth: false,
+      symbol: 'circle',
+      symbolSize: 6,
+      showSymbol: true,
+      connectNulls: false,
+      lineStyle: {
+        width: 2.5
+      },
+      itemStyle: {
+        color: country.code === 'TOTAL' ? '#1e293b' : colorMap.get(country.code)
+      },
+      data: country.data
+    }))
+  } else if (viewMode.value === 'stacked') {
+    // Stacked mode - countries as stacked area chart
+    const countries = countryDataArrays.filter(c => c.name !== 'Total (All Countries)')
+    const totalCountry = countryDataArrays.find(c => c.name === 'Total (All Countries)')
+
+    series = countries.map(country => ({
+      name: country.name,
+      type: 'line',
+      stack: 'total',
+      step: 'end', // Make it stepped to better represent discrete monthly data
+      areaStyle: {
+        color: colorMap.get(country.code),
+        opacity: 0.7
+      },
+      lineStyle: {
+        width: 0
+      },
+      symbol: 'none',
+      itemStyle: {
+        color: colorMap.get(country.code)
+      },
+      emphasis: {
+        focus: 'series',
+        areaStyle: {
+          opacity: 0.9
+        }
+      },
+      data: country.data
+    }))
+
+    // Add total line on top
+    if (totalCountry) {
+      series.push({
+        name: 'Total',
+        type: 'line',
+        step: 'end', // Match the stepped style for consistency
+        data: totalCountry.data,
+        lineStyle: {
+          width: 2.5,
+          color: '#1e293b'
+        },
+        symbol: 'circle',
+        symbolSize: 4,
+        itemStyle: {
+          color: '#1e293b'
+        },
+        z: 100  // Draw on top of areas
+      })
+    }
+  }
 
   return {
     animation: true,
@@ -580,7 +671,7 @@ const chartOption = computed(() => {
       }
     },
     legend: {
-      data: visibleTrendsData.value.map(c => c.country_name),
+      data: series.map(s => s.name),
       top: 0,
       type: 'scroll'
     },
