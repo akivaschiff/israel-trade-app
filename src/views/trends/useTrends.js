@@ -52,42 +52,42 @@ export function useTrends() {
     // Search through products in memory
     const results = productsData.value.filter(product => {
       // Search in HS code
-      if (product.hs_code.includes(searchTerm)) return true
+      if (product.code.includes(searchTerm)) return true
 
       // Search in description
-      if (product.description.toLowerCase().includes(lowerSearchTerm)) return true
+      if (product.desc.toLowerCase().includes(lowerSearchTerm)) return true
 
       // Search in search labels
-      if (product.search_labels?.some(label =>
+      if (product.labels?.some(label =>
         label.toLowerCase().includes(lowerSearchTerm)
       )) return true
 
       // Search in Hebrew search labels
-      if (product.hebrew_search_labels?.some(label =>
+      if (product.he?.some(label =>
         label.includes(searchTerm)
       )) return true
 
       // Search in category
-      if (product.category?.toLowerCase().includes(lowerSearchTerm)) return true
+      if (product.cat?.toLowerCase().includes(lowerSearchTerm)) return true
 
       return false
     })
 
     // Get chapter info from categories
     return results.map(product => {
-      const chapterCode = product.hs_chapter
+      const chapterCode = product.code.substring(0, 2)
       const categoryInfo = categoriesData.value?.find(c =>
         c.chapters.some(ch => ch.code === chapterCode)
       )
       const chapterInfo = categoryInfo?.chapters.find(ch => ch.code === chapterCode)
 
       return {
-        code: product.hs_code,
-        description: product.description,
+        code: product.code,
+        description: product.desc,
         chapter: chapterCode,
         chapter_name: chapterInfo?.name || `Chapter ${chapterCode}`,
-        category: product.category,
-        heading: product.hs_heading
+        category: product.cat,
+        heading: product.code.substring(0, 4)
       }
     })
     .sort((a, b) => a.code.localeCompare(b.code))

@@ -172,7 +172,7 @@ function buildHierarchy(products) {
       return {
         type: 'product',
         code: code,
-        description: p.description || 'No description',
+        description: p.desc || p.description || 'No description',
         chapter: chapter,
         chapter_name: p.chapter_name || (chapter ? `Chapter ${chapter}` : ''),
         key: `product:${code}`
@@ -184,7 +184,7 @@ function buildHierarchy(products) {
   
   for (const product of products) {
     const productCode = product.code || product.hs_code
-    const categoryName = product.category || 'Other'
+    const categoryName = product.cat || product.category || 'Other'
     const chapterCode = product.chapter || product.hs_chapter
     const headingCode = product.heading || product.hs_heading
     
@@ -211,7 +211,7 @@ function buildHierarchy(products) {
       category.directProducts.push({
         type: 'product',
         code: productCode,
-        description: product.description || 'No description',
+        description: product.desc || product.description || 'No description',
         chapter: '',
         chapter_name: '',
         key: `product:${productCode}`
@@ -239,8 +239,8 @@ function buildHierarchy(products) {
     // Initialize heading
     if (headingCode) {
       if (!chapter.headings.has(headingCode)) {
-        const headingName = product.description.split(';')[0].trim()
-        
+        const headingName = (product.desc || product.description).split(';')[0].trim()
+
         chapter.headings.set(headingCode, {
           type: 'heading',
           code: headingCode,
@@ -250,12 +250,12 @@ function buildHierarchy(products) {
           products: []
         })
       }
-      
+
       const heading = chapter.headings.get(headingCode)
       heading.products.push({
         type: 'product',
         code: productCode,
-        description: product.description,
+        description: product.desc || product.description,
         chapter: chapterCode,
         chapter_name: product.chapter_name || chapter.name || `Chapter ${chapterCode}`,
         key: `product:${productCode}`
@@ -266,7 +266,7 @@ function buildHierarchy(products) {
       chapter.products.push({
         type: 'product',
         code: productCode,
-        description: product.description,
+        description: product.desc || product.description,
         chapter: chapterCode,
         chapter_name: product.chapter_name || chapter.name || `Chapter ${chapterCode}`,
         key: `product:${productCode}`
