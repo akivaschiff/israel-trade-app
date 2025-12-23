@@ -343,12 +343,20 @@ function formatValue(value) {
   return `$${Math.round(actualValue)}`
 }
 
+// Format value in billions for Y-axis
+function formatBillions(value) {
+  const actualValue = value * 1000 // Convert from thousands to actual
+  return `$${(actualValue / 1e9).toFixed(1)}B`
+}
+
 // Chart configuration
 const chartOption = computed(() => {
   if (chartData.value.length === 0) return {}
 
   const dates = chartData.value.map(d => d.date)
-  const balances = chartData.value.map(d => d.balance)
+  const imports = chartData.value.map(d => d.import_value)
+  const exports = chartData.value.map(d => d.export_value)
+  const balances = chartData.value.map(d => Math.abs(d.balance))
 
   return {
     animation: true,
@@ -360,19 +368,29 @@ const chartOption = computed(() => {
         type: 'cross'
       },
       formatter: (params) => {
-        const param = params[0]
-        const dataPoint = chartData.value[param.dataIndex]
-        let result = `<strong>${param.axisValue}</strong><br/>`
-        result += `Imports: ${formatValue(dataPoint.import_value)}<br/>`
-        result += `Exports: ${formatValue(dataPoint.export_value)}<br/>`
-        result += `<strong>Balance: ${formatValue(dataPoint.balance)}</strong>`
+        const dataPoint = chartData.value[params[0].dataIndex]
+        const balanceType = dataPoint.balance >= 0 ? 'Surplus' : 'Deficit'
+        const balanceColor = dataPoint.balance >= 0 ? '#10b981' : '#ef4444'
+
+        let result = `<strong>${params[0].axisValue}</strong><br/>`
+        result += `<span style="color: #3b82f6">● Imports: ${formatValue(dataPoint.import_value)}</span><br/>`
+        result += `<span style="color: #f97316">● Exports: ${formatValue(dataPoint.export_value)}</span><br/>`
+        result += `<span style="color: ${balanceColor}">● ${balanceType}: ${formatValue(Math.abs(dataPoint.balance))}</span>`
         return result
+      }
+    },
+    legend: {
+      data: ['Imports', 'Exports', 'Deficit/Surplus'],
+      top: 0,
+      textStyle: {
+        fontSize: 13
       }
     },
     grid: {
       left: '3%',
       right: '4%',
       bottom: '3%',
+      top: '12%',
       containLabel: true
     },
     xAxis: {
@@ -390,14 +408,18 @@ const chartOption = computed(() => {
     },
     yAxis: {
       type: 'value',
-      name: 'Balance (thousands USD)',
+      name: 'Value (Billions USD)',
+      nameTextStyle: {
+        fontSize: 12,
+        color: '#64748b'
+      },
       axisLabel: {
-        formatter: (value) => formatValue(value)
+        formatter: (value) => formatBillions(value)
       }
     },
     series: [
       {
-        name: 'Trade Balance',
+        name: 'Imports',
         type: 'line',
         smooth: false,
         symbol: 'circle',
@@ -405,35 +427,43 @@ const chartOption = computed(() => {
         showSymbol: true,
         lineStyle: {
           width: 2.5,
-          color: '#6366f1'
+          color: '#3b82f6'
         },
-        areaStyle: {
-          color: {
-            type: 'linear',
-            x: 0,
-            y: 0,
-            x2: 0,
-            y2: 1,
-            colorStops: [
-              { offset: 0, color: 'rgba(99, 102, 241, 0.3)' },
-              { offset: 1, color: 'rgba(99, 102, 241, 0.05)' }
-            ]
-          }
+        itemStyle: {
+          color: '#3b82f6'
+        },
+        data: imports
+      },
+      {
+        name: 'Exports',
+        type: 'line',
+        smooth: false,
+        symbol: 'circle',
+        symbolSize: 6,
+        showSymbol: true,
+        lineStyle: {
+          width: 2.5,
+          color: '#f97316'
+        },
+        itemStyle: {
+          color: '#f97316'
+        },
+        data: exports
+      },
+      {
+        name: 'Deficit/Surplus',
+        type: 'line',
+        smooth: false,
+        symbol: 'circle',
+        symbolSize: 6,
+        showSymbol: true,
+        lineStyle: {
+          width: 2.5
         },
         itemStyle: {
           color: (params) => {
-            return balances[params.dataIndex] >= 0 ? '#10b981' : '#ef4444'
+            return chartData.value[params.dataIndex].balance >= 0 ? '#10b981' : '#ef4444'
           }
-        },
-        markLine: {
-          silent: true,
-          symbol: 'none',
-          lineStyle: {
-            color: '#94a3b8',
-            type: 'dashed',
-            width: 2
-          },
-          data: [{ yAxis: 0, label: { show: false } }]
         },
         data: balances
       }
