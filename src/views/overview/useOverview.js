@@ -1,6 +1,5 @@
 import { ref } from 'vue'
 import { supabase } from '@/lib/supabase'
-import _ from 'lodash'
 
 export function useOverview() {
   const loading = ref(false)
@@ -47,77 +46,26 @@ export function useOverview() {
     chartData.value = []
 
     try {
-      // Query imports (flow = 1)
-      const { data: importsData, error: importsError } = await supabase
-        .from('trade_data')
-        .select('year, period, value')
-        .eq('flow', 1)
-        .gte('year', startYear)
-        .lte('year', endYear)
-        .order('year')
-        .order('period')
-
-      if (importsError) throw importsError
-
-      // Query exports (flow = 2)
-      const { data: exportsData, error: exportsError } = await supabase
-        .from('trade_data')
-        .select('year, period, value')
-        .eq('flow', 2)
-        .gte('year', startYear)
-        .lte('year', endYear)
-        .order('year')
-        .order('period')
-
-      if (exportsError) throw exportsError
-
-      // Aggregate imports by month
-      const importsByMonth = _.chain(importsData)
-        .filter(row => {
-          const startIndex = (startYear * 12) + startPeriod
-          const endIndex = (endYear * 12) + endPeriod
-          const rowIndex = (row.year * 12) + row.period
-          return rowIndex >= startIndex && rowIndex <= endIndex
+      // Use RPC function to get aggregated monthly totals
+      const { data, error } = await supabase
+        .rpc('get_total_monthly_balance', {
+          p_start_year: startYear,
+          p_start_period: startPeriod,
+          p_end_year: endYear,
+          p_end_period: endPeriod
         })
-        .groupBy(row => `${row.year}-${row.period}`)
-        .mapValues(rows => _.sumBy(rows, 'value'))
-        .value()
 
-      // Aggregate exports by month
-      const exportsByMonth = _.chain(exportsData)
-        .filter(row => {
-          const startIndex = (startYear * 12) + startPeriod
-          const endIndex = (endYear * 12) + endPeriod
-          const rowIndex = (row.year * 12) + row.period
-          return rowIndex >= startIndex && rowIndex <= endIndex
-        })
-        .groupBy(row => `${row.year}-${row.period}`)
-        .mapValues(rows => _.sumBy(rows, 'value'))
-        .value()
+      if (error) throw error
 
-      // Combine into chart data
-      const allDates = new Set([...Object.keys(importsByMonth), ...Object.keys(exportsByMonth)])
-
-      chartData.value = Array.from(allDates)
-        .map(date => {
-          const [year, period] = date.split('-').map(Number)
-          const importValue = importsByMonth[date] || 0
-          const exportValue = exportsByMonth[date] || 0
-          const balance = exportValue - importValue
-
-          return {
-            date,
-            year,
-            period,
-            import_value: importValue,
-            export_value: exportValue,
-            balance
-          }
-        })
-        .sort((a, b) => {
-          if (a.year !== b.year) return a.year - b.year
-          return a.period - b.period
-        })
+      // Transform to chart data format
+      chartData.value = data.map(row => ({
+        date: `${row.year}-${row.period}`,
+        year: row.year,
+        period: row.period,
+        import_value: row.import_value || 0,
+        export_value: row.export_value || 0,
+        balance: (row.export_value || 0) - (row.import_value || 0)
+      }))
 
     } catch (e) {
       console.error('Error fetching total balance:', e)
@@ -132,79 +80,27 @@ export function useOverview() {
     chartData.value = []
 
     try {
-      // Query imports (flow = 1) for this country
-      const { data: importsData, error: importsError } = await supabase
-        .from('trade_data')
-        .select('year, period, value')
-        .eq('flow', 1)
-        .eq('partner_country', countryCode)
-        .gte('year', startYear)
-        .lte('year', endYear)
-        .order('year')
-        .order('period')
-
-      if (importsError) throw importsError
-
-      // Query exports (flow = 2) for this country
-      const { data: exportsData, error: exportsError } = await supabase
-        .from('trade_data')
-        .select('year, period, value')
-        .eq('flow', 2)
-        .eq('partner_country', countryCode)
-        .gte('year', startYear)
-        .lte('year', endYear)
-        .order('year')
-        .order('period')
-
-      if (exportsError) throw exportsError
-
-      // Aggregate imports by month
-      const importsByMonth = _.chain(importsData)
-        .filter(row => {
-          const startIndex = (startYear * 12) + startPeriod
-          const endIndex = (endYear * 12) + endPeriod
-          const rowIndex = (row.year * 12) + row.period
-          return rowIndex >= startIndex && rowIndex <= endIndex
+      // Use RPC function to get aggregated monthly totals for this country
+      const { data, error } = await supabase
+        .rpc('get_country_monthly_balance', {
+          p_country_code: countryCode,
+          p_start_year: startYear,
+          p_start_period: startPeriod,
+          p_end_year: endYear,
+          p_end_period: endPeriod
         })
-        .groupBy(row => `${row.year}-${row.period}`)
-        .mapValues(rows => _.sumBy(rows, 'value'))
-        .value()
 
-      // Aggregate exports by month
-      const exportsByMonth = _.chain(exportsData)
-        .filter(row => {
-          const startIndex = (startYear * 12) + startPeriod
-          const endIndex = (endYear * 12) + endPeriod
-          const rowIndex = (row.year * 12) + row.period
-          return rowIndex >= startIndex && rowIndex <= endIndex
-        })
-        .groupBy(row => `${row.year}-${row.period}`)
-        .mapValues(rows => _.sumBy(rows, 'value'))
-        .value()
+      if (error) throw error
 
-      // Combine into chart data
-      const allDates = new Set([...Object.keys(importsByMonth), ...Object.keys(exportsByMonth)])
-
-      chartData.value = Array.from(allDates)
-        .map(date => {
-          const [year, period] = date.split('-').map(Number)
-          const importValue = importsByMonth[date] || 0
-          const exportValue = exportsByMonth[date] || 0
-          const balance = exportValue - importValue
-
-          return {
-            date,
-            year,
-            period,
-            import_value: importValue,
-            export_value: exportValue,
-            balance
-          }
-        })
-        .sort((a, b) => {
-          if (a.year !== b.year) return a.year - b.year
-          return a.period - b.period
-        })
+      // Transform to chart data format
+      chartData.value = data.map(row => ({
+        date: `${row.year}-${row.period}`,
+        year: row.year,
+        period: row.period,
+        import_value: row.import_value || 0,
+        export_value: row.export_value || 0,
+        balance: (row.export_value || 0) - (row.import_value || 0)
+      }))
 
     } catch (e) {
       console.error('Error fetching country balance:', e)
