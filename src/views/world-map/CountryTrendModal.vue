@@ -285,7 +285,7 @@ const visibleMonths = ref(12) // Default to 12 months
 
 const viewModes = [
   { value: 'lines', label: 'Lines' },
-  { value: 'stacked', label: 'Stacked' },
+  { value: 'stacked', label: 'Area' },
   { value: 'percent', label: '% Share' }
 ]
 
@@ -730,6 +730,7 @@ const comparisonChartOption = computed(() => {
       xAxis: {
         type: 'category',
         data: months,
+        boundaryGap: false,
         axisLabel: {
           formatter: (value) => formatMonth(value),
           rotate: 45
@@ -745,7 +746,11 @@ const comparisonChartOption = computed(() => {
         name: item.displayName,
         type: 'line',
         data: item.alignedData.map(d => d.value),
-        smooth: true,
+        smooth: false,
+        symbol: 'circle',
+        symbolSize: 6,
+        showSymbol: true,
+        connectNulls: false,
         lineStyle: {
           width: 2.5,
           color: colors[idx % colors.length]
@@ -756,7 +761,54 @@ const comparisonChartOption = computed(() => {
       }))
     }
   } else if (viewMode.value === 'stacked') {
-    // Stacked area chart
+    // Stacked area chart with stepped style for discrete monthly data
+    const series = selectedData.map((item, idx) => ({
+      name: item.displayName,
+      type: 'line',
+      stack: 'total',
+      step: 'end', // Makes each month a horizontal block
+      data: item.alignedData.map(d => d.value),
+      areaStyle: {
+        color: colors[idx % colors.length],
+        opacity: 0.7
+      },
+      lineStyle: {
+        width: 0
+      },
+      itemStyle: {
+        color: colors[idx % colors.length]
+      },
+      emphasis: {
+        focus: 'series',
+        areaStyle: {
+          opacity: 0.9
+        }
+      }
+    }))
+
+    // Calculate total line data
+    const totalData = months.map((month, i) =>
+      selectedData.reduce((sum, item) => sum + item.alignedData[i].value, 0)
+    )
+
+    // Add total line on top
+    series.push({
+      name: 'Total',
+      type: 'line',
+      step: 'end', // Match the stepped style
+      data: totalData,
+      lineStyle: {
+        width: 2.5,
+        color: '#1e293b'
+      },
+      symbol: 'circle',
+      symbolSize: 4,
+      itemStyle: {
+        color: '#1e293b'
+      },
+      z: 100 // Draw on top of areas
+    })
+
     return {
       grid: {
         left: '3%',
@@ -776,6 +828,7 @@ const comparisonChartOption = computed(() => {
         }
       },
       legend: {
+        data: series.map(s => s.name),
         top: 10,
         type: 'scroll'
       },
@@ -793,19 +846,7 @@ const comparisonChartOption = computed(() => {
           formatter: (value) => formatValue(value)
         }
       },
-      series: selectedData.map((item, idx) => ({
-        name: item.displayName,
-        type: 'line',
-        stack: 'total',
-        data: item.alignedData.map(d => d.value),
-        areaStyle: {},
-        lineStyle: {
-          width: 0
-        },
-        itemStyle: {
-          color: colors[idx % colors.length]
-        }
-      }))
+      series
     }
   } else {
     // Percent share
